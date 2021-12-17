@@ -5,4 +5,4 @@ git add --all
 git commit -m "message of the changes to to be commited, give details of the changes done since the last commit"
 
 because the application is now on heroku, the git push command will not work. instead, we need to run the:
-git push heroku master  
+git push heroku master. 
