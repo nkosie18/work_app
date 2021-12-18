@@ -27,4 +27,21 @@ git push heroku <name of branch>
 git checkout master   #This will switch you to the master branch.
 git merge <name of branch>  # This will merge your branch with master and if you run:
 git push heroku master   # This will now make changes that were initially one on the branch to the master branch and trigger an new application build. now your application will have all the changes you have made on both the branch and the mater.
- 
+
+
+
+##########################################################
+Flask stuff
+##########################################################
+
+# To set environment variables on the bash terminal, use the export trigger like:
+export FLASK_APP=app.py   # app.py is a file on the root directory.
+export FLASK_ENV=development  # This will allow you to run the server in development mode and the debug mode on, It is very helpful when making changes to the application and wanting to see the changes without having to restart the server.
+
+# To start the server we use command:
+flask run
+
+#To kill the server you use CRT + C 
+
+# all HTML files live in templates, all javascripts files live in static, including images and CSS stuff.
+

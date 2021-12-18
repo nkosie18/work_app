@@ -1,0 +1,37 @@
+{%extends "signin/base1.html"%}
+
+{%block title%} Sign In {%endblock%}
+
+{%block content%}
+
+<div class="w3-container w3-padding-64 w3-margin-left">
+    <h1 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; color:whitesmoke;"> Sign In</h1>
+    <form action="" method="POST" novalidate>
+        {{form.hidden_tag()}}
+
+        <p style="color: whitesmoke;">
+            {{form.username.label}} <br>
+            {{form.username(size=32)}} <br>
+            {% for error in form.username.errors%}
+                <span style="color: rgb(150, 48, 48);">{{error}}</span>
+            {%endfor%}
+        </p>
+
+        <p style="color: whitesmoke;">
+            {{form.password.label}} <br>
+            {{form.password(size=32)}} <br>
+            {% for error in form.username.errors %}
+                <span style="color: rgb(150, 48, 48);">{{error}}</span>
+            {%endfor%}
+        </p>
+
+        <p style="color: whitesmoke;">{{form.remember_me()}}{{form.remember_me.label}}</p>
+
+        <p> {{form.submit()}}</p>
+
+    </form>
+
+
+</div>
+
+{%endblock%}

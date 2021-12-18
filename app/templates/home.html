@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{%block title%} Medical Physics Department  {%endblock%}
+
+{%block content%}
+
+<!--
+    
+-->
+<div class="w3-display-container  w3-row w3-nkosi">
+     <img src="{{url_for('static', filename='images/logo2.jpg')}}" class="w3-left" width= auto height="300" > 
+</div>
+
+<div class = "w3-container w3-margin-left">
+    <h4 style="color: tomato;">
+        {% with messages = get_flashed_messages() %}
+    {% if messages %}
+            {% for message in messages %}
+                {{ message }}   
+            {% endfor %}
+    {%endif%}
+{%endwith%}
+    </h4>
+
+</div>
+
+<div class = 'w3-container-fluid w3-padding-top-18'>
+    <div class="w3-row w3-margin-top">
+        <div class="w3-col m4 l3 w3-padding " style="margin-top: -9mm;">
+            <h2>Portal for Medical physics Quality Assurance</h2>
+            <p style="text-align: justify;"> This web application was designed with the aim of making the job of the medical physicist easy.
+                All the software tools used by the medical physicist will has been centralized in a single application. The application is designed with scalability in mind and incorporates python packages such as the Pylinac package and packages developed in-house. The application is designed to serve as a repository and a data center for all quality control tests performed by medical physics at the hospital. This application also contains the medical physics standard operating procedures and these have been made to be available on demand.
+            </p>
+            <p style="text-align: justify;">
+                The implementation of the application will enable the institution to continue in the direction of a paperless department and will also improve the ability of the medical physics department to track the performance of the machines. 
+            </p>
+
+        </div>
+        <div class="w3-col m8 l9 w3-center w3-scand " style="margin-top: -7mm;">
+
+            <h2>our machines</h2>
+            <div class="w3-row">
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <h1> Hello world from Templates  I wrote this !!! </h1>
+
+</div>
+
+
+{%endblock%}

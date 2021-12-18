@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{%block title%} LOAD CSV DATA {%endblock%}
+
+
+{% block content%}
+<div class = 'w3-container w3-padding-top-24'>
+    <div class="w3-row w3-margin-top">
+        <div class="w3-col m4 l3">
+           <h2>
+                Please load your CSV data to the database
+           </h2>
+
+           <div>
+               <form method="POST" action="" enctype="multipart/form-data">
+                
+                    <p>Upload your csv file: <input type="file" name="file"></p>
+                    <p> <input type="submit" value="Upload"></p>
+
+                </form>
+           </div>
+
+        </div>
+        <div class="w3-col m8 l9">
+
+            Make sure the correct csv file is selected
+
+        </div>
+
+
+    </div>
+    <h1> Hello world from Templates fuck you I wrote this shit!!! </h1>
+
+</div>
+
+
+{%endblock%}

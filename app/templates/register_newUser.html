@@ -1,0 +1,69 @@
+{%extends "base.html"%}
+
+{% block title %} New User Registration Form {%endblock%}
+
+{% block content %}
+
+<div class="w3-row w3-light-grey">
+
+    <h2 style="margin: 3mm; margin-top:7mm">New user registration form.</h2>
+
+</div>
+
+    <div class="w3-row w3-padding-24 w3-margin-left">
+        <div class="w3-col l2 m2">  </div>
+        <div class="w3-col l8 m8">
+            <form action="" method="POST" novalidate>
+                {{form.hidden_tag()}}
+                <p>
+                    {{form.username.label}} <br>
+                    {{form.username(size=24)}} <br>
+                    {% for error in form.username.errors %}
+                        <span style="color: red;">{{error}}</span>
+                    {%endfor%}
+                </p>
+
+                <p>
+                    {{form.password.label}} <br>
+                    {{form.password(size=24)}} <br>
+                    {% for error in form.password.errors %}
+                        <span style="color: red;">{{error}}</span>
+                    {%endfor%}
+                </p>
+                <p>
+                    {{form.confirm_password.label}} <br>
+                    {{form.confirm_password(size=24)}} <br>
+                    {% for error in form.confirm_password.errors %}
+                        <span style="color: red;">{{error}}</span>
+                    {%endfor%}
+                </p>
+
+                <p>
+                    {{form.role.label}} <br>
+                    {{form.role}} <br>
+
+
+                </p>
+
+                <p>{{form.submit()}}</p>
+
+                <span style="color: rgb(255, 0, 0);">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <ul class=flashes>
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endwith %}
+                </span>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+{%endblock%}
