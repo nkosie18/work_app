@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %} LINAC QA {% endblock %}
+
+{% block content%}
+
+  <h3>CT</h3>
+  <h4> Monthly QA </h4>
+  <p> CT: 
+    <select name="linacs" id="linac_Selection">
+      <option value="CT1">CT1</option>
+      <option value="CT2">CT2</option>
+      <option value="CT3">CT3</option>
+    </select>
+  </p>
+  <div class="w3-row">
+
+    <div class="w3-col m4 l4 s4"></div>
+    <div class="w3-col m4 l4 s4">
+
+      <table class = "w3-striped w3-center">
+        <tr>
+          <th>Test</th>
+          <th></th>
+          <th>Complete</th>
+          <th></th>
+          <th>Not complete</th>
+        </tr>
+        <tr>
+          <td>Mechanicals</td>
+          <td></td>
+          <td><input type="radio" name="rdb_ct_mechanicals" id="c_ct_M"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_ct_mechanicals" id="notc_ct_M"></td>
+        </tr>
+        <tr>
+          <td>Lasers</td>
+          <td></td>
+          <td><input type="radio" name="rdb_ct_lasers" id="c_ct_lasers"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_ct_lasers" id="notc_ct_lasers"></td>
+        </tr>
+        <tr>
+          <td>Scans</td>
+          <td></td>
+          <td><input type="radio" name="rdb_ct_scans" id="c_ct_scans"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_ct_scans" id="notc_ct_scans"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

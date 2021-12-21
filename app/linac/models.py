@@ -4,7 +4,7 @@ from app import db
 
 
 class Machine(db.Model):
-    __tablename__ = 'machine'
+    __tablename__ = 'linac_Monthly'
     id = db.Column(db.Integer, primary_key = True)
     make = db.Column(db.String(120), index= True)
     n_name = db.Column(db.String(4), index=True)
