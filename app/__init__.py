@@ -18,15 +18,15 @@ def test2():
 
 from app.signin.views import login_bp, logout_bp, register_bp
 from app.machines.views import machines_bp
-from app.sasqart.view import sasqart_bp
+from app.linac.views import linac_bp
+from app.ct.views import ct_bp
 
 app.register_blueprint(login_bp)
-app.register_blueprint(sasqart_bp)
 app.register_blueprint(logout_bp)
 app.register_blueprint(register_bp)
 app.register_blueprint(machines_bp)
-
-
+app.register_blueprint(linac_bp)
+app.register_blueprint(ct_bp)
 
 login.login_view = 'login.login'
 

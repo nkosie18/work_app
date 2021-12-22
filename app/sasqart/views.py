@@ -6,7 +6,4 @@ sasqart_bp = Blueprint('sasqart',__name__, template_folder='templates', static_f
 def sasqart():
     return render_template('test2.html')
 
-@sasqart_bp.route('/brachy')
-def brachy():
-    return render_template('brachy.html')
 
