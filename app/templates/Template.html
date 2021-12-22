@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %} ### QA {% endblock %}
+
+{% block content%}
+<div class= "w3-container" style="margin-top: 15mm;">
+
+  <h3>###</h3>
+  <h4> Monthly QA </h4>
+  <p> ##: 
+    <select name="##" id="##_Selection">
+      <option value="##">CT1</option>
+      <option value="##">CT2</option>
+      <option value="##">CT3</option>
+    </select>
+  </p>
+  <div class="w3-row">
+
+    <div class="w3-col m4 l4 s4"></div>
+    <div class="w3-col m4 l4 s4">
+
+      <table class = "w3-striped w3-center">
+        <tr>
+          <th>Test</th>
+          <th></th>
+          <th>Complete</th>
+          <th></th>
+          <th>Not complete</th>
+        </tr>
+        <tr>
+          <td>Mechanicals</td>
+          <td></td>
+          <td><input type="radio" name="rdb_##_mechanicals" id="c_##_M"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_##_mechanicals" id="notc_##_M"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p><input type="button" value="Submit"></p>
+</div>
+  
+
+{% endblock %}

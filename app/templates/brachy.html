@@ -1,11 +1,66 @@
 {% extends 'base.html' %}
 
-{% block title %} Brachytherapy {% endblock %}
+{% block title %} Brachytherapy QA {% endblock %}
 
 {% block content%}
+<div class= "w3-container" style="margin-top: 15mm;">
 
-  <h1>Brachytherapy QA </h1>
-  <h2>Monthly QA </h2>
+  <h3>Brachy</h3>
+  <h4> QUARTERLY QA </h4>
+  <p> Brachy: 
+    <select name="Brachys" id="brachy_Selection">
+      <option value="Unit1">Unit1</option>
+      <option value="Unit2">Unit2</option>
+      <option value="Unit3">Unit3</option>
+    </select>
+  </p>
+  <div class="w3-row">
+
+    <div class="w3-col m4 l4 s4"></div>
+    <div class="w3-col m4 l4 s4">
+
+      <table class = "w3-striped w3-center">
+        <tr>
+          <th>Test</th>
+          <th></th>
+          <th>Complete</th>
+          <th></th>
+          <th>Not complete</th>
+        </tr>
+        <tr>
+          <td>Mechanicals</td>
+          <td></td>
+          <td><input type="radio" name="rdb_brachy_mechanicals" id="c_brachy_mechanicals"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_brachy_mechanicals" id="notc_brachy_mechanicals"></td>
+        </tr>
+        <tr>
+          <td>Source/dummy interlocks</td>
+          <td></td>
+          <td><input type="radio" name="rdb_brachy_interlocks" id="c_brachy_interlocks"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_brachy_interlocks" id="notc_brachy_interlocks"></td>
+        </tr>
+        <tr>
+          <td>Source position</td>
+          <td></td>
+          <td><input type="radio" name="rdb_brachy_position" id="c_brachy_position"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_brachy_position" id="notc_brachy_position"></td>
+        </tr>
+        <tr>
+          <td>Source strength</td>
+          <td></td>
+          <td><input type="radio" name="rdb_brachy_strength" id="c_brachy_strength"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_brachy_strength" id="notc_brachy_strength"></td>
+        </tr>
+        <tr>
+      </table>
+    </div>
+  </div>
+  <p><input type="button" value="Submit"></p>
+</div>
   
 
 {% endblock %}
