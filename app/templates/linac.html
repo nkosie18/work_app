@@ -1,0 +1,83 @@
+gi{% extends 'base.html' %}
+
+{% block title %} LINAC QA {% endblock %}
+
+{% block content%}
+
+  <h3>LINAC</h3>
+  <h4> QA </h4>
+  <p> LINAC: 
+    <select name="linacs" id="linac_Selection">
+      <option value="L1">L1</option>
+      <option value="L2">L2</option>
+      <option value="L3">L3</option>
+    </select>
+  </p>
+
+  <div class="w3-row">
+
+    <div class="w3-col m4 l4 s4"></div>
+    <div class="w3-col m4 l4 s4">
+
+      <table class = "w3-striped w3-center">
+        <tr>
+          <th>Test</th>
+          <th></th>
+          <th>Complete</th>
+          <th></th>
+          <th>Not complete</th>
+        </tr>
+        <tr>
+          <td>Mechanicals</td>
+          <td></td>
+          <td><input type="radio" name="rdb_mechanicals" id="c_M"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_mechanicals" id="notc_M"></td>
+        </tr>
+        <tr>
+          <td>Flatness and Symmetry</td>
+          <td></td>
+          <td><input type="radio" name="rdb_FS" id="c_FS"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_FS" id="notc_FS"></td>
+        </tr>
+        <tr>
+          <td>Beam Output</td>
+          <td></td>
+          <td><input type="radio" name="rdb_BO" id="c_BO"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_BO" id="notc_BO"></td>
+        </tr>
+        <tr>
+          <td>Beam Energy</td>
+          <td></td>
+          <td><input type="radio" name="rdb_BE" id="c_M"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_BE" id="notc_M"></td>
+        </tr>
+        <tr>
+          <td>EPID</td>
+          <td></td>
+          <td><input type="radio" name="rdb_Epid" id="c_EPID"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_Epid" id="notc_EPID"></td>
+        </tr>
+        <tr>
+          <td>XVI</td>
+          <td></td>
+          <td><input type="radio" name="rdb_XVI" id="c_XVI"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_XVI" id="notc_XVI"></td>
+        </tr>
+        <tr>
+          <td>MLC</td>
+          <td></td>
+          <td><input type="radio" name="rdb_MLC" id="c_MLC"></td>
+          <td></td>
+          <td><input type="radio" name="rdb_MLC" id="notc_MLC"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}
