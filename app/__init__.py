@@ -22,7 +22,6 @@ app.register_blueprint(machines_bp)
 app.register_blueprint(linac_bp)
 app.register_blueprint(ct_bp)
 
-
 login.login_view = 'login.login'
 
 from app import views
