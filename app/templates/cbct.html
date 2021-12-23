@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %} Cone beam CT QA {% endblock %}
+
+{% block content%}
+<div class= "w3-container" style="margin-top: 15mm;">
+
+  <h3>Cone beam CT</h3>
+  <h4> Monthly QA </h4>
+  <p> Cone beam CT: 
+    <select name="CBCTs" id="CBCT_Selection">
+      <option value="CBCT1">CBCT1</option>
+      <option value="CBCT2">CBCT2</option>
+      <option value="CBCT3">CBCT3</option>
+    </select>
+  </p>
+  <div class="w3-row">
+
+    <div class="w3-col m4 l4 s4"></div>
+    <div class="w3-col m4 l4 s4">
+
+      <table class = "w3-striped w3-center">
+        <tr>
+          <th>Test</th>
+          <th>Complete</th>
+          <th>Not complete</th>
+          <th>Date of Completion</th>
+          <th>Days left until next repeat</th>
+          <th>Task status</th>
+          <th>Done by</th>
+        </tr>
+        <tr>
+          <td><a href = "" target="_blank"></a>kV/MV/laser alignment &nbsp <a href="" target="_blank"><i class="fa fa-bar-chart"></i></a></td>
+          <td><input type="radio" name="rdb_cbct_cbctalignment" id="c_cbct_M"></td>
+          <td><input type="radio" name="rdb_cbct_cbctalignment" id="notc_cbct_M"></td>
+          <td><input type="date" name="date_update_cbct_cbctalignment" id="date_update_cbct_cbctalignment"></td>
+          <td><input type="number" name="days_to_repeat_cbct_cbctalignment" id="days_to_repeat_cbct_cbctalignment" disabled></td>
+          <td><input type="text" name="uptodate_cbct_cbctalignment" id="uptodate_cbct_cbctalignment" disabled></td>
+          <td><input type="text" name="doneBy_cbct_cbctalignment" id="doneBy_cbct_cbctalignment"></td>
+        </tr>
+        <tr>
+          <td><a href = "" target="_blank">End-to-end, including couch shift accuracy</a> &nbsp <a href="" target="_blank" rel="noopener noreferrer"><i class="fa fa-bar-chart"></i></a></td>
+          <td><input type="radio" name="rdb_cbct_cbctend2end" id="c_cbct_cbctend2end"></td>
+          <td><input type="radio" name="rdb_cbct_cbctend2end" id="notc_cbct_cbctend2end"></td>
+          <td><input type="date" name="date_update_cbct_cbctend2end" id="date_update_cbct_cbctend2end"></td>
+          <td><input type="number" name="days_to_repeat_cbct_cbctend2end" id="days_to_repeat_cbct_cbctend2end" disabled></td>
+          <td><input type="text" name="uptodate_cbct_cbctend2end" id="uptodate_cbct_cbctend2end" disabled></td>
+          <td><input type="text" name="doneBy_cbct_cbctend2end" id="doneBy_cbct_cbctend2end"></td>
+        </tr>
+        <tr>
+          <td><a href = "" target="_blank">Image quality</a> &nbsp<i class="fa fa-bar-chart"></i></td>
+          <td><input type="radio" name="rdb_cbct_cbctiq" id="c_cbct_cbctiq"></td>
+          <td><input type="radio" name="rdb_cbct_cbctiq" id="notc_cbct_cbctiq"></td>
+          <td><input type="date" name="date_update_cbct_cbctiq" id="date_update_cbct_cbctiq"></td>
+          <td><input type="number" name="days_to_repeat_cbct_cbctiq" id="days_to_repeat_cbct_cbctiq" disabled></td>
+          <td><input type="text" name="uptodate_cbct_cbctiq" id="uptodate_cbct_cbctiq" disabled></td>
+          <td><input type="text" name="doneBy_cbct_cbctiq" id="doneBy_cbct_cbctiq"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p><input type="button" value="Submit"></p>
+</div>
+  
+
+{% endblock %}

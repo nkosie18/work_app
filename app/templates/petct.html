@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %} PETCT QA {% endblock %}
+
+{% block content%}
+<div class= "w3-container" style="margin-top: 15mm;">
+
+  <h3>PETCT</h3>
+  <h4> Monthly QA </h4>
+  <p> PETCT: 
+    <select name="petcts" id="petct_Selection">
+      <option value="petct1">petct1</option>
+      <option value="petct2">petct2</option>
+      <option value="petct3">petct3</option>
+    </select>
+  </p>
+  <div class="w3-row">
+
+    <div class="w3-col m4 l4 s4"></div>
+    <div class="w3-col m4 l4 s4">
+
+      <table class = "w3-striped w3-center">
+        <tr>
+          <th>Test</th>
+          <th>Complete</th>
+          <th>Not complete</th>
+          <th>Date of Completion</th>
+          <th>Days left until next repeat</th>
+          <th>Task status</th>
+          <th>Done by</th>
+        </tr>
+        <tr>
+          <td><a href = "" target="_blank"></a>Mechanicals<a href="" target="_blank"><i class="fa fa-bar-chart"></i></a></td>
+          <td><input type="radio" name="rdb_petct_mechanicals" id="c_petct_M"></td>
+          <td><input type="radio" name="rdb_petct_mechanicals" id="notc_petct_M"></td>
+          <td><input type="date" name="date_update_petct_mechanicals" id="date_update_petct_mechanicals"></td>
+          <td><input type="number" name="days_to_repeat_petct_mechanicals" id="days_to_repeat_petct_mechanicals" disabled></td>
+          <td><input type="text" name="uptodate_petct_mechanicals" id="uptodate_petct_mechanicals" disabled></td>
+          <td><input type="text" name="doneBy_petct_mechanicals" id="doneBy_petct_mechanicals"></td>
+        </tr>
+        <tr>
+          <td><a href = "" target="_blank">Lasers</a> &nbsp <a href="" target="_blank" rel="noopener noreferrer"><i class="fa fa-bar-chart"></i></a></td>
+          <td><input type="radio" name="rdb_petct_lasers" id="c_petct_lasers"></td>
+          <td><input type="radio" name="rdb_petct_lasers" id="notc_petct_lasers"></td>
+          <td><input type="date" name="date_update_petct_lasers" id="date_update_petct_lasers"></td>
+          <td><input type="number" name="days_to_repeat_petct_lasers" id="days_to_repeat_petct_lasers" disabled></td>
+          <td><input type="text" name="uptodate_petct_lasers" id="uptodate_petct_lasers" disabled></td>
+          <td><input type="text" name="doneBy_petct_lasers" id="doneBy_petct_lasers"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p><input type="button" value="Submit"></p>
+</div>
+  
+
+{% endblock %}

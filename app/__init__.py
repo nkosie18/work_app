@@ -16,6 +16,14 @@ from app.brachytherapy.views import brachy_bp
 from app.linac.views import linac_bp
 from app.ct.views import ct_bp
 from app.simulators.views import simulators_bp
+from app.qcchecks.views import qcchecks_bp
+from app.kilovoltage.views import kilovoltage_bp
+from app.tps.views import tps_bp
+from app.gammaknife.views import gammaknife_bp
+from app.cyberknife.views import cyberknife_bp
+from app.cbct.views import cbct_bp
+from app.mri.views import mri_bp
+from app.petct.views import petct_bp
 
 app.register_blueprint(login_bp)
 app.register_blueprint(logout_bp)
@@ -25,6 +33,14 @@ app.register_blueprint(brachy_bp)
 app.register_blueprint(linac_bp)
 app.register_blueprint(ct_bp)
 app.register_blueprint(simulators_bp)
+app.register_blueprint(qcchecks_bp)
+app.register_blueprint(kilovoltage_bp)
+app.register_blueprint(tps_bp)
+app.register_blueprint(gammaknife_bp)
+app.register_blueprint(cyberknife_bp)
+app.register_blueprint(cbct_bp)
+app.register_blueprint(mri_bp)
+app.register_blueprint(petct_bp)
 
 login.login_view = 'login.login'
 
