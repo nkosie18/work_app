@@ -19,7 +19,7 @@
     <div class="w3-col m4 l4 s4"></div>
     <div class="w3-col m4 l4 s4">
 
-      <table class = "w3-striped w3-center">
+      <table class = "w3-striped w3-center w3-hide-medium w3-hide-small" >
         <tr>
           <th>Test</th>
           <th>Complete</th>
@@ -67,8 +67,61 @@
         </tr>
         <tr>
       </table>
+
+      <table class = "w3-striped w3-center w3-hide-large" >
+        <tr>
+          <th>Test</th>
+          <th><a href = "" target="_blank">Mechanicals</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></i></a></th>
+          <th><a href="" target="_blank">Source/dummy interlocks</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></th>
+          <th><a href="" target="_blank">Source position</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></th>
+          <th><a href="" target="_blank">Source strength</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></th>
+        </tr>
+        <tr>
+          <td>Complete</td>
+          <td><input type="radio" name="rdb_brachy_mechanicals" id="c_brachy_mechanicals"></td>
+          <td><input type="radio" name="rdb_brachy_interlocks" id="c_brachy_interlocks"></td>
+          <td><input type="radio" name="rdb_brachy_position" id="c_brachy_position"></td>
+          <td><input type="radio" name="rdb_brachy_strength" id="c_brachy_strength"></td>
+        </tr>
+        <tr>
+          <td>Not complete</td>
+          <td><input type="radio" name="rdb_brachy_mechanicals" id="notc_brachy_mechanicals"></td>
+          <td><input type="radio" name="rdb_brachy_interlocks" id="notc_brachy_interlocks"></td>
+          <td><input type="radio" name="rdb_brachy_position" id="notc_brachy_position"></td>
+          <td><input type="radio" name="rdb_brachy_strength" id="notc_brachy_strength"></td>
+        </tr>      
+        <tr>
+          <td>Date of completion</td>
+          <td><input type="date" name="date_update_brachy_mechanicals" id="date_update_brachy_mechanicals"></td>
+          <td><input type="date" name="date_update_brachy_interlocks" id="date_update_brachy_interlocks"></td>
+          <td><input type="date" name="date_update_brachy_position" id="date_update_brachy_position"></td>
+          <td><input type="date" name="date_update_strength" id="date_update_strength"></td>
+        </tr>
+        <tr>
+          <td>Days left until next repeat</td>
+          <td><input type="number" name="days_to_repeat_brachy_mechanicals" id="days_to_repeat_brachy_mechanicals" disabled></td>
+          <td><input type="number" name="days_to_repeat_brachy_interlocks" id="days_to_repeat_brachy_interlocks" disabled></td>
+          <td><input type="number" name="days_to_repeat_brachy_position" id="days_to_repeat_brachy_position" disabled></td>
+          <td><input type="number" name="days_to_repeat_brachy_strength" id="days_to_repeat_brachy_strength" disabled></td>
+        <tr>
+          <td>Task status</td>
+          <td><input type="text" name="uptodate_brachy_mechanicals" id="uptodate_brachy_mechanicals" disabled></td>
+          <td><input type="text" name="uptodate_brachy_interlocks" id="uptodate_brachy_interlocks" disabled></td>
+          <td><input type="text" name="uptodate_brachy_position" id="uptodate_brachy_position" disabled></td>
+          <td><input type="text" name="uptodate_brachy_strength" id="uptodate_brachy_strength" disabled></td>
+        </tr>
+        <tr>
+          <td>Done by</td>
+            <td><input type="text" name="doneBy_brachy_mechanicals" id="doneBy_brachy_mechanicals"></td>
+            <td><input type="text" name="doneBy_brachy_interlocks" id="doneBy_brachy_interlocks"></td>
+            <td><input type="text" name="doneBy_brachy_position" id="doneBy_brachy_position"></td>
+            <td><input type="text" name="doneBy_brachy_strength" id="doneBy_brachy_strength"></td>
+        </tr>
+      </table>
     </div>
   </div>
+
+
   <p><input type="button" value="Submit"></p>
 </div>
   
