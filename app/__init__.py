@@ -24,6 +24,8 @@ from app.cyberknife.views import cyberknife_bp
 from app.cbct.views import cbct_bp
 from app.mri.views import mri_bp
 from app.petct.views import petct_bp
+from app.cbct.views import cbct_form_bp
+
 
 app.register_blueprint(login_bp)
 app.register_blueprint(logout_bp)
@@ -41,6 +43,8 @@ app.register_blueprint(cyberknife_bp)
 app.register_blueprint(cbct_bp)
 app.register_blueprint(mri_bp)
 app.register_blueprint(petct_bp)
+app.register_blueprint(cbct_form_bp)
+
 
 login.login_view = 'login.login'
 

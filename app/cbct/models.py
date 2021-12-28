@@ -3,15 +3,13 @@ from app import db
 
 
 
-class Machine(db.Model):
-    __tablename__ = 'ct_Monthly'
+class CBCT(db.Model):
+    __tablename__ = 'cbct_Monthly'
     id = db.Column(db.Integer, primary_key = True)
     make = db.Column(db.String(120), index= True)
     n_name = db.Column(db.String(4), index=True)
     com_date = db.Column(db.Date)
     photon_en = db.relationship('Photon_energy', backref='machine', lazy='dynamic', passive_deletes=True)
-    electron_en = db.relationship('Electron_energy', backref='machine', lazy='dynamic', passive_deletes=True)
-
 
     def __repr__(self):
         return "<{}>".format(self.n_name)

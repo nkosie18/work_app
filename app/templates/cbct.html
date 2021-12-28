@@ -8,7 +8,7 @@
   <h3>Cone beam CT</h3>
   <h4> Monthly QA </h4>
   <p> Cone beam CT: 
-    <select name="CBCTs" id="CBCT_Selection">
+    <select name="CBCTs" id="unitSelection">
       <option value="CBCT1">CBCT1</option>
       <option value="CBCT2">CBCT2</option>
       <option value="CBCT3">CBCT3</option>
@@ -30,7 +30,7 @@
           <th>Done by</th>
         </tr>
         <tr>
-          <td><a href = "" target="_blank"></a>kV/MV/laser alignment &nbsp <a href="" target="_blank"><i class="fa fa-bar-chart"></i></a></td>
+          <td><a href = "{{url_for('cbct_form.cbct_form')}}" target="_blank" onclick="storeCBCT()">kV/MV/laser alignment</a> &nbsp <a href="" target="_blank"><i class="fa fa-bar-chart"></i></a></td>
           <td><input type="radio" name="rdb_cbct_cbctalignment" id="c_cbct_M"></td>
           <td><input type="radio" name="rdb_cbct_cbctalignment" id="notc_cbct_M"></td>
           <td><input type="date" name="date_update_cbct_cbctalignment" id="date_update_cbct_cbctalignment"></td>
@@ -61,7 +61,7 @@
       <table class = "w3-striped w3-center w3-hide-large" >
         <tr>
           <th>Test</th>
-          <th><a href = "" target="_blank"></a>kV/MV/laser alignment &nbsp <a href="" target="_blank"><i class="fa fa-bar-chart"></i></a></th>
+          <th><a href = "{{url_for('cbct_form.cbct_form')}}" target="_blank" onclick ="storeCBCT()">kV/MV/laser alignment</a> &nbsp <a href="" target="_blank"><i class="fa fa-bar-chart"></i></a></th>
           <th><a href = "" target="_blank">End-to-end, including couch shift accuracy</a> &nbsp <a href="" target="_blank" rel="noopener noreferrer"><i class="fa fa-bar-chart"></i></a></th>
           <th><a href = "" target="_blank">Image quality</a> &nbsp<i class="fa fa-bar-chart"></i></th>
         </tr>
@@ -103,7 +103,7 @@
       </table>
     </div>
   </div>
-  <p><input type="button" value="Submit"></p>
+  <p><input type="button" value="Submit" onclick="storeCBCT()"></p>
 </div>
   
 
