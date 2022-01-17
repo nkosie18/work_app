@@ -19,19 +19,6 @@ class Trs398_photons(db.Model):
     machine_id = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=False)
     beam_id = db.Column(db.Integer, db.ForeignKey("photon_energy.id", ondelete='CASCADE'), nullable=False)
 
-    def __init__(self, date, temp,press, m_avrg, m_pdd10, m_tpr, m_dose, m_electrometer, ion_chamber_id, machine_id, beam_id):
-        self.date = date,
-        self.temp = temp,
-        self.press = press,
-        self.m_avrg = m_avrg,
-        self.m_pdd10 = m_pdd10,
-        self.m_tpr = m_tpr,
-        self.m_dose = m_dose,
-        self.m_electrometer = m_electrometer,
-        self.ion_chamber_id = ion_chamber_id,
-        self.machine_id = machine_id,
-        self.beam_id = beam_id
-
     def __repr__(self):
         return "<{}>".format(self.date)
 

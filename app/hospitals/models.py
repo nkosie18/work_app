@@ -1,4 +1,3 @@
-from sqlalchemy.orm import backref
 from app import db
 #from app import ma
 from app.ionization_chambers.models import Sr_checks
