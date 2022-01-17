@@ -25,11 +25,9 @@
        <button class="w3-btn w3-round w3-hover-white w3-padding-small" style="color: #fff;background-color:#2c3531 ;"><i class="fa fa-folder w3-margin-right"></i> Softwares</button>     
        <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
          <a href="#" class="w3-bar-item w3-button" style="font-size: small;"> MU Calculator</a>
-         <a href="#" class="w3-bar-item w3-button" style="font-size: small;"> QC checks </a>
+         <a href="{{url_for('qcchecks.qcchecks')}}" target="blank" class="w3-bar-item w3-button" style="font-size: small;"> QC checks </a>
          <a href="#" class="w3-bar-item w3-button" style="font-size: small;">Brachytherapy Calculators </a>
          <a href="#" class="w3-bar-item w3-button" style="font-size: small;"> Machines</a>
-         <a href="{{url_for('linac.linac')}}" class="w3-bar-item w3-button" style="font-size: small;">LINAC</a>
-         <a href="{{url_for('ct.ct')}}" class="w3-bar-item w3-button" style="font-size: small;">CT</a>
         </div>
       </div>
 
@@ -48,12 +46,10 @@
    
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-bar-block w3-padding-top-24 w3-hide w3-hide-large w3-hide-medium" style=" color: #fff;background-color:#2c3531 ;">
-    <a href="#" class="w3-bar-item w3-button w3-padding-small">QC checks</a>
+    <a href="{{url_for('qcchecks.qcchecks')}}" class="w3-bar-item w3-button w3-padding-small">QC checks</a>
     <a href="#" class="w3-bar-item w3-button w3-padding-small">Brachytherapy Calculators</a>
     <a href="#" class="w3-bar-item w3-button w3-padding-small">MU Calculator</a>
     <a href="#" class="w3-bar-item w3-button w3-padding-small">New Projects</a>
-    <a href="{{url_for('linac.linac')}}" class="w3-bar-item w3-button w3-padding-small">LINAC</a>
-    <a href="{{url_for('ct.ct')}}" class="w3-bar-item w3-button w3-padding-small">CT</a>
   </div>
   
   {% block content%}

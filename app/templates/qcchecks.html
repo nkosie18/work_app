@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{%block title%} QC Checks {%endblock%}
+
+
+{% block content%}
+<div class = 'w3-container w3-padding-top-24'>
+    <div class="w3-row w3-margin-top">
+        <h2 class="w3-margin-left"> QC Tests </h2>
+    </div>
+    <div class="w3-row w3-margin-top">
+        <div class="w3-col m4 l4">
+               <table>
+                   <tr>
+                       <th>Radiotherapy</th>
+                   </tr>
+                   <tr>
+                        <td>
+                            <ul>
+                                <li><a href="{{url_for('cbct.cbct')}}" target="_blank">Accelerator integrated cone beam systems for verification imaging</a></li>
+                                <li><a href="{{url_for('brachy.brachy')}}" target="_blank">Brachytherapy remote afterloaders</a></li>
+                                <li><a href="{{url_for('simulators.simulators')}}" target="_blank">Conventional radiotherapy simulators</a></li>
+                                <li><a href="{{url_for('ct.ct')}}">Computed tomography simulators</a></li>
+                                <li><a href="{{url_for('cyberknife.cyberknife')}}">CyberKnife</a></li>
+                                <li><a href="{{url_for('gammaknife.gammaknife')}}" target="_blank">GammaKnife</a></li>
+                                <li><a href="{{url_for('kilovoltage.kilovoltage')}}" target="_blank">Kilovoltage radiotherapy machine</a></li>
+                                <li>Low dose rate permanent seed brachytherapy</li>
+                                <li>Major dosimetry equipment</li>
+                                <li><a href="{{url_for('linac.linac')}}" target="_blank">Medical linear accelerators and multi-leaf collimators</a></li>
+                                <li><a href="{{url_for('tps.tps')}}" target="_blank">Treatment planning systems</a></li>
+                            </ul>
+                        </td>
+                   </tr>
+               </table>
+        </div>
+
+        <div class="w3-col m4 l4">
+                <table>
+                    <tr>
+                        <th> Nuclear Medicine</th>
+                    </tr>
+                    <tr>
+                         <td>
+                             <ul>
+                                 <li><a href="{{url_for('petct.petct')}}" target="_blank">Positron Emission Tomography – Computed Tomography (PET/CT)s</a></li>
+                             </ul>
+                         </td>
+                    </tr>
+                </table>
+        </div>
+
+        <div class="w3-col m4 l4">
+            <table>
+                        <tr>
+                            <th style="margin-top: 15mm;">Diagnostic</th>
+                        </tr>
+                        <tr>
+                             <td>
+                                 <ul>
+                                     <li><a href="{{url_for('mri.mri')}}" target="_blank">Magnetic Resonance Imaging</a></li>
+                                 </ul>
+                             </td>
+                        </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

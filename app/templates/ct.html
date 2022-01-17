@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} LINAC QA {% endblock %}
+{% block title %} CT QA {% endblock %}
 
 {% block content%}
 <div class= "w3-container" style="margin-top: 15mm;">
@@ -8,7 +8,7 @@
   <h3>CT</h3>
   <h4> Monthly QA </h4>
   <p> CT: 
-    <select name="CTs" id="CT_Selection">
+    <select name="CTs" id="unitSelection">
       <option value="CT1">CT1</option>
       <option value="CT2">CT2</option>
       <option value="CT3">CT3</option>
@@ -19,39 +19,90 @@
     <div class="w3-col m4 l4 s4"></div>
     <div class="w3-col m4 l4 s4">
 
-      <table class = "w3-striped w3-center">
+      <table class = "w3-striped w3-center w3-hide-medium w3-hide-small">
         <tr>
           <th>Test</th>
-          <th></th>
           <th>Complete</th>
-          <th></th>
           <th>Not complete</th>
+          <th>Date of Completion</th>
+          <th>Days left until next repeat</th>
+          <th>Task status</th>
+          <th>Done by</th>
         </tr>
         <tr>
-          <td>Mechanicals</td>
-          <td></td>
+          <td><a href = "" target="_blank"></a>Mechanicals &nbsp <a href="" target="_blank"><i class="fa fa-bar-chart"></i></a></td>
           <td><input type="radio" name="rdb_ct_mechanicals" id="c_ct_M"></td>
-          <td></td>
           <td><input type="radio" name="rdb_ct_mechanicals" id="notc_ct_M"></td>
+          <td><input type="date" name="date_update_ct_mechanicals" id="date_update_ct_mechanicals"></td>
+          <td><input type="number" name="days_to_repeat_ct_mechanicals" id="days_to_repeat_ct_mechanicals" disabled></td>
+          <td><input type="text" name="uptodate_ct_mechanicals" id="uptodate_ct_mechanicals" disabled></td>
+          <td><input type="text" name="doneBy_ct_mechanicals" id="doneBy_ct_mechanicals"></td>
         </tr>
         <tr>
-          <td>Lasers</td>
-          <td></td>
+          <td><a href = "" target="_blank">Lasers</a> &nbsp <a href="" target="_blank" rel="noopener noreferrer"><i class="fa fa-bar-chart"></i></a></td>
           <td><input type="radio" name="rdb_ct_lasers" id="c_ct_lasers"></td>
-          <td></td>
           <td><input type="radio" name="rdb_ct_lasers" id="notc_ct_lasers"></td>
+          <td><input type="date" name="date_update_ct_lasers" id="date_update_ct_lasers"></td>
+          <td><input type="number" name="days_to_repeat_ct_lasers" id="days_to_repeat_ct_lasers" disabled></td>
+          <td><input type="text" name="uptodate_ct_lasers" id="uptodate_ct_lasers" disabled></td>
+          <td><input type="text" name="doneBy_ct_lasers" id="doneBy_ct_lasers"></td>
         </tr>
         <tr>
-          <td>Scans</td>
-          <td></td>
+          <td><a href = "" target="_blank">Scans</a> &nbsp<i class="fa fa-bar-chart"></i></td>
           <td><input type="radio" name="rdb_ct_scans" id="c_ct_scans"></td>
-          <td></td>
           <td><input type="radio" name="rdb_ct_scans" id="notc_ct_scans"></td>
+          <td><input type="date" name="date_update_ct_scans" id="date_update_ct_scans"></td>
+          <td><input type="number" name="days_to_repeat_ct_scans" id="days_to_repeat_ct_scans" disabled></td>
+          <td><input type="text" name="uptodate_ct_scans" id="uptodate_ct_scans" disabled></td>
+          <td><input type="text" name="doneBy_ct_scans" id="doneBy_ct_scans"></td>
+        </tr>
+      </table>
+      <table class = "w3-striped w3-center w3-hide-large" >
+        <tr>
+          <th>Test</th>
+          <th><a href = "" target="_blank"></a>Mechanicals &nbsp <a href="" target="_blank"><i class="fa fa-bar-chart"></i></a></th>
+          <th><a href = "" target="_blank">Lasers</a> &nbsp <a href="" target="_blank" rel="noopener noreferrer"><i class="fa fa-bar-chart"></i></a></th>
+          <th><a href = "" target="_blank">Scans</a> &nbsp<i class="fa fa-bar-chart"></i></th>
+        </tr>
+        <tr>
+          <td>Complete</td>
+          <td><input type="radio" name="rdb_ct_mechanicals" id="c_ct_M"></td>
+          <td><input type="radio" name="rdb_ct_lasers" id="c_ct_lasers"></td>
+          <td><input type="radio" name="rdb_ct_scans" id="c_ct_scans"></td>
+        </tr>
+        <tr>
+          <td>Not complete</td>
+          <td><input type="radio" name="rdb_ct_mechanicals" id="notc_ct_M"></td>
+          <td><input type="radio" name="rdb_ct_lasers" id="notc_ct_lasers"></td>
+          <td><input type="radio" name="rdb_ct_scans" id="notc_ct_scans"></td>
+        </tr>      
+        <tr>
+          <td>Date of completion</td>
+          <td><input type="date" name="date_update_ct_mechanicals" id="date_update_ct_mechanicals"></td>
+          <td><input type="date" name="date_update_ct_lasers" id="date_update_ct_lasers"></td>
+          <td><input type="date" name="date_update_ct_scans" id="date_update_ct_scans"></td>
+        </tr>
+        <tr>
+          <td>Days left until next repeat</td>
+          <td><input type="number" name="days_to_repeat_ct_mechanicals" id="days_to_repeat_ct_mechanicals" disabled></td>
+          <td><input type="number" name="days_to_repeat_ct_lasers" id="days_to_repeat_ct_lasers" disabled></td>
+          <td><input type="number" name="days_to_repeat_ct_scans" id="days_to_repeat_ct_scans" disabled></td>
+        <tr>
+          <td>Task status</td>
+          <td><input type="text" name="uptodate_ct_mechanicals" id="uptodate_ct_mechanicals" disabled></td>
+          <td><input type="text" name="uptodate_ct_lasers" id="uptodate_ct_lasers" disabled></td>
+          <td><input type="text" name="uptodate_ct_scans" id="uptodate_ct_scans" disabled></td>
+        </tr>
+        <tr>
+          <td>Done by</td>
+          <td><input type="text" name="doneBy_ct_mechanicals" id="doneBy_ct_mechanicals"></td>
+          <td><input type="text" name="doneBy_ct_lasers" id="doneBy_ct_lasers"></td>
+          <td><input type="text" name="doneBy_ct_scans" id="doneBy_ct_scans"></td>
         </tr>
       </table>
     </div>
   </div>
-
+  <p><input type="button" value="Submit"></p>
 </div>
   
 

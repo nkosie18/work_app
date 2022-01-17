@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %} Brachytherapy QA {% endblock %}
+
+{% block content%}
+<div class= "w3-container" style="margin-top: 15mm;">
+
+  <h3>GammaKnife/h3>
+  <h4> QUARTERLY QA </h4>
+  <p> GammaKnife
+    <select name="gammaknife" id="gammaknife_Selection">
+      <option value="Unit1">Unit1</option>
+      <option value="Unit2">Unit2</option>
+      <option value="Unit3">Unit3</option>
+    </select>
+  </p>
+  <div class="w3-row">
+
+    <div class="w3-col m4 l4 s4"></div>
+    <div class="w3-col m4 l4 s4">
+
+      <table class = "w3-striped w3-center">
+        <tr>
+          <th>Test</th>
+          <th>Complete</th>
+          <th>Not complete</th>
+          <th>Date of Completion</th>
+          <th>Days left until next repeat</th>
+          <th>Task status</th>
+          <th>Done by</th>
+        </tr>
+        <tr>
+          <td><a href = "" target="_blank">Clearance test tool check</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></i></a></td>
+          <td><input type="radio" name="rdb_gk_toolcheck" id="c_gk_toolcheck"></td>
+          <td><input type="radio" name="rdb_gk_toolcheck" id="notc_gk_toolcheck"></td>
+          <td><input type="date" name="date_update_gk_toolcheck" id="date_update_gk_toolcheck"></td>
+          <td><input type="number" name="days_to_repeat_gk_toolcheck" id="days_to_repeat_gk_toolcheck" disabled></td>
+          <td><input type="text" name="uptodate_gk_toolcheck" id="uptodate_gk_toolcheck" disabled></td>
+          <td><input type="text" name="doneBy_gk_toolcheck" id="doneBy_gk_toolcheck"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">UPS battery check</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_gk_upscheck" id="c_gk_upscheck"></td>
+          <td><input type="radio" name="rdb_gk_upscheck" id="notc_gk_upscheck"></td>
+          <td><input type="date" name="date_update_gk_upscheck" id="date_update_gk_upscheck"></td>
+          <td><input type="number" name="days_to_repeat_gk_upscheck" id="days_to_repeat_gk_upscheck" disabled></td>
+          <td><input type="text" name="uptodate_gk_upscheck" id="uptodate_gk_upscheck" disabled></td>
+          <td><input type="text" name="doneBy_gk_upscheck" id="doneBy_gk_upscheck"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Patient positioning system retraction</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_gk_retraction" id="c_gk_retraction"></td>
+          <td><input type="radio" name="rdb_gk_retraction" id="notc_gk_retraction"></td>
+          <td><input type="date" name="date_update_gk_retraction" id="date_update_gk_retraction"></td>
+          <td><input type="number" name="days_to_repeat_gk_retraction" id="days_to_repeat_gk_retraction" disabled></td>
+          <td><input type="text" name="uptodate_gk_retraction" id="uptodate_gk_retraction" disabled></td>
+          <td><input type="text" name="doneBy_gk_retraction" id="doneBy_gk_retraction"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Patient positioning system accuracy</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_gk_accuracy" id="c_gk_accuracy"></td>
+          <td><input type="radio" name="rdb_gk_accuracy" id="notc_gk_accuracy"></td>
+          <td><input type="date" name="date_update_accuracy" id="date_update_accuracy"></td>
+          <td><input type="number" name="days_to_repeat_gk_accuracy" id="days_to_repeat_gk_accuracy" disabled></td>
+          <td><input type="text" name="uptodate_gk_accuracy" id="uptodate_gk_accuracy" disabled></td>
+          <td><input type="text" name="doneBy_gk_accuracy" id="doneBy_gk_accuracy"></td>
+        </tr>
+      </table>
+      <table class = "w3-striped w3-center w3-hide-large" >
+        <tr>
+          <th>Test</th>
+          <th><a href = "" target="_blank">Clearance test tool check</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></i></a></th>
+          <th><a href="" target="_blank">UPS battery check</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></th>
+          <th><a href="" target="_blank">Patient positioning system retraction</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></th>
+          <th><a href="" target="_blank">Patient positioning system accuracy</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></th>
+
+        </tr>
+        <tr>
+          <td>Complete</td>
+          <td><input type="radio" name="rdb_gk_toolcheck" id="c_gk_toolcheck"></td>
+          <td><input type="radio" name="rdb_gk_upscheck" id="c_gk_upscheck"></td>
+          <td><input type="radio" name="rdb_gk_retraction" id="c_gk_retraction"></td>
+          <td><input type="radio" name="rdb_gk_accuracy" id="c_gk_accuracy"></td>
+        </tr>
+        <tr>
+          <td>Not complete</td>
+          <td><input type="radio" name="rdb_gk_toolcheck" id="notc_gk_toolcheck"></td>
+          <td><input type="radio" name="rdb_gk_upscheck" id="notc_gk_upscheck"></td>
+          <td><input type="radio" name="rdb_gk_retraction" id="notc_gk_retraction"></td>
+          <td><input type="radio" name="rdb_gk_accuracy" id="notc_gk_accuracy"></td>
+        </tr>      
+        <tr>
+          <td>Date of completion</td>
+          <td><input type="date" name="date_update_gk_toolcheck" id="date_update_gk_toolcheck"></td>
+          <td><input type="date" name="date_update_gk_upscheck" id="date_update_gk_upscheck"></td>
+          <td><input type="date" name="date_update_gk_retraction" id="date_update_gk_retraction"></td>
+          <td><input type="date" name="date_update_accuracy" id="date_update_accuracy"></td>
+        </tr>
+        <tr>
+          <td>Days left until next repeat</td>
+          <td><input type="number" name="days_to_repeat_gk_toolcheck" id="days_to_repeat_gk_toolcheck" disabled></td>
+          <td><input type="number" name="days_to_repeat_gk_upscheck" id="days_to_repeat_gk_upscheck" disabled></td>
+          <td><input type="number" name="days_to_repeat_gk_retraction" id="days_to_repeat_gk_retraction" disabled></td>
+          <td><input type="number" name="days_to_repeat_gk_accuracy" id="days_to_repeat_gk_accuracy" disabled></td>
+        <tr>
+          <td>Task status</td>
+          <td><input type="text" name="uptodate_gk_toolcheck" id="uptodate_gk_toolcheck" disabled></td>
+          <td><input type="text" name="uptodate_gk_upscheck" id="uptodate_gk_upscheck" disabled></td>
+          <td><input type="text" name="uptodate_gk_retraction" id="uptodate_gk_retraction" disabled></td>
+          <td><input type="text" name="uptodate_gk_accuracy" id="uptodate_gk_accuracy" disabled></td>
+        </tr>
+        <tr>
+          <td>Done by</td>
+          <td><input type="text" name="doneBy_gk_toolcheck" id="doneBy_gk_toolcheck"></td>
+          <td><input type="text" name="doneBy_gk_upscheck" id="doneBy_gk_upscheck"></td>
+          <td><input type="text" name="doneBy_gk_retraction" id="doneBy_gk_retraction"></td>
+          <td><input type="text" name="doneBy_gk_accuracy" id="doneBy_gk_accuracy"></td>
+          <td><input type="radio" name="rdb_gk_accuracy" id="c_gk_accuracy"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p><input type="button" value="Submit"></p>
+</div>
+  
+
+{% endblock %}

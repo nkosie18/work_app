@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %} Brachytherapy QA {% endblock %}
+
+{% block content%}
+<div class= "w3-container" style="margin-top: 15mm;">
+
+  <h3>GammaKnife/h3>
+  <h4> QUARTERLY QA </h4>
+  <p> GammaKnife
+    <select name="gammaknife" id="unitr ;lrn;Selection">
+      <option value="Unit1">Unit1</option>
+      <option value="Unit2">Unit2</option>
+      <option value="Unit3">Unit3</option>
+    </select>
+  </p>
+  <div class="w3-row">
+
+    <div class="w3-col m4 l4 s4"></div>
+    <div class="w3-col m4 l4 s4">
+
+      <table class = "w3-striped w3-center w3-hide-medium w3-hide-small">
+        <tr>
+          <th>Test</th>
+          <th>Complete</th>
+          <th>Not complete</th>
+          <th>Date of Completion</th>
+          <th>Days left until next repeat</th>
+          <th>Task status</th>
+          <th>Done by</th>
+        </tr>
+        <tr>
+          <td><a href = "" target="_blank">Clearance test tool check</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></i></a></td>
+          <td><input type="radio" name="rdb_cyberknife_energyconstancy" id="c_cyberknife_energyconstancy"></td>
+          <td><input type="radio" name="rdb_cyberknife_energyconstancy" id="notc_cyberknife_energyconstancy"></td>
+          <td><input type="date" name="date_update_cyberknife_energyconstancy" id="date_update_cyberknife_energyconstancy"></td>
+          <td><input type="number" name="days_to_repeat_cyberknife_energyconstancy" id="days_to_repeat_cyberknife_energyconstancy" disabled></td>
+          <td><input type="text" name="uptodate_cyberknife_energyconstancy" id="uptodate_cyberknife_energyconstancy" disabled></td>
+          <td><input type="text" name="doneBy_cyberknife_energyconstancy" id="doneBy_cyberknife_energyconstancy"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Accelerator output</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_cyberknife_acceloutput" id="c_cyberknife_acceloutput"></td>
+          <td><input type="radio" name="rdb_cyberknife_acceloutput" id="notc_cyberknife_acceloutput"></td>
+          <td><input type="date" name="date_update_cyberknife_acceloutput" id="date_update_cyberknife_acceloutput"></td>
+          <td><input type="number" name="days_to_repeat_cyberknife_acceloutput" id="days_to_repeat_cyberknife_acceloutput" disabled></td>
+          <td><input type="text" name="uptodate_cyberknife_acceloutput" id="uptodate_cyberknife_acceloutput" disabled></td>
+          <td><input type="text" name="doneBy_cyberknife_acceloutput" id="doneBy_cyberknife_acceloutput"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Intracranial and Extracranial isocentric end-to-end</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_cyberknife_isoend2end " id="c_cyberknife_isoend2end  "></td>
+          <td><input type="radio" name="rdb_cyberknife_isoend2end " id="notc_cyberknife_isoend2end "></td>
+          <td><input type="date" name="date_update_cyberknife_isoend2end  " id="date_update_cyberknife_isoend2end "></td>
+          <td><input type="number" name="days_to_repeat_cyberknife_isoend2end " id="days_to_repeat_cyberknife_isoend2end " disabled></td>
+          <td><input type="text" name="uptodate_cyberknife_isoend2end " id="uptodate_cyberknife_isoend2end " disabled></td>
+          <td><input type="text" name="doneBy_cyberknife_isoend2end " id="doneBy_cyberknife_isoend2end "></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Non-isocentric patient specific quality assurance</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_cyberknife_nonisoqa" id="c_cyberknife_nonisoqa"></td>
+          <td><input type="radio" name="rdb_cyberknife_nonisoqa" id="notc_cyberknife_nonisoqa"></td>
+          <td><input type="date" name="date_update_nonisoqa" id="date_update_nonisoqa"></td>
+          <td><input type="number" name="days_to_repeat_cyberknife_nonisoqa" id="days_to_repeat_cyberknife_nonisoqa" disabled></td>
+          <td><input type="text" name="uptodate_cyberknife_nonisoqa" id="uptodate_cyberknife_nonisoqa" disabled></td>
+          <td><input type="text" name="doneBy_cyberknife_nonisoqa" id="doneBy_cyberknife_nonisoqa"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Iris™ field size verification</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_cyberknife_fsverification" id="c_cyberknife_fsverification"></td>
+          <td><input type="radio" name="rdb_cyberknife_fsverification" id="notc_cyberknife_fsverification"></td>
+          <td><input type="date" name="date_update_fsverification" id="date_update_fsverification"></td>
+          <td><input type="number" name="days_to_repeat_cyberknife_fsverification" id="days_to_repeat_cyberknife_fsverification" disabled></td>
+          <td><input type="text" name="uptodate_cyberknife_fsverification" id="uptodate_cyberknife_fsverification" disabled></td>
+          <td><input type="text" name="doneBy_cyberknife_fsverification" id="doneBy_cyberknife_fsverification"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Garden fence MLC</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_cyberknife_gardenfence" id="c_cyberknife_gardenfence"></td>
+          <td><input type="radio" name="rdb_cyberknife_gardenfence" id="notc_cyberknife_gardenfence"></td>
+          <td><input type="date" name="date_update_gardenfence" id="date_update_gardenfence"></td>
+          <td><input type="number" name="days_to_repeat_cyberknife_gardenfence" id="days_to_repeat_cyberknife_gardenfence" disabled></td>
+          <td><input type="text" name="uptodate_cyberknife_gardenfence" id="uptodate_cyberknife_gardenfence" disabled></td>
+          <td><input type="text" name="doneBy_cyberknife_gardenfence" id="doneBy_cyberknife_gardenfence"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Low contrast and spatial resolution of armophous silicon detectors</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_cyberknife_contrastresolution" id="c_cyberknife_contrastresolution"></td>
+          <td><input type="radio" name="rdb_cyberknife_contrastresolution" id="notc_cyberknife_contrastresolution"></td>
+          <td><input type="date" name="date_update_contrastresolution" id="date_update_contrastresolution"></td>
+          <td><input type="number" name="days_to_repeat_cyberknife_contrastresolution" id="days_to_repeat_cyberknife_contrastresolution" disabled></td>
+          <td><input type="text" name="uptodate_cyberknife_contrastresolution" id="uptodate_cyberknife_contrastresolution" disabled></td>
+          <td><input type="text" name="doneBy_cyberknife_contrastresolution" id="doneBy_cyberknife_contrastresolution"></td>
+        </tr>
+      </table>
+      
+    </div>
+  </div>
+  <p><input type="button" value="Submit"></p>
+</div>
+  
+
+{% endblock %}

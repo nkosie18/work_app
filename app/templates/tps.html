@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %} Brachytherapy QA {% endblock %}
+
+{% block content%}
+<div class= "w3-container" style="margin-top: 15mm;">
+
+  <h3>Treatment planning systems</h3>
+  <h4> QUARTERLY QA </h4>
+  <p> Treatment planning system: 
+    <select name="tps" id="tps_Selection">
+      <option value="Unit1">Unit1</option>
+      <option value="Unit2">Unit2</option>
+      <option value="Unit3">Unit3</option>
+    </select>
+  </p>
+  <div class="w3-row">
+
+    <div class="w3-col m4 l4 s4"></div>
+    <div class="w3-col m4 l4 s4">
+
+      <table class = "w3-striped w3-center">
+        <tr>
+          <th>Test</th>
+          <th>Complete</th>
+          <th>Not complete</th>
+          <th>Date of Completion</th>
+          <th>Days left until next repeat</th>
+          <th>Task status</th>
+          <th>Done by</th>
+        </tr>
+        <tr>
+          <td><a href = "" target="_blank">CPU/server</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></i></a></td>
+          <td><input type="radio" name="rdb_tps_cpu" id="c_tps_cpu"></td>
+          <td><input type="radio" name="rdb_tps_cpu" id="notc_tps_cpu"></td>
+          <td><input type="date" name="date_update_tps_cpu" id="date_update_tps_cpu"></td>
+          <td><input type="number" name="days_to_repeat_tps_cpu" id="days_to_repeat_tps_cpu" disabled></td>
+          <td><input type="text" name="uptodate_tps_cpu" id="uptodate_tps_cpu" disabled></td>
+          <td><input type="text" name="doneBy_tps_cpu" id="doneBy_tps_cpu"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Digitizer (if clinically used)</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_tps_digitizer" id="c_tps_digitizer"></td>
+          <td><input type="radio" name="rdb_tps_digitizer" id="notc_tps_digitizer"></td>
+          <td><input type="date" name="date_update_tps_digitizer" id="date_update_tps_digitizer"></td>
+          <td><input type="number" name="days_to_repeat_tps_digitizer" id="days_to_repeat_tps_digitizer" disabled></td>
+          <td><input type="text" name="uptodate_tps_digitizer" id="uptodate_tps_digitizer" disabled></td>
+          <td><input type="text" name="doneBy_tps_digitizer" id="doneBy_tps_digitizer"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Electronic plan transfer</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_tps_transfer" id="c_tps_transfer"></td>
+          <td><input type="radio" name="rdb_tps_transfer" id="notc_tps_transfer"></td>
+          <td><input type="date" name="date_update_tps_transfer" id="date_update_tps_transfer"></td>
+          <td><input type="number" name="days_to_repeat_tps_transfer" id="days_to_repeat_tps_transfer" disabled></td>
+          <td><input type="text" name="uptodate_tps_transfer" id="uptodate_tps_transfer" disabled></td>
+          <td><input type="text" name="doneBy_tps_transfer" id="doneBy_tps_transfer"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Plan details</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_tps_plandetails" id="c_tps_plandetails"></td>
+          <td><input type="radio" name="rdb_tps_plandetails" id="notc_tps_plandetails"></td>
+          <td><input type="date" name="date_update_plandetails" id="date_update_plandetails"></td>
+          <td><input type="number" name="days_to_repeat_tps_plandetails" id="days_to_repeat_tps_plandetails" disabled></td>
+          <td><input type="text" name="uptodate_tps_plandetails" id="uptodate_tps_plandetails" disabled></td>
+          <td><input type="text" name="doneBy_tps_plandetails" id="doneBy_tps_plandetails"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Plotter/printer</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_tps_printer" id="c_tps_printer"></td>
+          <td><input type="radio" name="rdb_tps_printer" id="notc_tps_printer"></td>
+          <td><input type="date" name="date_update_printer" id="date_update_printer"></td>
+          <td><input type="number" name="days_to_repeat_tps_printer" id="days_to_repeat_tps_printer" disabled></td>
+          <td><input type="text" name="uptodate_tps_printer" id="uptodate_tps_printer" disabled></td>
+          <td><input type="text" name="doneBy_tps_printer" id="doneBy_tps_printer"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">Back-up recovery</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_tps_backup" id="c_tps_backup"></td>
+          <td><input type="radio" name="rdb_tps_backup" id="notc_tps_backup"></td>
+          <td><input type="date" name="date_update_backup" id="date_update_backup"></td>
+          <td><input type="number" name="days_to_repeat_tps_backup" id="days_to_repeat_tps_backup" disabled></td>
+          <td><input type="text" name="uptodate_tps_backup" id="uptodate_tps_backup" disabled></td>
+          <td><input type="text" name="doneBy_tps_backup" id="doneBy_tps_backup"></td>
+        </tr>
+        <tr>
+          <td><a href="" target="_blank">CT geometry/density</a> &nbsp;<a href = "" target="_blank"><i class="fa fa-bar-chart"></a></td>
+          <td><input type="radio" name="rdb_tps_ctdensity" id="c_tps_ctdensity"></td>
+          <td><input type="radio" name="rdb_tps_ctdensity" id="notc_tps_ctdensity"></td>
+          <td><input type="date" name="date_update_ctdensity" id="date_update_ctdensity"></td>
+          <td><input type="number" name="days_to_repeat_tps_ctdensity" id="days_to_repeat_tps_ctdensity" disabled></td>
+          <td><input type="text" name="uptodate_tps_ctdensity" id="uptodate_tps_ctdensity" disabled></td>
+          <td><input type="text" name="doneBy_tps_ctdensity" id="doneBy_tps_ctdensity"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p><input type="button" value="Submit"></p>
+</div>
+  
+
+{% endblock %}

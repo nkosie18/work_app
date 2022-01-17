@@ -3,7 +3,7 @@ gi{% extends 'base.html' %}
 {% block title %} LINAC QA {% endblock %}
 
 {% block content%}
-
+<div class= "w3-container" style="margin-top: 15mm;">
   <h3>LINAC</h3>
   <h4> QA </h4>
   <p> LINAC: 
@@ -22,62 +22,120 @@ gi{% extends 'base.html' %}
       <table class = "w3-striped w3-center">
         <tr>
           <th>Test</th>
-          <th></th>
           <th>Complete</th>
-          <th></th>
           <th>Not complete</th>
+          <th>Date of Completion</th>
+          <th>Days left until next repeat</th>
+          <th>Task status</th>
+          <th>Done by</th>
         </tr>
         <tr>
-          <td>Mechanicals</td>
-          <td></td>
-          <td><input type="radio" name="rdb_mechanicals" id="c_M"></td>
-          <td></td>
-          <td><input type="radio" name="rdb_mechanicals" id="notc_M"></td>
+          <td><a href = "" target="_blank">Mechanicals</a> &nbsp<i class="fa fa-bar-chart"></i></td>
+          <td><input type="radio" name="rdb_linac_mechanicals" id="c_M"></td>
+          <td><input type="radio" name="rdb_linac_mechanicals" id="notc_M"></td>
+          <td><input type="date" name="date_update_linac_mechanicals" id="date_update_linac_mechanicals"></td>
+          <td><input type="number" name="days_to_repeat_linac_mechanicals" id="days_to_repeat_linac_mechanicals" disabled></td>
+          <td><input type="text" name="uptodate_linac_mechanicals" id="uptodate_linac_mechanicals" disabled></td>
+          <td><input type="text" name="doneBy_linac_mechanicals" id="doneBy_linac_mechanicals"></td>
         </tr>
         <tr>
-          <td>Flatness and Symmetry</td>
-          <td></td>
-          <td><input type="radio" name="rdb_FS" id="c_FS"></td>
-          <td></td>
-          <td><input type="radio" name="rdb_FS" id="notc_FS"></td>
+          <td><a href = "" target="_blank">Flatness and Symmetry</a>&nbsp<i class="fa fa-bar-chart"></i></td>
+          <td><input type="radio" name="rdb_linac_FS" id="c_FS"></td>
+          <td><input type="radio" name="rdb_linac_FS" id="notc_FS"></td>
+          <td><input type="date" name="date_update_linac_FS" id="date_update_linac_FS"></td>
+          <td><input type="number" name="days_to_repeat_linac_FS" id="days_to_repeat_linac_FS" disabled></td>
+          <td><input type="text" name="uptodate_linac_FS" id="uptodate_linac_FS" disabled></td>
+          <td><input type="text" name="doneBy_linac_FS" id="doneBy_linac_FS"></td>
         </tr>
         <tr>
-          <td>Beam Output</td>
-          <td></td>
-          <td><input type="radio" name="rdb_BO" id="c_BO"></td>
-          <td></td>
-          <td><input type="radio" name="rdb_BO" id="notc_BO"></td>
+          <td><a href = "" target="_blank">Beam Output</a>&nbsp<i class="fa fa-bar-chart"></i></td>
+          <td><input type="radio" name="rdb_linac_BO" id="c_BO"></td>
+          <td><input type="radio" name="rdb_linac_BO" id="notc_BO"></td>
+          <td><input type="date" name="date_update_linac_BO" id="date_update_linac_BO"></td>
+          <td><input type="number" name="days_to_repeat_linac_BO" id="days_to_repeat_linac_BO" disabled></td>
+          <td><input type="text" name="uptodate_linac_BO" id="uptodate_linac_BO" disabled></td>
+          <td><input type="text" name="doneBy_linac_BO" id="doneBy_linac_BO"></td>
         </tr>
         <tr>
-          <td>Beam Energy</td>
-          <td></td>
-          <td><input type="radio" name="rdb_BE" id="c_M"></td>
-          <td></td>
-          <td><input type="radio" name="rdb_BE" id="notc_M"></td>
+          <td><a href = "" target="_blank">Beam Energy</a>&nbsp<i class="fa fa-bar-chart"></i></td>
+          <td><input type="radio" name="rdb_linac_BE" id="c_M"></td>
+          <td><input type="radio" name="rdb_linac_BE" id="notc_M"></td>
+          <td><input type="date" name="date_update_linac_BE" id="date_update_linac_BE"></td>
+          <td><input type="number" name="days_to_repeat_linac_BE" id="days_to_repeat_linac_BE" disabled></td>
+          <td><input type="text" name="uptodate_linac_BE" id="uptodate_linac_BE" disabled></td>
+          <td><input type="text" name="doneBy_linac_BE" id="doneBy_linac_BE"></td>
         </tr>
         <tr>
-          <td>EPID</td>
-          <td></td>
-          <td><input type="radio" name="rdb_Epid" id="c_EPID"></td>
-          <td></td>
-          <td><input type="radio" name="rdb_Epid" id="notc_EPID"></td>
+          <td><a href = "" target="_blank">MLC</a>&nbsp<i class="fa fa-bar-chart"></i></td>
+          <td><input type="radio" name="rdb_linac_MLC" id="c_MLC"></td>
+          <td><input type="radio" name="rdb_linac_MLC" id="notc_MLC"></td>
+          <td><input type="date" name="date_update_linac_MLC" id="date_update_linac_MLC"></td>
+          <td><input type="number" name="days_to_repeat_linac_MLC" id="days_to_repeat_linac_MLC" disabled></td>
+          <td><input type="text" name="uptodate_linac_MLC" id="uptodate_linac_MLC" disabled></td>
+          <td><input type="text" name="doneBy_linac_MLC" id="doneBy_linac_MLC"></td>
+        </tr>
+      </table>
+      <table class = "w3-striped w3-center w3-hide-large" >
+        <tr>
+          <th>Test</td>
+          <td><a href = "" target="_blank">Mechanicals</a> &nbsp<i class="fa fa-bar-chart"></i></td>
+          <td><a href = "" target="_blank">Flatness and Symmetry</a>&nbsp<i class="fa fa-bar-chart"></i></td>
+          <td><a href = "" target="_blank">Beam Output</a>&nbsp<i class="fa fa-bar-chart"></i></td>
+          <td><a href = "" target="_blank">Beam Energy</a>&nbsp<i class="fa fa-bar-chart"></i></td>
+          <td><a href = "" target="_blank">MLC</a>&nbsp<i class="fa fa-bar-chart"></i></td>
         </tr>
         <tr>
-          <td>XVI</td>
-          <td></td>
-          <td><input type="radio" name="rdb_XVI" id="c_XVI"></td>
-          <td></td>
-          <td><input type="radio" name="rdb_XVI" id="notc_XVI"></td>
+          <td>Complete</td>
+          <td><input type="radio" name="rdb_linac_mechanicals" id="c_M"></td>
+          <td><input type="radio" name="rdb_linac_FS" id="c_FS"></td>
+          <td><input type="radio" name="rdb_linac_BO" id="c_BO"></td>
+          <td><input type="radio" name="rdb_linac_BE" id="c_M"></td>
+          <td><input type="radio" name="rdb_linac_MLC" id="c_MLC"></td>
         </tr>
         <tr>
-          <td>MLC</td>
-          <td></td>
-          <td><input type="radio" name="rdb_MLC" id="c_MLC"></td>
-          <td></td>
-          <td><input type="radio" name="rdb_MLC" id="notc_MLC"></td>
+          <td>Not complete</td>
+          <td><input type="radio" name="rdb_linac_mechanicals" id="notc_M"></td>
+          <td><input type="radio" name="rdb_linac_FS" id="notc_FS"></td>
+          <td><input type="radio" name="rdb_linac_BO" id="notc_BO"></td>
+          <td><input type="radio" name="rdb_linac_BE" id="notc_M"></td>
+          <td><input type="radio" name="rdb_linac_MLC" id="notc_MLC"></td>
+        </tr>      
+        <tr>
+          <td>Date of completion</td>
+          <td><input type="date" name="date_update_linac_mechanicals" id="date_update_linac_mechanicals"></td>
+          <td><input type="date" name="date_update_linac_FS" id="date_update_linac_FS"></td>
+          <td><input type="date" name="date_update_linac_BO" id="date_update_linac_BO"></td>
+          <td><input type="date" name="date_update_linac_BE" id="date_update_linac_BE"></td>
+          <td><input type="date" name="date_update_linac_MLC" id="date_update_linac_MLC"></td>
+        </tr>
+        <tr>
+          <td>Days left until next repeat</td>
+          <td><input type="number" name="days_to_repeat_linac_mechanicals" id="days_to_repeat_linac_mechanicals" disabled></td>
+          <td><input type="number" name="days_to_repeat_linac_FS" id="days_to_repeat_linac_FS" disabled></td>
+          <td><input type="number" name="days_to_repeat_linac_BO" id="days_to_repeat_linac_BO" disabled></td>
+          <td><input type="number" name="days_to_repeat_linac_BE" id="days_to_repeat_linac_BE" disabled></td>
+          <td><input type="number" name="days_to_repeat_linac_MLC" id="days_to_repeat_linac_MLC" disabled></td>
+        <tr>
+          <td>Task status</td>
+          <td><input type="text" name="uptodate_linac_mechanicals" id="uptodate_linac_mechanicals" disabled></td>
+          <td><input type="text" name="uptodate_linac_FS" id="uptodate_linac_FS" disabled></td>
+          <td><input type="text" name="uptodate_linac_BO" id="uptodate_linac_BO" disabled></td>
+          <td><input type="text" name="uptodate_linac_BE" id="uptodate_linac_BE" disabled></td>
+          <td><input type="text" name="uptodate_linac_MLC" id="uptodate_linac_MLC" disabled></td>
+        </tr>
+        <tr>
+          <td>Done by</td>
+          <td><input type="text" name="doneBy_linac_mechanicals" id="doneBy_linac_mechanicals"></td>
+          <td><input type="text" name="doneBy_linac_FS" id="doneBy_linac_FS"></td>
+          <td><input type="text" name="doneBy_linac_BO" id="doneBy_linac_BO"></td>
+          <td><input type="text" name="doneBy_linac_BE" id="doneBy_linac_BE"></td>
+          <td><input type="text" name="doneBy_linac_MLC" id="doneBy_linac_MLC"></td>
         </tr>
       </table>
     </div>
   </div>
+  <p><input type="button" value="Submit"></p>
+</div>
+
 
 {% endblock %}

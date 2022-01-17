@@ -7,3 +7,6 @@ def sasqart():
     return render_template('test2.html')
 
 
+@sasqart_bp.route('/linacMonthlyChecks')
+def linac():
+    return render_template('linac.html')

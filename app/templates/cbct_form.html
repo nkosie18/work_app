@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %} forms {% endblock %}
+
+{% block content%}
+<div class= "w3-container" style="margin-top: 15mm;">
+    <h3> <label id="unit"></label> Measurements</h3>
+    <h4> Monthly QA </h4>
+    <form action="">
+        <div className="forms">
+            <table  class = "w3-striped w3-center w3-hide-medium w3-hide-small" >
+                <tr>
+                    <th>Designator</th>
+                    <th>Test</th>
+                    <th>Result</th>
+                    <th>Tolerance</th>
+                </tr>
+                <tr>
+                    <td>MS1</td>
+                    <td>kV/MV/laser alignment (mm)</td>
+                    <td><input  class="ialchtdinput" type="number" name="" id="" step="any"></td>
+                    <td>±1 mm</td>
+                </tr>
+                <tr>
+                    <td>MS2</td>
+                    <td>End-to-end test (include couch shift) (mm)</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td><input class="ialchtdinput" type="number" name="" id="" placeholder="x" step="any"></td>
+                                <td><input class="ialchtdinput" type="number" name="" id="" placeholder="y" step="any"></td>
+                                <td><input class="ialchtdinput" type="number" name="" id="" placeholder="z" step="any"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>±1 mm</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Image quality</td>
+                </tr>
+                <tr>
+                    <td>MS3</td>
+                    <td>Spatial integrity</td>
+                    <td><select id="spatialIntegrity">
+                         <option value="0">Reproducible</option>   
+                        <option value="1">Non-reproducible</option>
+                        </select>
+                    </td>
+                    <td>Reproducible</td>
+                </tr>
+                <tr>
+                    <td>MS4</td>
+                    <td>Uniformity, noise</td>
+                    <td><select id="uniformnoise">
+                         <option value="0">Reproducible</option>   
+                        <option value="1">Non-reproducible</option>
+                        </select>
+                    </td>
+                    <td>Reproducible</td>
+                </tr>
+                <tr>
+                    <td>MS5</td>
+                    <td>Low contrast visibility</td>
+                    <td><select id="lowcontrast">
+                         <option value="0">Reproducible</option>   
+                        <option value="1">Non-reproducible</option>
+                        </select>
+                    </td>
+                    <td>Reproducible</td>
+                </tr>
+                <tr>
+                    <td>MS6</td>
+                    <td>High contrast resolution (mm)</td>
+                    <td><input  class="ialchtdinput" type="number" name="" id="highcontrastresolution" step="any"></td>
+                    <td>2mm</td>
+                </tr>
+                <tr>
+                    <td>MS7</td>
+                    <td><a href="" target="">CT number accuracy and stability</a></td>
+                    <td><select id="lowcontrast">
+                         <option value="0">Reproducible</option>   
+                        <option value="1">Non-reproducible</option>
+                        </select>
+                    </td>
+                    <td>Reproducible</td>
+                </tr>
+            </table>
+            <table  class = "w3-striped w3-center w3-hide-large" >
+                <tr>
+                    <th>Designator</th>
+                    <th>Result</th>
+                    <th>Tolerance</th>
+                </tr>
+                <tr>
+                    <td>MS1</td>
+                    <td><input  class="ialchtdinput" type="number" name="" id="" step="any"></td>
+                    <td>±1 mm</td>
+                </tr>
+                <tr>
+                    <td>MS2</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td><input class="ialchtdinput" type="number" name="" id="" placeholder="x" step="any"></td>
+                                <td><input class="ialchtdinput" type="number" name="" id="" placeholder="y" step="any"></td>
+                                <td><input class="ialchtdinput" type="number" name="" id="" placeholder="z" step="any"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>±1 mm</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Image quality</td>
+                </tr>
+                <tr>
+                    <td>MS3</td>
+                    <td><select id="spatialIntegrity">
+                         <option value="0">Reproducible</option>   
+                        <option value="1">Non-reproducible</option>
+                        </select>
+                    </td>
+                    <td>Reproducible</td>
+                </tr>
+                <tr>
+                    <td>MS4</td>
+                    <td><select id="uniformnoise">
+                         <option value="0">Reproducible</option>   
+                        <option value="1">Non-reproducible</option>
+                        </select>
+                    </td>
+                    <td>Reproducible</td>
+                </tr>
+                <tr>
+                    <td>MS5</td>
+                    <td><select id="lowcontrast">
+                         <option value="0">Reproducible</option>   
+                        <option value="1">Non-reproducible</option>
+                        </select>
+                    </td>
+                    <td>Reproducible</td>
+                </tr>
+                <tr>
+                    <td>MS6</td>
+                    <td><input  class="ialchtdinput" type="number" name="" id="highcontrastresolution" step="any"></td>
+                    <td>2mm</td>
+                </tr>
+                <tr>
+                    <td>MS7</td>
+                    <td><select id="lowcontrast">
+                         <option value="0">Reproducible</option>   
+                        <option value="1">Non-reproducible</option>
+                        </select>
+                    </td>
+                    <td>Reproducible</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    </form>
+    <body onload="retrieve_cbct()"></body>
+
+
+{% endblock %}
