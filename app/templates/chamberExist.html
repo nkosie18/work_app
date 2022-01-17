@@ -1,0 +1,14 @@
+{% extends "base.html"%}
+
+{%block title%} The chamber {%endblock%}
+
+{%block content %} 
+<h1> New Chamber regitration failed!!</h1>
+
+<p>A chamber with the same serial number already exist in the database. Please check if this is the same chamber you are trying to add to the system.</p>
+<ul>
+    <li> Chamber make: {{chamber.make}}</li>
+    <li>Chamber Serial Number: {{chamber.sn}}</li>
+</ul>
+
+{%endblock%}

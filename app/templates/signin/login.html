@@ -4,33 +4,65 @@
 
 {%block content%}
 
-<div class="w3-container w3-padding-64 w3-margin-left">
-    <h1 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; color:whitesmoke;"> Sign In</h1>
-    <form action="" method="POST" novalidate>
-        {{form.hidden_tag()}}
+<div class="w3-row w3-padding" style="margin-top: 1mm;">
+    <div class="w3-col m4 l4">
+        <div class="w3-container w3-padding-64 w3-margin-left">
+            <h1 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; color:whitesmoke;"> Sign In</h1>
+            <form action="" method="POST" novalidate>
+                {{form.hidden_tag()}}
+        
+                <p style="color: whitesmoke;">
+                    {{form.username.label}} <br>
+                    {{form.username(size=32)}} <br>
+                    {% for error in form.username.errors%}
+                        <span style="color: rgb(150, 48, 48);">{{error}}</span>
+                    {%endfor%}
+                </p>
+        
+                <p style="color: whitesmoke;">
+                    {{form.password.label}} <br>
+                    {{form.password(size=32)}} <br>
+                    {% for error in form.username.errors %}
+                        <span style="color: rgb(150, 48, 48);">{{error}}</span>
+                    {%endfor%}
+                </p>
+        
+                <p style="color: whitesmoke;">{{form.remember_me()}}{{form.remember_me.label}}</p>
+        
+                <p> {{form.submit()}}</p>
+        
+            </form>
+        
+        
+        </div>
 
-        <p style="color: whitesmoke;">
-            {{form.username.label}} <br>
-            {{form.username(size=32)}} <br>
-            {% for error in form.username.errors%}
-                <span style="color: rgb(150, 48, 48);">{{error}}</span>
-            {%endfor%}
-        </p>
+    </div>
+    <div class="w3-col m2 l2"> <h4></h4></div>
+    <div class="w3-col m5 l5">
 
-        <p style="color: whitesmoke;">
-            {{form.password.label}} <br>
-            {{form.password(size=32)}} <br>
-            {% for error in form.username.errors %}
-                <span style="color: rgb(150, 48, 48);">{{error}}</span>
-            {%endfor%}
-        </p>
+        <div class="w3-container w3-padding-64 w3-margin-left">
 
-        <p style="color: whitesmoke;">{{form.remember_me()}}{{form.remember_me.label}}</p>
+            <h1 style="color: whitesmoke;">{{today}}</h1> 
+            <h6 style="color: whitesmoke; margin-top:-5mm;">{{date1}}</h6> 
+                <table class="w3-table">
+                    <tr><th> <h2 style="color: whitesmoke; margin-top:-3mm;"><u>Physics Daily QA List</u></h2></th></tr>    
+                    {%for each in roster1%}
 
-        <p> {{form.submit()}}</p>
+                        <tr>
+                            <td>
+                                <h6 style="color: whitesmoke;"> {{each}} </h6>
+                            </td>
+                        </tr>
+                    {%endfor%}
 
-    </form>
+                </table>
 
+        </div>
+
+
+            
+
+    </div>
 
 </div>
 

@@ -3,6 +3,9 @@ from app import db
 from app import login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from app.hospitals.models import Institution
+
+
 
 
 class User(UserMixin, db.Model):
@@ -13,6 +16,7 @@ class User(UserMixin, db.Model):
     role = db.Column(db.String(20), index=True)
     remember_me = db.Column(db.String(12))
     status = db.Column(db.String(15))
+    institution_id = db.Column(db.Integer,  db.ForeignKey("institution.id", ondelete='CASCADE'))
 
 
     def set_password(self, password):

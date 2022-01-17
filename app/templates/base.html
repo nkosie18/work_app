@@ -6,14 +6,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
-    <link rel= "stylesheet" type="text/css" href="{{url_for('static', filename = 'w3.css')}}"
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel= "stylesheet" type="text/css" href="{{url_for('static', filename = 'w3.css')}}">
+    <script src="{{url_for('static', filename ='jquery.js')}}"></script>
+    <script src="{{url_for('static', filename='myjava.js')}}"> </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
     
    <!-- Navbar -->
-<div class="w3-top ">
+<div class="w3-top w3-padding-bottom-small">
     <div class="w3-bar w3-left-align w3-theme-d2 " style="color: #fff;background-color:#2c3531 ;">
      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-padding-small" href="javascript:void(0);" onclick="myFunction()"><i class="fa fa-bars"></i></a>
      <a href="{{url_for('home')}}" class="w3-bar-item w3-button w3-hover-white w3-round w3-padding-small "><i class="fa fa-home w3-margin-right"></i>Home</a>
@@ -40,6 +43,8 @@
 
     </div>
   </div>
+
+  
    
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-bar-block w3-padding-top-24 w3-hide w3-hide-large w3-hide-medium" style=" color: #fff;background-color:#2c3531 ;">

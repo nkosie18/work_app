@@ -47,17 +47,18 @@
 
                 <p>{{form.submit()}}</p>
 
-                <span style="color: rgb(255, 0, 0);">
-                    {% with messages = get_flashed_messages() %}
+                <div class=" w3-container w3-magine-left">
+                    <h4 style="color: tomato;">
+                        {% with messages = get_flashed_messages() %}
+        
                         {% if messages %}
-                            <ul class=flashes>
                             {% for message in messages %}
-                                <li>{{ message }}</li>
-                            {% endfor %}
-                            </ul>
-                        {% endif %}
-                    {% endwith %}
-                </span>
+                                {{message}}
+                            {%endfor%}
+                        {%endif%}
+                    {%endwith%}
+                    </h4>
+                </div>
 
 
             </form>
