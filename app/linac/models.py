@@ -1,4 +1,3 @@
-from sqlalchemy.orm import backref
 from app import db
 #from app.hospitals.models import Institution
 #from app.trs398.models import Trs398_photons, Trs398_electrons
