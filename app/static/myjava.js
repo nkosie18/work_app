@@ -1,10 +1,13 @@
 $(document).ready(function(){
     $('#hello').text('Hello world! I have just changed the text in this paragraph using JQuery');
     
-    $('#btn-0390').click(function(event){
-        event.preventDefault();
+    
 
-        var serial_number = $('#serial').text();
+    $("#chambst").click(function(event){
+        //event.preventDefault();
+        
+
+        var serial_number = event.target.id;
         //console.log(serial_number)
         req2 = $.ajax({ 
             url : '/chambViewProcess',
@@ -24,8 +27,9 @@ $(document).ready(function(){
             var decay_ref1 =  data.decay_ref;
             var ref_exposure = data.exposure_ref;
 
+            $('#chambhist').css("display", "block");
             $('#refmeas_b').html(`
-                <h1 style ="margin-top:-20mm;"> ${chamber_name}</h1>
+                <h2 style ="margin-top:-20mm;"> ${chamber_name}</h2>
 
                 <p> Date: ${date} </p>
                 <p> Electrometer: ${electrometer} </p>
@@ -36,19 +40,25 @@ $(document).ready(function(){
             `)
 
             $('#chambhist').html(`
-             
-            <table id= "numbanumba" class = " w3-table-all">
+            <div class="w3-row">
+            <div class="w3-col l8">
+            <div class = "w3-responsive" style="background-color: #FAB340;">
+            <table id= "numbanumba" class = " w3-table-all w3-small">
             <tr>
             <th> Date </th>
-            <th> Mean Exposure(mGy) </th>
-            <th> Temperatur(0C) </th>
-            <th> Pressure (mm Hg) </th>
+            <th> X <sub> mean</sub> (mGy) </th>
+            <th> Temp(<sup> 0 </sup> C) </th>
+            <th> Press (mm Hg) </th>
             <th> Ktp </th>
             <th> Sr-90 Decay </th>
-            <th> Exposure corr (mGy)  </th>
+            <th> X <sub> corr </sub> (mGy)  </th>
             <th> Percent Diff </th>
             </tr>
             </table>
+            </div>
+            </div>
+            <div class="w3-col l4"><p></p></div>
+            </div>
 
             `)
             if(data.ref_only !== 'true'){
@@ -83,11 +93,14 @@ $(document).ready(function(){
             
             
 
-        })
+        });
+
         
          
     });
 
+
+    /*
     $("#addmore").click(function(){
         $("#mytable").append("<tr><td>Mfeka</dt><td>J. P</dt><td>KZ003344</dt><td>10 MV</dt></tr>");
        });
@@ -95,7 +108,7 @@ $(document).ready(function(){
     $('#addjson').click(function(event) {
     event.preventDefault();
     $.getJSON('b.json');
-    })
+    });
 
     $('#check').click(function(){
 
@@ -115,7 +128,7 @@ $(document).ready(function(){
                 
                 );
         });
-    });
+    }); */
 
 
 }); 

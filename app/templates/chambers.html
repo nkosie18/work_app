@@ -6,10 +6,13 @@
 
 
 
-<div>
+<div style="background-color: #FFECEC;">
 
-    <div style=" margin-top: -5mm; background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);"> <h1 style="margin-top: 15mm; margin-left: 8mm;"> Ionization Chambers mantainance System </h1>  </div> 
+    <header style="background-color: #FE8787;  height:20mm;">
+        <div style=" margin-top: -5mm;"> <h1 style="margin-top: 14mm; margin-left: 8mm;"> Ionization Chambers mantainance System </h1>  </div> 
+    </header>
 
+    
 
 
     <div class="w3-container w3-padding-large">
@@ -25,34 +28,11 @@
             {%endwith%}
             </h4>
         </div>
-        <h3>Introduction</h3>
-        <p>
-            Accurate  radiation dose delivery is at the heart of quality external beam radiotherapy treatments and accurate calibration of radiotherapy tereatment units plays an important role in achieving accurate dose delivery. Former type ionization chambers are still held in high regards as the dosimeters of choice for routine calibration of clinical photons and electron beams.
-            
-
-        </p>
-        <p style="text-align:justify;">Bellow is a table with information on all the Registered ionization chambers (chambers) used for reference dosimetry at Inkosi Albert Luthuli Hospital. The chambers available on this system are all the chambers that have been registered for mantainance tracking.
-            Chamber mantainance include, Calibration by of the reference chamber by the national standards laboratory as well as in-house calibrations of the field chambers. The in-house cross-calibration is performed using the reference ionization chamber and a Sr-90 check source.
-            The reference chamber is calibrated once every 5 years at the secondary standards laboratory and once a year or when ever the responce of the field chamber is suspected to have changed the reference chamber is used to cross-calibrate the hospital field chambers following recommendations from TRS-398 Code of Practice.
-            When the reference chamber is not in use, it is kept away in a secure environment to avoid incidentces that may change the responce of the chamber.
-            
-        </p>
-        <h3>Routine Mantainance of Ionization Chambers</h3>
-        <p>
-            Routine mantainance of reference dosimeters in
-        </p>
-            
-    <ul>
-        <li> Detector Stability QC using Strontium-90 check sources" </li>
-        <li>TRS-398</li>
-        <li>Radiation Field Size and SET Field Congruency.</li>
-        <li>Beam Flatness and Symmetry in Water</li>
-    </ul> 
-        <br><br><br>
+             
 
     <div class="w3-row">
         <div class = "w3-col m6 l6 ">
-            <table class ="w3-table-all">
+            <table id = "chambst"class ="w3-table-all w3-small">
 
                 <tr>
                     <th>Date Added</th>
@@ -67,19 +47,22 @@
                     <td> {{item.make}} </td>
                     <td id="serial"> {{item.sn}} </td>
                     <td>{{item.chamber_type}}</td>
-                    <td> <button type="button" id="{{'btn-{}'.format(item.sn)}}" class="w3-button w3-blue w3-round-large">View</button></td>
+                    <td> <button type="button" id="{{item.sn}}" class="w3-button w3-blue w3-round-large">View</button></td>
                 </tr>
                 {%endfor%}
             </table>
+            <p> <i><b>Table 1.</b> List of Ionization chambers used for reference dosimetry and mantained using Strontium-90 check source. </i></p>
+
         </div>
-        <div class="w3-col m6 l6"> 
+        <div id = "mydiv1" class="w3-col m6 l6"> 
             <div class="w3-container w3-padding-64">
-                    <div id="refmeas_b" class="w3-col l8 m8">
+                    <div id="refmeas_b" class="w3-col l8 m8" >
     
                     </div>
 
 
             </div>
+            
         
         
         
@@ -87,15 +70,13 @@
         </div>
 
     </div>
-    <br>
-    <div id = "chambhist">
+    <div id = "chambhist" >
     
     
     </div>
-    <p> Did you not see the chamber you are interested in? </p>
-    <p> Maybe you should add the chamber as a new chamber. Please <a href="{{url_for('reg_chamber.reg_chamber')}}"> Click Here </a> to add the chamber to the list </p><br>
+    <p> To add a chamber to <b><i>Table .1 </i></b> <button type="button" onclick="location.href='{{url_for('reg_chamber.reg_chamber')}}'" class="w3-button w3-blue w3-round-large"> Add Chamber </button><br>
     <h2>Stability check measurements</h2>
-    <p>To perform stability check source measurements or to add data to the database  <a href="{{url_for('ion_chamber.sr_checks_m')}}"> Click Here </a></p>
+    <p>To perform stability check measurements or Add previous data <button type="button" onclick="location.href='{{url_for('ion_chamber.sr_checks_m')}}'" class="w3-button w3-blue w3-round-large"> measurements </button>  <a href="">  </a></p>
 
 
 

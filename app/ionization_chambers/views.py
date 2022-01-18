@@ -78,7 +78,7 @@ def chamberViewProcess():
             date1 = datetime.strftime(each.date, "%d %b %Y")
             avrg = round(((each.m_reading1 + each.m_reading2 + each.m_reading3)/3),2)
 
-            ktp = round((760.3/each.m_press)*((273.2 + each.m_temp)/293.2),3)
+            ktp = round((760.004/each.m_press)*((273.2 + each.m_temp)/293.2),3)
 
             exposure_corr = round(((avrg * ktp)/decay),2)
 
