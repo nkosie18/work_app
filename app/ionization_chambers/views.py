@@ -1,5 +1,6 @@
 from flask import Blueprint, request, flash, redirect, url_for, render_template, jsonify
 from flask_login import login_required
+from sqlalchemy.sql.expression import asc
 from app.ionization_chambers.models import Ionization_chambers, Sr_checks #Sr_checksSchema, Chamber_calfactor'''
 from app.ionization_chambers.forms import CheckSourceForm, NewChamberForm
 from flask_login import current_user
@@ -7,7 +8,7 @@ from app import db
 from datetime import datetime
 import math
 import numpy as np
-from sqlalchemy import and_
+from sqlalchemy import and_, asc, desc
 
 
 
@@ -63,26 +64,30 @@ def chamberViewProcess():
     electrometer_ref = sr_checks_baseLine.m_electrometer
     elect_voltage_ref = sr_checks_baseLine.elect_voltage
     source_ref = sr_checks_baseLine.sr_source
+    temp_ref = sr_checks_baseLine.m_temp
+    press_ref = sr_checks_baseLine.m_press
+    ktpp_ref = (1013.3/press_ref)*((273.2 + temp_ref)/293.2)
     decay_ref = 1
-    exposure_ref = round(((sr_checks_baseLine.m_reading1 + sr_checks_baseLine.m_reading2 + sr_checks_baseLine.m_reading3)/3),2)
+    
+    exposure_ref = ((sr_checks_baseLine.m_reading1 + sr_checks_baseLine.m_reading2 + sr_checks_baseLine.m_reading3)/3)*ktpp_ref
 
 
 
-    sr_checks = Sr_checks.query.filter(and_(Sr_checks.ion_chamber_id == chamb.id, Sr_checks.base_line != True)).all()
+    sr_checks = Sr_checks.query.filter(and_(Sr_checks.ion_chamber_id == chamb.id, Sr_checks.base_line != True)).order_by(desc(Sr_checks.date))
     jata = []
     if sr_checks !="":
         for each in sr_checks:
             days = abs(each.date - sr_checks_baseLine.date).days
-            decay = round(math.exp(-(math.log(2)/28.7)*(days)/365.25),3)
+            decay = math.exp(-(math.log(2)/28.7)*(days)/365.25)
 
             date1 = datetime.strftime(each.date, "%d %b %Y")
-            avrg = round(((each.m_reading1 + each.m_reading2 + each.m_reading3)/3),2)
+            avrg = ((each.m_reading1 + each.m_reading2 + each.m_reading3)/3)
 
-            ktp = round((760.004/each.m_press)*((273.2 + each.m_temp)/293.2),3)
+            ktp = (760.004/each.m_press)*((273.2 + each.m_temp)/293.2)
 
-            exposure_corr = round(((avrg * ktp)/decay),2)
+            exposure_corr = ((avrg * ktp)/decay)
 
-            percent_diff = round(100*((exposure_ref - exposure_corr)/ exposure_ref),2)
+            percent_diff = 100*((exposure_ref - exposure_corr)/ exposure_ref)
 
             jata.append({
                 'date': date1,

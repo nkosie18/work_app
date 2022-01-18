@@ -51,7 +51,7 @@
                 </tr>
                 {%endfor%}
             </table>
-            <p> <i><b>Table 1.</b> List of Ionization chambers used for reference dosimetry and mantained using Strontium-90 check source. </i></p>
+            <p> <i><b>Table 1.</b> List of Ionization chambers used for reference dosimetry and mantained using Strontium-90 check source. <button type="button" onclick="location.href='{{url_for('reg_chamber.reg_chamber')}}'" class="w3-button w3-blue w3-round-large w3-small"> Add New Chamber </button>
 
         </div>
         <div id = "mydiv1" class="w3-col m6 l6"> 
@@ -74,9 +74,8 @@
     
     
     </div>
-    <p> To add a chamber to <b><i>Table .1 </i></b> <button type="button" onclick="location.href='{{url_for('reg_chamber.reg_chamber')}}'" class="w3-button w3-blue w3-round-large"> Add Chamber </button><br>
     <h2>Stability check measurements</h2>
-    <p>To perform stability check measurements or Add previous data <button type="button" onclick="location.href='{{url_for('ion_chamber.sr_checks_m')}}'" class="w3-button w3-blue w3-round-large"> measurements </button>  <a href="">  </a></p>
+    <p>To perform stability check measurements or Add previous data <button type="button" onclick="location.href='{{url_for('ion_chamber.sr_checks_m')}}'" class="w3-button w3-blue w3-round-large"> Add Data </button>  <a href="">  </a></p>
 
 
 

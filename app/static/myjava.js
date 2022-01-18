@@ -29,14 +29,17 @@ $(document).ready(function(){
 
             $('#chambhist').css("display", "block");
             $('#refmeas_b').html(`
-                <h2 style ="margin-top:-20mm;"> ${chamber_name}</h2>
+                <i><h2 style ="margin-top:-20mm;"> ${chamber_name}</h2></i>
+                <p style="margin-top:-5mm;"><i> reference data</i></p>
 
-                <p> Date: ${date} </p>
-                <p> Electrometer: ${electrometer} </p>
-                <p> Biasing Voltage: ${voltage}  </p>
-                <p> Check Source: ${source} </p>
-                <p> Decay Factor: ${decay_ref1} </p>
-                <p> Exposure: ${ref_exposure} mGy</p>
+                <table>
+                <tr><td> Date: </td><td> <b> ${date}</b> </td></tr>
+                <tr><td> Electrometer: </td><td><b>${electrometer}</b> </td></tr>
+               <tr> <td> Biasing Voltage:</td><td> <b>${voltage} </b> </td></tr>
+                <tr><td> Check Source: </td><td><b>${source} </b></td></tr>
+                <tr><td> Decay Factor:</td><td><b> ${decay_ref1}</b> </td></tr>
+                <tr><td> Exposure:</td><td><b> ${ref_exposure.toFixed(2)} mGy</b></td></tr>
+                <tr></table>
             `)
 
             $('#chambhist').html(`
@@ -52,10 +55,12 @@ $(document).ready(function(){
             <th> Ktp </th>
             <th> Sr-90 Decay </th>
             <th> X <sub> corr </sub> (mGy)  </th>
-            <th> Percent Diff </th>
+            <th> % Error </th>
             </tr>
             </table>
             </div>
+
+            <p style="margin-top:3mm;"> <i> <b>Table 2.</b> Previouse Sr-90 stability check measurements for ${chamber_name}. </i></p> <br><br>
             </div>
             <div class="w3-col l4"><p></p></div>
             </div>
@@ -77,23 +82,29 @@ $(document).ready(function(){
                     $('#numbanumba').append(`
                     <tr>
                     <td> ${date1} </td>
-                    <td> ${mean_exposure} </td>
-                    <td> ${temp} </td>
-                    <td> ${press} </td>
-                    <td> ${ktp} </td>
-                    <td> ${decay} </td>
-                    <td> ${exposure_corr} </td>
-                    <td> ${percent_diff} </td>
+                    <td> ${mean_exposure.toFixed(2)} </td>
+                    <td> ${temp.toFixed(2)} </td>
+                    <td> ${press.toFixed(1)} </td>
+                    <td> ${ktp.toFixed(3)} </td>
+                    <td> ${decay.toFixed(3)} </td>
+                    <td> ${exposure_corr.toFixed(2)} </td>
+                    <td> ${percent_diff.toFixed(2)} </td>
                     </tr>
                      `)
 
             }
  
             }
+
+            
             
             
 
         });
+        
+        
+
+
 
         
          
