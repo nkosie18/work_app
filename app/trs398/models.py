@@ -1,5 +1,4 @@
 from app import db
-from app.ionization_chambers.models import Ionization_chambers
 
 
 #TRS-398 table for photon beams
@@ -10,7 +9,9 @@ class Trs398_photons(db.Model):
     date = db.Column(db.Date)
     temp = db.Column(db.Float, nullable=False)
     press = db.Column(db.Float, nullable=False)
-    m_avrg = db.Column(db.Float, nullable=False)
+    m_reading21 = db.Column(db.Float)
+    m_reading22 = db.Column(db.Float)
+    m_reading23 = db.Column(db.Float)
     m_pdd10 = db.Column(db.Float)
     m_tpr = db.Column(db.Float)
     m_dose = db.Column(db.Float)

@@ -1,8 +1,8 @@
 from flask import Blueprint, request, flash, redirect, url_for, render_template, jsonify
 from flask_login import login_required
 from sqlalchemy.sql.expression import asc
-from app.ionization_chambers.models import Ionization_chambers, Sr_checks #Sr_checksSchema, Chamber_calfactor'''
-from app.ionization_chambers.forms import CheckSourceForm, NewChamberForm
+from app.ionization_chambers.models import Ionization_chambers, Sr_checks, Chamber_calfactor
+from app.ionization_chambers.forms import CheckSourceForm, NewChamberForm, CalibrationCertForm
 from flask_login import current_user
 from app import db
 from datetime import datetime
@@ -23,6 +23,28 @@ def ion_chamber():
     chambers = Ionization_chambers.query.all()
     #cals = Chamber_calfactor
     return render_template('chambers.html', chambers=chambers, datetime = datetime)
+
+@ion_chamber_bp.route('/Add calibration certificate Data', methods=['GET', 'POST'])
+@login_required
+def Cal_certs():
+    form = CalibrationCertForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            check = Chamber_calfactor.query.filter(and_(Chamber_calfactor.date_cal == form.cal_date.data, Chamber_calfactor.ndw == form.calfactor.data)).first()
+            if check is None:
+                chamb = form.chambers.data
+                sn1 = chamb[10:]
+                chamb_obj = Ionization_chambers.query.filter_by(sn = sn1).first()
+                newCert = Chamber_calfactor(added_by = current_user.username, date_cal = form.cal_date.data, cal_lab = form.cal_lab.data, cal_electrometer = form.electrometer.data, calfact_electrometer = form.electrometerCalFactor.data, elec_voltage = form.calVoltage.data, ndw = form.calfactor.data, cal_energy = form.beamQuality.data, cal_machine = form.calMachine.data, ion_chamb = chamb_obj)
+                db.session.add(newCert)
+                db.session.commit()
+                flash('Everything works fine, the chamber certificate has been added to the database')
+                return redirect(url_for('ion_chamber.ion_chamber'))
+            else:
+                flash('The cirtificate you are trying to add already exist in the database.')
+                return redirect(url_for('ion_chamber.ion_chamber'))
+                
+    return render_template('calCetificate.html', form = form)
 
 @ion_chamber_bp.route('/Sr-90 check source measurement', methods=['GET', 'POST'])
 @login_required
@@ -71,10 +93,11 @@ def chamberViewProcess():
     
     exposure_ref = ((sr_checks_baseLine.m_reading1 + sr_checks_baseLine.m_reading2 + sr_checks_baseLine.m_reading3)/3)*ktpp_ref
 
-
+    chamber_cert = Chamber_calfactor.query.filter_by(chamber_id1 = chamb.id).all()
 
     sr_checks = Sr_checks.query.filter(and_(Sr_checks.ion_chamber_id == chamb.id, Sr_checks.base_line != True)).order_by(desc(Sr_checks.date))
     jata = []
+    cert_data = []
     if sr_checks !="":
         for each in sr_checks:
             days = abs(each.date - sr_checks_baseLine.date).days
@@ -99,12 +122,33 @@ def chamberViewProcess():
                 'exposure_corr' : exposure_corr,
                 'percent_diff' : percent_diff
             })
+            #inside the for loop.
+        #outside the for loop.
+        for each in chamber_cert:
+            date2 = datetime.strftime(each.date_cal, "%d %b %Y")
+            physicist = each.added_by
+            date_loaded = datetime.strftime(each.date_loaded, "%d %b %Y")
+            cal_lab = each.cal_lab
+            electrometer = each.cal_electrometer
+            bias_voltage = each.elec_voltage
+            ndw = each.ndw
+            cal_energy = each.cal_energy
 
+            cert_data.append({
+                'date_cal': date2,
+                'added_by' : physicist,
+                'date_loaded': date_loaded,
+                'cal_lab': cal_lab,
+                'electrometer': electrometer,
+                'voltage': bias_voltage,
+                'ndw' : ndw,
+                'cal_energy' : cal_energy
+            })
 
-        return jsonify({'results':'success', 'data':jata, 'chamb_name':name1, 'date_ref':date_ref, 'electrometer_ref':electrometer_ref, 'elect_voltage_ref' : elect_voltage_ref, 'source_ref' : source_ref, 'decay_ref' : decay_ref, 'exposure_ref' :exposure_ref   })
+        return jsonify({'results':'success', 'data':jata, 'cert':cert_data, 'chamb_name':name1, 'date_ref':date_ref, 'electrometer_ref':electrometer_ref, 'elect_voltage_ref' : elect_voltage_ref, 'source_ref' : source_ref, 'decay_ref' : decay_ref, 'exposure_ref' :exposure_ref   })
 
     else:
-        return jsonify({'results':'success', 'chamb_name':name1, 'ref_only': 'true', 'date_ref':date_ref, 'electrometer_ref':electrometer_ref, 'elect_voltage_ref' : elect_voltage_ref, 'source_ref' : source_ref, 'decay_ref' : decay_ref, 'exposure_ref' : exposure_ref   })
+        return jsonify({'results':'success', 'chamb_name':name1, 'cert':cert_data, 'ref_only': 'true', 'date_ref':date_ref, 'electrometer_ref':electrometer_ref, 'elect_voltage_ref' : elect_voltage_ref, 'source_ref' : source_ref, 'decay_ref' : decay_ref, 'exposure_ref' : exposure_ref   })
 
 
 @reg_chamber_bp.route('/chamber registration', methods=['GET', 'POST'])

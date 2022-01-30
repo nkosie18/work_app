@@ -1,6 +1,7 @@
 from datetime import datetime
 from app import db
-#from app import ma
+from app.trs398.models import Trs398_electrons, Trs398_photons
+from flask_login import current_user
 
 
 
@@ -35,12 +36,16 @@ class Ionization_chambersSchema(ma.SQLAlchemyAutoSchema):
 class Chamber_calfactor(db.Model):
     __tablename__ = 'chamber_calfactor'
     id = db.Column(db.Integer, primary_key=True)
+    date_loaded = db.Column(db.Date, default = datetime.now())
+    added_by = db.Column(db.String(128))
     date_cal = db.Column(db.Date)
     cal_lab = db.Column(db.String(128))
     cal_electrometer = db.Column(db.String(120))          # Electrometer make and serial number should be entered here
     calfact_electrometer = db.Column(db.Float)
-    elec_voltage = db.Column(db.String(20))
+    elec_voltage = db.Column(db.String(30))
     ndw = db.Column(db.Float)                   # Gy/nC
+    cal_energy = db.Column(db.String(30))
+    cal_machine = db.Column(db.String(30))
     chamber_id1 = db.Column(db.Integer, db.ForeignKey("ionization_chambers.id", ondelete='CASCADE'))   # back referenced to ion_chamb
 
 

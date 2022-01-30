@@ -4,6 +4,7 @@ from  wtforms import StringField, PasswordField, SubmitField, BooleanField, Sele
 from wtforms import validators
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from flask_login import current_user
+from app.ionization_chambers.models import Ionization_chambers
 
 
 
@@ -15,15 +16,23 @@ class NewChamberForm(FlaskForm):
     chamber_type = SelectField('Chamber Type', choices=['Reference (TRS-398)', 'Field (TRS-398)', 'Field (scanning)', 'Reference (scanning)'])
     submit = SubmitField('Register')
 
+chambers = []
+all_chambs = Ionization_chambers.query.all()
+for each in all_chambs:
+    name12 = '{}-{}'.format(each.make, each.sn)
+    chambers.append(name12)
 
 class CalibrationCertForm(FlaskForm):
     #remember to query the database for the chamber to be used.
     electrometer = StringField('Electrometer-S/N')
-    electrometerCalFactor = FloatField('Electrometer Calibration Factor', validators=[DataRequired()])
+    electrometerCalFactor = FloatField('Electrometer Calibration Factor', validators=[DataRequired()], default = 1.0)
     calVoltage = StringField('calibration Voltage', validators=[DataRequired()])
     calfactor = FloatField('Calibration Factor (Gy/nC)', validators=[DataRequired()])
     cal_date = DateField('Date Callibrated', validators=[DataRequired()])
     cal_lab = StringField('Calibration Lab', validators=[DataRequired()])
+    beamQuality = SelectField('Beam Quality', choices=['Co-60', 'Sr-90', '6 MV', 'Other'])
+    calMachine = SelectField('Calibration Unit', choices=['Standards Lab', 'Sr-90 check source', ' L1 (Internaly)', ' L2 (Internaly)', ' L3 (Internaly)'])
+    chambers = SelectField('Chember', choices= chambers)
     submit = SubmitField('Capture')
 
 

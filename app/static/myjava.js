@@ -43,8 +43,6 @@ $(document).ready(function(){
             `)
 
             $('#chambhist').html(`
-            <div class="w3-row">
-            <div class="w3-col l8">
             <div class = "w3-responsive" style="background-color: #FAB340;">
             <table id= "numbanumba" class = " w3-table-all w3-small">
             <tr>
@@ -61,11 +59,58 @@ $(document).ready(function(){
             </div>
 
             <p style="margin-top:3mm;"> <i> <b>Table 2.</b> Previouse Sr-90 stability check measurements for ${chamber_name}. </i></p> <br><br>
-            </div>
-            <div class="w3-col l4"><p></p></div>
-            </div>
+            
+            
+            
 
             `)
+            $('#chambCal').html(`
+            <div class="w3-responsive">
+                <table id ="calcert" class="w3-table-all w3-small">
+                <tr>
+                <th>Date Loaded</th>
+                <th>Loaded by</th>
+                <th>Calibration Lab</th>
+                <th>Date Calibrated</th>
+                <th>Calibration Factor</th>
+                <th>Electrometer</th>
+                <th>Bias Voltage</th>
+                <th>Beam Quality</th>
+                </tr>
+
+                </table>
+                <p style="margin-top:3mm;"> <i> <b>Table 3.</b> Calibration certificates for ${chamber_name}. </i></p> <br><br> 
+            </div>
+            `)
+
+            var size_cert = Object.keys(data.cert).length;
+
+            for (let i =0; i<size_cert; i++){
+                var date_loaded = data.cert[i].date_loaded;
+                var loaded_by = data.cert[i].added_by;
+                var date_cal = data.cert[i].date_cal;
+                var cal_lab = data.cert[i].cal_lab;
+                var cal_factor = data.cert[i].ndw;
+                var electrometer_cert = data.cert[i].electrometer;
+                var bias_voltage = data.cert[i].voltage;
+                var beam_quality = data.cert[i].cal_energy;
+                
+                $('#calcert').append(`
+
+                <tr>
+                <td> ${date_loaded} </td>
+                <td> ${loaded_by} </td>
+                <td> ${cal_lab} </td>
+                <td> ${date_cal} </td>
+                <td> ${cal_factor.toFixed(5)} </td>
+                <td> ${electrometer_cert} </td>
+                <td> ${bias_voltage} </td>
+                <td> ${beam_quality} </td>
+                </tr>
+
+                `)
+            }
+
             if(data.ref_only !== 'true'){
 
                 var size = Object.keys(data.data).length;

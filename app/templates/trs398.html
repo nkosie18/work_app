@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block tittle %}
+TRS398 reference dose measurements
+{% endblock %}
+
+{% block content %}
+<h1>Reference dosimetry following TRS-398 Code of Practice</h1>
+<form action="" method="POST" novalidate >
+    {{form.hidden_tag()}}
+    <p>
+        {{form.date.label}}
+        {{form.date(size=24)}} <br>
+        {% for error in form.temp.errors %}
+            <span style="color: red;">{{error}}</span>
+        {%endfor%}
+    </p>
+
+    <p>
+        {{form.temp.label}} <br>
+        {{form.temp(size=24)}} <br>
+        {% for error in form.temp.errors %}
+            <span style="color: red;">{{error}}</span>
+        {%endfor%}
+    </p>
+
+    <p>
+        {{form.press.label}} <br>
+        {{form.press(size=24)}} <br>
+        {% for error in form.press.errors %}
+            <span style="color: red;">{{error}}</span>
+        {%endfor%}
+    </p>
+
+
+</form>
+{% endblock %}
