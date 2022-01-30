@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block title %} Add New Machine {% endblock title %}
+{% block content %}
+
+<div class="w3-container w3-padding" style="margin-top: 10mm">
+  <h1>Adding a New Machine</h1>
+
+  <form action="" method="POST" novalidate>
+    {{form.hidden_tag()}}
+
+    <p>
+      {{form.make.label}} {{form.make(size= 40)}} <br />
+      {% for error in form.make.errors %}
+      <span style="color: red">{{error}}</span>
+      {%endfor%}
+    </p>
+
+    <p>
+      {{form.n_name.label}} {{form.n_name(size = 4)}} <br />
+      {% for error in form.n_name.errors %}
+      <span style="color: red">{{error}}</span>
+      {%endfor%}
+    </p>
+
+    <p>
+      {{form.com_date.label}} {{form.com_date}} <br />
+      {% for error in form.com_date.errors %}
+      <span style="color: red">{{error}}</span>
+      {%endfor%}
+    </p>
+
+    <p>{{form.submit()}}</p>
+  </form>
+</div>
+
+{% endblock content %}

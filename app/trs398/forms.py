@@ -17,15 +17,15 @@ class TRS398_photonsForm(FlaskForm):
     m_list = Machine.query.filter_by(hospital_id = current_user.institution_id).all()
     machine = SelectField('Machine', choices = m_list)
     beam = SelectField('Beam Type', choices=['Photon Beam', 'Electron Beam'])
-    if beam == 'Photon':
+    if beam == 'Photon Beam':
         energies =  Photon_energy.query.filter_by(machine_id = machine.id ).all()
     else:
         energies = Electron_energy.query.filter_by(machine_id = machine.id).all()
     energy_sel = SelectField('Energy', choices= energies)
-    chamberss = Ionization_chambers.query.fiter_by(institution_id = current_user.institution_id).all()
-    ion_chember = SelectField('Ionization Chamber', choices = chamberss)
-    pdd10_def = SelectField('PDD10', choices=['Use Measured Now', 'Use Commissioning Data'])
-    tpr2010 = SelectField('Beam Quality (TPR20,10)', choices=['Use Measured Now', 'Use Commisioning Data'])
+    chamberss = Ionization_chambers.query.filter_by(institution_id = current_user.institution_id).all()
+    ion_chember = SelectField('Ionization Chambers', choices = chamberss)
+    pdd10_def = SelectField('PDD10', choices=['Use Measured Data', 'Use Commissioning Data'])
+    tpr2010 = SelectField('Beam Quality (TPR20,10)', choices=['Use Measured Data', 'Use Commisioning Data'])
     
 
 
