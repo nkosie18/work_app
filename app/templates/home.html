@@ -1,5 +1,31 @@
 {% extends "base.html" %} {%block title%} Medical Physics Department
-{%endblock%} {%block content%}
+{%endblock%} 
+
+{%block content%}
+
+<style>
+  .geeks img {
+      transition: 0.3s all ease-in-out;
+  }
+
+  .geeks:hover img {
+      transform: scale(1.1);
+  }
+
+  body{
+    background: linear-gradient(to bottom right, #000066 0%, #ccffff 60%);
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        margin: 0;
+        padding: 0;
+        background-image: url("{{url_for('static', filename='images/hm_bg.jpg')}}");
+        background-size: cover;
+        background-repeat: no-repeat;
+    
+    }
+
+</style>
 
 <!--
     
@@ -13,91 +39,58 @@
   />
 </div>
 
-<div class="w3-container w3-margin-left">
-  <h4 style="color: tomato">
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for
-    message in messages %} {{ message }} {% endfor %} {%endif%} {%endwith%}
-  </h4>
-</div>
 
-<div class="w3-container-fluid w3-padding-top-18" style="margin-top: 10mm">
-  <div class="w3-container w3-center">
-    <h2>Welcome to the {{inst3}} Quality management portal</h2>
-  </div>
+<div class="w3-container-fluid w3-padding-top-18" style="margin-top: -5mm;">
   <div class="w3-row w3-margin-top">
-    <div class="w3-col m4 l3 w3-padding" style="margin-top: -9mm">
-      <h2>Portal for Medical physics Quality Assurance</h2>
-      <p style="text-align: justify">
-        This web application was designed with the aim of making the job of the
-        medical physicist easy. All the software tools used by the medical
-        physicist will has been centralized in a single application. The
-        application is designed with scalability in mind and incorporates python
-        packages such as the Pylinac package and packages developed in-house.
-        The application is designed to serve as a repository and a data center
-        for all quality control tests performed by medical physics at the
-        hospital. This application also contains the medical physics standard
-        operating procedures and these have been made to be available on demand.
-      </p>
-      <p style="text-align: justify">
-        The implementation of the application will enable the institution to
-        continue in the direction of a paperless department and will also
-        improve the ability of the medical physics department to track the
-        performance of the machines.
-      </p>
-    </div>
-    <div class="w3-col m8 l9 w3-center w3-scand" style="margin-top: -7mm">
-      <h2>Our Machines</h2>
-      <div class="w3-row">
-        <div class="w3-col m4 l4">
-          <a href="#"
-            ><img
-              src="{{url_for('static', filename ='images/versa_l2.jpg' )}}"
-              alt="Elekta Versa HD"
-              width="auto"
-              height="200mm"
-            />
-          </a>
-          <p>L1: Elekta Versa HD</p>
-        </div>
-        <div class="w3-col m4 l4">
-          <a href="#"
-            ><img
-              src="{{url_for('static', filename ='images/versa_l2.jpg' )}}"
-              alt="Elekta Versa HD"
-              width="auto"
-              height="200mm"
-            />
-          </a>
-          <p>L2: Elekta Versa HD</p>
-        </div>
-        <div class="w3-col m4 l4">
-          <a href="#"
-            ><img
-              src="{{url_for('static', filename ='images/synergy_l3.png' )}}"
-              alt="Elekta Versa HD"
-              width="auto"
-              height="200mm"
-            />
-          </a>
-          <p>L3: Elekta Synergy</p>
-        </div>
-      </div>
-      <div class="w3-row">
-        <p><h6 class="w3-left">
-            <a style="color: black" href="{{url_for('ion_chamber.ion_chamber')}}">
-              Hospital Ionization Chambers</a
-            >
-          </h6></p>
+    <div class="w3-col m1 l1"> <p></p></div>
+    
+    <div class="w3-col m4 l5 w3-border-right" style="margin-top: -13mm;">
+          <p style="margin-top:20mm;">
+            <a href="#" class="geeks"><img 
+              src="{{url_for('static', filename ='images/linear_accelerators.png' )}}"
+              alt="Linear Accelerators"
+              width="600mm"
+              height="90mm"/>
+            </a>
+          </p>
+          
+          <p>
+            <a href="#" class="geeks"><img
+              src="{{url_for('static', filename ='images/brachytherapy.png' )}}"
+              alt="Brachytherapy"
+              width="600mm"
+              height="90mm"/>
+            </a>
+          </p>
+          
+          <p>
+            <a href="{{url_for('ion_chamber.ion_chamber')}}" class="geeks"><img
+              src="{{url_for('static', filename ='images/ionization_chambers.png' )}}"
+              alt="Ionization Chambers"
+              width="600mm"
+              height="90mm"/>
+            </a>
+          </p>
 
-        <p class="w3-left"><h6>
-            <a style="color: black" href="{{url_for('linac.new_linac')}}">
-              Hospital linear accelerators</a
-            >
-          </h6></p>
-      </div>
+          <p>
+            <a href="#" class="geeks"><img
+              src="{{url_for('static', filename ='images/ct_scanner.png' )}}"
+              alt="CT Scanner"
+              width="600mm"
+              height="90mm"/>
+            </a>
+          </p>
+
+          <p>
+            <a href="#" class="geeks"><img
+              src="{{url_for('static', filename ='images/simulator.png' )}}"
+              alt="Simulator"
+              width="600mm"
+              height="90mm"/>
+            </a>
+          </p>
     </div>
   </div>
-  <h1>Hello world from Templates I wrote this !!!</h1>
 </div>
 
 {%endblock%}

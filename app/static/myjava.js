@@ -30,7 +30,7 @@ $(document).ready(function(){
             $('#chambhist').css("display", "block");
             $('#refmeas_b').html(`
                 <i><h2 style ="margin-top:-20mm;"> ${chamber_name}</h2></i>
-                <p style="margin-top:-5mm;"><i> reference data</i></p>
+                <p style="margin-top:-5mm;"><i> reference data</i></p> <br>
 
                 <table>
                 <tr><td> Date: </td><td> <b> ${date}</b> </td></tr>

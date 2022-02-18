@@ -53,13 +53,15 @@
                 {%endfor%}
             </table>
             </div>
-            <p> <i><b>Table 1.</b> List of Ionization chambers used for reference dosimetry (TRS-398) and mantained using Strontium-90 check source. <button type="button" onclick="location.href='{{url_for('reg_chamber.reg_chamber')}}'" class="w3-button w3-blue w3-round-large w3-small"> Add New Chamber </button>
+            <p> <i><b>Table 1.</b> List of Ionization chambers used for reference dosimetry (TRS-398) and mantained using Strontium-90 check source. 
 
         </div>
         <div id = "mydiv1" class="w3-col m6 l6"> 
             <div class="w3-container w3-padding-64">
-                    <div id="refmeas_b" class="w3-col l8 m8">
+                    <div class="w3-row">
+                        <div id="refmeas_b" class="w3-col l8 m8">
     
+                        </div>
                     </div>
 
  
@@ -74,12 +76,11 @@
     </div>
     <div class="w3-row">
         <div class="w3-col l6 ">
-            <h2>Stability check measurements</h2>
-            <p>To perform stability check measurements or Add previous data <button type="button" onclick="location.href='{{url_for('ion_chamber.sr_checks_m')}}'" class="w3-button w3-blue w3-round-large"> Add Data </button>  <a href="">  </a></p>
+            <h2>Navigator</h2>
+            <p><button type="button" onclick="location.href='{{url_for('reg_chamber.reg_chamber')}}'" class="w3-button w3-blue w3-round-large w3-small"> Add a New Chamber to the Chamber Library </button></p>
+            <p><button type="button" onclick="location.href='{{url_for('ion_chamber.sr_checks_m')}}'" class="w3-button w3-blue w3-round-large"> Perform Ionization Chamber Stability checks using Sr-90 check Source. </button>  <a href="">  </a></p>
+            <p><button type="button" onclick="location.href='{{url_for('ion_chamber.Cal_certs')}}'" class="w3-button w3-blue w3-round-large"> Add a New Calibration Certificate to the Database </button></p>
             <br>
-            <h2>Chamber Calibration/ Cross Calibration</h2>
-            <p style="margin-right: 10mm;">The chambers used for reference dosimetry(TRS-398) are either calibrated at standards laboratories or are cross calibrated against a hospital's reference chamber following internal dosimetry procedures.</p>
-            <p>To upload calibration certificate data to the system click here <button type="button" onclick="location.href='{{url_for('ion_chamber.Cal_certs')}}'" class="w3-button w3-blue w3-round-large"> Add Cal Certificate Data </button> </p>
         </div>
 
         <div class="w3-col l6">
