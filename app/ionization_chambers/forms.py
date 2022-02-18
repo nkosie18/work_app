@@ -26,7 +26,7 @@ class CalibrationCertForm(FlaskForm):
     #remember to query the database for the chamber to be used.
     electrometer = StringField('Electrometer-S/N')
     electrometerCalFactor = FloatField('Electrometer Calibration Factor', validators=[DataRequired()], default = 1.0)
-    calVoltage = StringField('calibration Voltage', validators=[DataRequired()])
+    calVoltage = StringField('Calibration Voltage', validators=[DataRequired()])
     calfactor = FloatField('Calibration Factor (Gy/nC)', validators=[DataRequired()])
     cal_date = DateField('Date Callibrated', validators=[DataRequired()])
     cal_lab = StringField('Calibration Lab', validators=[DataRequired()])

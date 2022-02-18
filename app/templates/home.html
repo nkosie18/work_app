@@ -1,30 +1,26 @@
 {% extends "base.html" %} {%block title%} Medical Physics Department
-{%endblock%} 
-
-{%block content%}
+{%endblock%} {%block content%}
 
 <style>
   .geeks img {
-      transition: 0.3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
   }
 
   .geeks:hover img {
-      transform: scale(1.1);
+    transform: scale(1.1);
   }
 
-  body{
+  body {
     background: linear-gradient(to bottom right, #000066 0%, #ccffff 60%);
-        width: 100%;
-        height: 100%;
-        max-height: 100%;
-        margin: 0;
-        padding: 0;
-        background-image: url("{{url_for('static', filename='images/hm_bg.jpg')}}");
-        background-size: cover;
-        background-repeat: no-repeat;
-    
-    }
-
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url("{{url_for('static', filename='images/hm_bg_2.jpg')}}");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 </style>
 
 <!--
@@ -34,61 +30,84 @@
   <img
     src="{{url_for('static', filename='images/logo2.jpg')}}"
     class="w3-left w3-hide-small"
-    width="auto"
-    height="300"
+    width="500"
+    height="auto"
   />
 </div>
 
-
-<div class="w3-container-fluid w3-padding-top-18" style="margin-top: -5mm;">
+<div class="w3-container-fluid w3-padding-top-18" style="margin-top: -5mm">
   <div class="w3-row w3-margin-top">
-    <div class="w3-col m1 l1"> <p></p></div>
-    
-    <div class="w3-col m4 l5 w3-border-right" style="margin-top: -13mm;">
-          <p style="margin-top:20mm;">
-            <a href="#" class="geeks"><img 
-              src="{{url_for('static', filename ='images/linear_accelerators.png' )}}"
-              alt="Linear Accelerators"
-              width="600mm"
-              height="90mm"/>
-            </a>
-          </p>
-          
-          <p>
-            <a href="#" class="geeks"><img
-              src="{{url_for('static', filename ='images/brachytherapy.png' )}}"
-              alt="Brachytherapy"
-              width="600mm"
-              height="90mm"/>
-            </a>
-          </p>
-          
-          <p>
-            <a href="{{url_for('ion_chamber.ion_chamber')}}" class="geeks"><img
-              src="{{url_for('static', filename ='images/ionization_chambers.png' )}}"
-              alt="Ionization Chambers"
-              width="600mm"
-              height="90mm"/>
-            </a>
-          </p>
+    <div class="w3-col m1 l1"><p></p></div>
 
-          <p>
-            <a href="#" class="geeks"><img
-              src="{{url_for('static', filename ='images/ct_scanner.png' )}}"
-              alt="CT Scanner"
-              width="600mm"
-              height="90mm"/>
-            </a>
-          </p>
+    <div class="w3-col m4 l5 w3-border-right" style="margin-top: -13mm">
+      <div class="w3-responsive">
+        <table class="w3-table" style="margin-top: 20mm">
+          <tr>
+            <td>
+              <a href="#" class="geeks"
+                ><img
+                  src="{{url_for('static', filename ='images/linear_accelerators.png' )}}"
+                  alt="Linear Accelerators"
+                  width="500mm"
+                  height="90mm"
+                />
+              </a>
+            </td>
+          </tr>
 
-          <p>
-            <a href="#" class="geeks"><img
-              src="{{url_for('static', filename ='images/simulator.png' )}}"
-              alt="Simulator"
-              width="600mm"
-              height="90mm"/>
-            </a>
-          </p>
+          <tr>
+            <td>
+              <a href="#" class="geeks"
+                ><img
+                  src="{{url_for('static', filename ='images/brachytherapy.png' )}}"
+                  alt="Brachytherapy"
+                  width="500mm"
+                  height="90mm"
+                />
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <a href="{{url_for('ion_chamber.ion_chamber')}}" class="geeks"
+                ><img
+                  src="{{url_for('static', filename ='images/ionization_chambers.png' )}}"
+                  alt="Ionization Chambers"
+                  width="500mm"
+                  height="90mm"
+                />
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <a href="#" class="geeks"
+                ><img
+                  src="{{url_for('static', filename ='images/ct_scanner.png' )}}"
+                  alt="CT Scanner"
+                  width="500mm"
+                  height="90mm"
+                />
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <a href="#" class="geeks"
+                ><img
+                  src="{{url_for('static', filename ='images/simulator.png' )}}"
+                  alt="Simulator"
+                  width="500mm"
+                  height="90mm"
+                />
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </div>
