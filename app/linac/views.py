@@ -35,4 +35,7 @@ def new_linac():
                 
     return render_template('new_linac.html', form = form)
 
+@linac_bp.route('/linacs')
+def linacs():
+    return render_template('linac2.html')
 

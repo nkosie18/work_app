@@ -23,7 +23,7 @@ class Machine(db.Model):
 class Photon_energy(db.Model):
     __tablename__= 'photon_energy'
     id = db.Column(db.Integer, primary_key =True)
-    energy = db.Column(db.String(6), index = True)
+    energy = db.Column(db.String(10), index = True)
     com_pdd10 = db.Column(db.Float)
     com_tpr = db.Column(db.Float)
     machine_id = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=False)
@@ -39,7 +39,7 @@ class Photon_energy(db.Model):
 class Electron_energy(db.Model):
     __tablename__= 'electron_energy'
     id = db.Column(db.Integer, primary_key = True)
-    energy = db.Column(db.String(6), index = True)
+    energy = db.Column(db.String(10), index = True)
     com_r50ion = db.Column(db.Float)
     com_r80ion = db.Column(db.Float)
     mean_energy = db.Column(db.Float)
@@ -48,6 +48,20 @@ class Electron_energy(db.Model):
 
     def __repr__(self):
         return "<{}>".format(self.energy)
+
+'''
+#Tracking linac faults.
+
+class Linac_fault(db.Model):
+    __tablename__ = 'linac_fault'
+    id = db.Column(db.Integer, primary_key = True)
+    date = db.Column(db.Date)
+    comment = db.Column(db.String(300))
+    machine21 = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=False)
+    physicist21 = db.Column(db.Integer, db.ForeignKey("user.id",ondelete='CASCADE'), nullable=False)
+'''  
+
+
 
 
 
