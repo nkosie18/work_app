@@ -12,7 +12,7 @@ class Machine(db.Model):
     com_date = db.Column(db.Date)
     hospital_id = db.Column(db.Integer, db.ForeignKey("institution.id", ondelete='CASCADE'))
     photon_en = db.relationship('Photon_energy', backref='machine_en_ph', lazy='dynamic', passive_deletes=True)
-    electron_en = db.relationship('Electron_energy', backref='machine_en_el', lazy='dynamic', passive_deletes=True)
+    electron_en = db.relationship('Electron_energy', backref='machine_en_el', lazy='dynamic', passive_deletes=True) 
     m_trs398_photons = db.relationship('Trs398_photons', backref='machine_trs_ph', lazy='dynamic', passive_deletes=True)
     m_trs398_electrons = db.relationship('Trs398_electrons', backref='machine_trs_el', lazy='dynamic', passive_deletes=True)
 
@@ -25,7 +25,7 @@ class Photon_energy(db.Model):
     id = db.Column(db.Integer, primary_key =True)
     energy = db.Column(db.String(10), index = True)
     com_pdd10 = db.Column(db.Float)
-    com_tpr = db.Column(db.Float)
+    com_tpr = db.Column(db.Float) 
     machine_id = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=False)
     trs398_readings = db.relationship('Trs398_photons', backref='ion_chamber_phen', lazy='dynamic', passive_deletes=True)
 

@@ -155,6 +155,21 @@ $(document).ready(function(){
          
     });
 
+    $("#linacst").click(function(event){
+        var machine = event.target.id
+        if(machine != ''){
+        console.log(machine)
+        //console.log(typeof(machine))
+        req_linac = $.ajax({
+            url : '/linacViewProcess',
+            type: 'POST',
+            data: {machine_id:machine}
+        });
+        }
+        else{console.log('You did not click the button on the table')}
+
+    })
+
 
     /*
     $("#addmore").click(function(){

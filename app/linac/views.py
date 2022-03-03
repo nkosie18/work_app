@@ -1,14 +1,17 @@
-from flask import render_template, Blueprint, request, flash, redirect, url_for
+import re
+from unittest import result
+from flask import jsonify, render_template, Blueprint, request, flash, redirect, url_for
 from app.hospitals.models import Institution
 from app import db
 from app.linac.models import Machine, Photon_energy, Electron_energy
 from app.linac.forms import AddMachineForm, AddBeamsPhotons, AddBeamsElectrons
-from flask_login import current_user
+from flask_login import current_user, login_required
 from sqlalchemy import and_
 
 linac_bp = Blueprint('linac',__name__, template_folder='templates', static_folder='static')
 
 @linac_bp.route('/add linac', methods=['GET', 'POST'])
+@login_required
 def new_linac():
     
     form = AddMachineForm()
@@ -36,6 +39,19 @@ def new_linac():
     return render_template('new_linac.html', form = form)
 
 @linac_bp.route('/linacs')
+@login_required
 def linacs():
-    return render_template('linac2.html')
+    linacs = Machine.query.all()
+    return render_template('linac2.html', linacs=linacs)
+
+
+@linac_bp.route('/linacViewProcess', methods=['POST'])
+@login_required
+def linacViewProcess():
+    selected_machine_id = request.form['machine_id'].strip()
+    print('The selected machine id is : {}'.format(selected_machine_id))
+    selected_machine = Machine.query.filter_by(id = int(selected_machine_id)).first()
+    machine_name = selected_machine.n_name
+    return jsonify({'result': 'success', 'selected_machine_name': machine_name})
+
 
