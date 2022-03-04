@@ -7,3 +7,4 @@ function storeCBCT(){
 function retrieve_cbct(){
     document.getElementById("unit").innerHTML = localStorage.getItem('unitname');
 }
+

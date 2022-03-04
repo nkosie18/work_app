@@ -44,7 +44,7 @@ $(document).ready(function(){
                 `)
     
                 $('#chambhist').html(`
-                <div class = "w3-responsive" style="background-color: #FAB340;">
+                <div class = "w3-responsive">
                 <table id= "numbanumba" class = " w3-table-all w3-small">
                 <thead>
                 <tr>
@@ -117,6 +117,22 @@ $(document).ready(function(){
                     </tr>
     
                     `)
+                    $('#calcert').DataTable({"lengthMenu": [[5, 10, -1], [5, 10, "All"]],
+                    "aoColumns": [
+                        { "orderSequence": [ "desc" ] },
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                    ]
+
+                
+                });
+                    
+    
                 }
     
                 if(data.ref_only !== 'true'){
@@ -146,6 +162,20 @@ $(document).ready(function(){
                          `)
     
                     }
+
+                    $('#numbanumba').DataTable({"lengthMenu": [[5, 10, -1], [5, 10, "All"]],
+                    "aoColumns": [
+                        { "orderSequence": [ "desc" ] },
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                    ]
+                
+                });
      
                 }
     
@@ -163,8 +193,7 @@ $(document).ready(function(){
              
     });
         
-    $('#numbanumba').DataTable();
-    $('#calcert').DataTable();
+    
 
     $("#linacst").click(function(event){
         var machine = event.target.id

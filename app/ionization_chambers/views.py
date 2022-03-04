@@ -103,7 +103,7 @@ def chamberViewProcess():
             days = abs(each.date - sr_checks_baseLine.date).days
             decay = math.exp(-(math.log(2)/28.7)*(days)/365.25)
 
-            date1 = datetime.strftime(each.date, "%d %b %Y")
+            date1 = datetime.strftime(each.date, "%Y-%m-%d")
             avrg = ((each.m_reading1 + each.m_reading2 + each.m_reading3)/3)
 
             ktp = (760.004/each.m_press)*((273.2 + each.m_temp)/293.2)
@@ -125,9 +125,9 @@ def chamberViewProcess():
             #inside the for loop.
         #outside the for loop.
         for each in chamber_cert:
-            date2 = datetime.strftime(each.date_cal, "%d %b %Y")
+            date2 = datetime.strftime(each.date_cal, "%Y-%m-%d")
             physicist = each.added_by
-            date_loaded = datetime.strftime(each.date_loaded, "%d %b %Y")
+            date_loaded = datetime.strftime(each.date_loaded, "%Y-%m-%d")
             cal_lab = each.cal_lab
             electrometer = each.cal_electrometer
             bias_voltage = each.elec_voltage
