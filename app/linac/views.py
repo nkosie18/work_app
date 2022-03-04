@@ -54,4 +54,3 @@ def linacViewProcess():
     machine_name = selected_machine.n_name
     return jsonify({'result': 'success', 'selected_machine_name': machine_name})
 
-

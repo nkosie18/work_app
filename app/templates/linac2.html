@@ -17,17 +17,28 @@ Linear Accelerators
 </div>
 
 <div class="w3-container w3-padding">
-  <div class="w3-responsive">
-    <table id="linacst" class="w3-table-all">
-      {% for item in linacs%}
-      <tr>
-        <td>{{item.make}}</td>
-        <td>{{item.n_name}}</td>
-        <td> <button type="button" id="{{item.id}}"> Load Data</button></td>
-      </tr>
-      {%endfor%}  
-    </table>
+  <div class="w3-row">
+    <div class="w3-col l6 m8">
+      <div class="w3-responsive">
+        <table id="linacst" class="w3-table-all" style="max-width: 150mm;">
+          {% for item in linacs%}
+          <tr>
+            <td>{{item.make}} ({{item.n_name}})</td>
+            <td class="w3-right"> <button type="button" id="{{item.id}}"> Load Data</button></td>
+          </tr>
+          {%endfor%}  
+        </table>
+      </div>
+    </div>
+
+    <div class="w3-col l6 m4"> 
+      <div class="w3-container">
+
+      </div>
+    </div>
+    
   </div>
+  
 
   <div>
 
