@@ -22,46 +22,48 @@ Linear Accelerators
 
 
       <div class="w3-bar w3-blackies">
-        <button class="w3-bar-item w3-button w3-xlarge w3-border-left w3-border-top tablink w3-white" onclick="selectMachine(event,'L1')">Linac 1</button>
-        <button class="w3-bar-item w3-button w3-xlarge w3-border-top tablink" onclick="selectMachine(event,'L2')">Linac 2</button>
-        <button class="w3-bar-item w3-button w3-xlarge w3-border-top tablink" onclick="selectMachine(event,'L3')">Linac 3</button>
+        <button class="w3-bar-item w3-button w3-large w3-border-left w3-border-top tablink w3-nkosie w3-disabled" onclick="selectMachine(event,'L1')">Linac 1</button>
+        <button class="w3-bar-item w3-button w3-large w3-border-top tablink w3-nkosie" onclick="selectMachine(event,'L2')">Linac 2</button>
+        <button class="w3-bar-item w3-button w3-large w3-border-top tablink w3-nkosie" onclick="selectMachine(event,'L3')">Linac 3</button>
       </div>
 
-      <div id="L1" class="w3-container w3-border-left w3-border-right w3-border-bottom machine">
-        <div class="w3-sidebar w3-light-grey" style="width:55mm; right:129mm">
-          <button class="w3-bar-item w3-button tablinkr w3-blue" onclick="selectQa(event, 'trs-398')" style="width: 55mm; text-align:left">TRS-398</button>
-          <button class="w3-bar-item w3-button tablinkr" onclick="selectQa(event, 'energy_checks')" style="width: 55mm; text-align:left">Energy Checks</button>
-          <button class="w3-bar-item w3-button tablinkr" onclick="selectQa(event, 'flatness_symmetry')" style="width: 55mm; text-align:left">Flatness and Symmetry</button>
-          <button class="w3-bar-item w3-button tablinkr" onclick="selectQa(event, 'machanical')" style="width: 55mm; text-align:left">Machanical Checks</button>
-        </div>
-
-        <div style="margin-left:0px">
-          <div class="w3-padding">Vertical Tab Example (sidebar)</div>
-        
-          <div id="trs-398" class="w3-container qacheck" style="display:none">
-            <h2>London</h2>
-            <p>London is the capital qacheck of England.</p>
-            <p>It is the most populous qacheck in the United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
+      <div id="L1" class="w3-border-left w3-border-right w3-border-bottom machine">
+        <div class="w3-responsive">
+          <div class="w3-bar w3-light-grey">
+            <button class="w3-bar-item w3-button tablinkr w3-grey w3-disabled" onclick="selectQa(event, 'trs-398')" style="width: 55mm; text-align:left">TRS-398</button>
+            <button class="w3-bar-item w3-button tablinkr w3-grey" onclick="selectQa(event, 'energy_checks')" style="width: 55mm; text-align:left">Energy Checks</button>
+            <button class="w3-bar-item w3-button tablinkr w3-grey" onclick="selectQa(event, 'flatness_symmetry')" style="text-align:left">Flatness and Symmetry</button>
+            <button class="w3-bar-item w3-button tablinkr w3-grey" onclick="selectQa(event, 'machanical')" style="width: 55mm; text-align:left">Machanical Checks</button>
           </div>
-        
-          <div id="energy_checks" class="w3-container qacheck" style="display:none">
-            <h2>Paris</h2>
-            <p>Paris is the capital of France.</p> 
-            <p>The Paris area is one of the largest population centers in Europe, with more than 12 million inhabitants.</p>
+  
+          <div style="margin-left:0px">
+            <div class="w3-padding">Vertical Tab Example (sidebar)</div>
+          
+            <div id="trs-398" class="w3-container qacheck" style="display:block">
+              <h2>London</h2>
+              <p>London is the capital qacheck of England.</p>
+              <p>It is the most populous qacheck in the United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
+            </div>
+          
+            <div id="energy_checks" class="w3-container qacheck" style="display:none">
+              <h2>Paris</h2>
+              <p>Paris is the capital of France.</p> 
+              <p>The Paris area is one of the largest population centers in Europe, with more than 12 million inhabitants.</p>
+            </div>
+          
+            <div id="flatness_symmetry" class="w3-container qacheck" style="display:none">
+              <h2>Tokyo</h2>
+              <p>Tokyo is the capital of Japan.</p>
+              <p>It is the center of the Greater Tokyo Area, and the most populous metropolitan area in the world.</p>
+            </div>
+  
+            <div id="machanical" class="w3-container qacheck" style="display:none">
+              <h2>Machanicals</h2>
+              <p>machanical checks to be done by me.</p>
+              <p>It is the center of the Greater Tokyo Area, and the most populous metropolitan area in the world.</p>
+            </div>
+          
           </div>
-        
-          <div id="flatness_symmetry" class="w3-container qacheck" style="display:none">
-            <h2>Tokyo</h2>
-            <p>Tokyo is the capital of Japan.</p>
-            <p>It is the center of the Greater Tokyo Area, and the most populous metropolitan area in the world.</p>
-          </div>
-
-          <div id="machanical" class="w3-container qacheck" style="display:none">
-            <h2>Machanicals</h2>
-            <p>machanical checks to be done by me.</p>
-            <p>It is the center of the Greater Tokyo Area, and the most populous metropolitan area in the world.</p>
-          </div>
-        
         </div>
       </div>
 
@@ -86,7 +88,7 @@ Linear Accelerators
             {% for item in linacs%}
               <tr>
                 <td>{{item.make}} ({{item.n_name}})</td>
-                <td class="w3-right"> <button class="w3-button w3-blue w3-round-large" type="button" id="{{item.id}}"> Load Data</button></td>
+                <td class="w3-right"> <button class="w3-button w3-blue-large" type="button" id="{{item.id}}"> Load Data</button></td>
               </tr>
             {%endfor%}  
           </table>
@@ -120,10 +122,10 @@ Linear Accelerators
     }
     tablinks = document.getElementsByClassName("tablink");
     for (i = 0; i < x.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" w3-white", "");
+      tablinks[i].className = tablinks[i].className.replace(" w3-disabled", "");
     }
     document.getElementById(machineName).style.display = "block";
-    evt.currentTarget.className += " w3-white";
+    evt.currentTarget.className += " w3-disabled";
   }
 
   function selectQa(evt, qaName) {
@@ -134,10 +136,10 @@ Linear Accelerators
     }
     tablinks = document.getElementsByClassName("tablinkr");
     for (i = 0; i < x.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
+      tablinks[i].className = tablinks[i].className.replace(" w3-disabled", "");
     }
     document.getElementById(qaName).style.display = "block";
-    evt.currentTarget.className += " w3-blue";
+    evt.currentTarget.className += " w3-disabled";
   }
 </script>
 {% endblock %} 
