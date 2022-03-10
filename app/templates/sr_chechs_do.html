@@ -7,6 +7,14 @@
 <div class="w3-cntainer" style="margin-top:10mm;">
     <h1>Check source measurements with a Sr-90 source</h1>
     <div style="margin-left: 20mm;">
+        <table class="w3-table-all" style="width: 40mm;">
+            <tr>
+                <td>Temperature:</td> <td>{{temp}}</td>
+            </tr>
+            <tr>
+                <td>Pressure:</td> <td>{{press}}</td>
+            </tr>
+        </table>
 
         <form class="w3-form" action="" method="POST" novalidate>
             {{form.hidden_tag()}}
@@ -48,20 +56,7 @@
                     <span style="color: red;">{{error}}</span>
                 {%endfor%}
             </p>
-            <p>
-                {{form.temp_reading.label}} 
-                {{form.temp_reading}} <br>
-                {% for error in form.temp_reading.errors %}
-                    <span style="color: red;">{{error}}</span>
-                {%endfor%}
-            </p>
-            <p>
-                {{form.press_reading.label}} 
-                {{form.press_reading}} <br>
-                {% for error in form.press_reading.errors %}
-                    <span style="color: red;">{{error}}</span>
-                {%endfor%}
-            </p>
+
             <p>
                 {{form.reading1.label}} 
                 {{form.reading1}} <br>

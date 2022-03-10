@@ -49,8 +49,10 @@ def linacs():
 @login_required
 def linacViewProcess():
     selected_machine_id = request.form['machine_id'].strip()
-    print('The selected machine id is : {}'.format(selected_machine_id))
-    selected_machine = Machine.query.filter_by(id = int(selected_machine_id)).first()
+    selected_qc = request.form['test_name'].strip()
+    print('The selected machine id is : {} \n The selected QC test is: {}'.format(selected_machine_id, selected_qc))
+
+    selected_machine = Machine.query.filter_by(n_name = selected_machine_id).first()
     machine_name = selected_machine.n_name
     return jsonify({'result': 'success', 'selected_machine_name': machine_name})
 

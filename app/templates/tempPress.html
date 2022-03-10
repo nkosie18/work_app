@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block tittle %}
+Temperature and Pressure of the day
+{% endblock %}
+
+{% block content %}
+<div class="w3-container w3-nkosie" style="height: 40mm; margin-top:15mm">
+
+    <h1>Temperature and Pressure of the day </h1>
+
+</div>
+
+<div class="w3-container">
+    <form action="" method="POST" novalidate>
+        {{form.hidden_tag()}}
+        <p>
+            {{form.temp.label}} <br>
+            {{form.temp(size=20)}} <br>
+            {% for error in form.temp.errors %}
+                <span style="color: red;">{{error}}</span>
+            {%endfor%}
+    
+        </p>
+
+        <p>
+            {{form.press.label}} <br>
+            {{form.press(size=20)}} <br>
+            {% for error in form.press.errors %}
+                <span style="color: red;">{{error}}</span>
+            {%endfor%}
+    
+        </p>
+
+        <p>{{form.submit()}}</p>
+
+    </form>
+
+</div>
+{% endblock %}

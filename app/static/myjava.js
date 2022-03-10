@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    $('#hello').text('Hello world! I have just changed the text in this paragraph using JQuery');
     
     
 
@@ -192,23 +191,92 @@ $(document).ready(function(){
         }    
              
     });
+
+
         
     
 
-    $("#linacst").click(function(event){
+    $("#linacs").click(function(event){
         var machine = event.target.id
-        if(machine != ''){
-        console.log(machine)
-        //console.log(typeof(machine))
-        req_linac = $.ajax({
-            url : '/linacViewProcess',
-            type: 'POST',
-            data: {machine_id:machine}
-        });
-        }
-        else{console.log('You did not click the button on the table')}
+        if(machine !== '' && machine !== 'linacs'){
+            var i, tablinks
+            tablinks = document.getElementsByClassName("tablink");
+            for(i = 0; i < tablinks.length; i++){   
+                tablinks[i].className = tablinks[i].className.replace(" w3-disabled", "");
+            } 
 
-    })
+            $('#' + machine).addClass('w3-disabled');
+    
+
+            if(document.getElementById("bodyup").style.display != "block"){
+                console.log("the block was not showing so we showed it")
+                $("#bodyup").css("display", "block")
+
+            };
+            tablinke = document.getElementsByClassName("tablinkr");
+            for(i = 0; i < tablinke.length; i++){
+                if(tablinke[i].className.includes("w3-disabled")){
+                    qachecks2 = tablinke[i].id
+
+                    console.log(machine)
+                    console.log(qachecks2)
+
+                    req_data = $.ajax({
+                        url : '/linacViewProcess',
+                        type: 'POST',
+                        data: {machine_id:machine, test_name : qachecks2}
+                    });
+                }   
+            };
+
+           
+            //$("#qabuttons").append(``);
+
+
+
+
+            /*console.log(typeof(machine))
+            req_linac = $.ajax({
+                url : '/linacViewProcess',
+                type: 'POST',
+                data: {machine_id:machine}
+            });
+            }
+            else{console.log('You did not click the button on the table')} */
+        };
+        
+
+    });
+
+    $("#qabuttons").click(function(event){
+        var qachecks = event.target.id
+        if(qachecks !== '' && qachecks !== 'qabuttons'){
+        var i, j, tablinke, machine_stat
+        tablinke = document.getElementsByClassName("tablinkr");
+        for(i = 0; i < tablinke.length; i++){   
+            tablinke[i].className = tablinke[i].className.replace(" w3-disabled", "")};
+            
+        }
+
+        $('#' + qachecks).addClass('w3-disabled');
+
+        machine_stat = document.getElementsByClassName("tablink");
+        for(j=0; j<machine_stat.length; j++){
+            if(machine_stat[j].className.includes("w3-disabled")){
+
+                machine = machine_stat[j].id 
+            }
+        }
+        var current_machine = machine
+        var current_check = qachecks
+    
+        console.log(current_machine)
+        console.log(current_check)
+
+    });
+
+
+    
 
 
     /*

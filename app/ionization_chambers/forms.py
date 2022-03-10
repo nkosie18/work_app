@@ -38,16 +38,21 @@ class CalibrationCertForm(FlaskForm):
 
 class CheckSourceForm(FlaskForm):
     date = DateField('Measurement Date', validators=[DataRequired()])
-    chamber = SelectField('Chamber', choices=['PTW-30013-0390','PTW-30013-0391', 'PTW-30013-011795','PTW-30013-011794' ])
+    chamber = SelectField('Chamber', choices=chambers)
     source = SelectField('Source Used', validators=[DataRequired()],choices=['Sr-90 48002-0762', 'Sr-90 8921-1732'])
     electrometer = StringField('Electrometer (make/model)', validators=[DataRequired()], default='UNIDOS 11126')
     elect_voltage = StringField('Applied Voltage', validators=[DataRequired()], default='+ 400V')
-    temp_reading = FloatField('Temperature', validators=[DataRequired()])
-    press_reading = FloatField('Pressure', validators=[DataRequired()])
     reading1 = FloatField('Reading 1', validators=[DataRequired()])
     reading2 = FloatField('Reading 2', validators=[DataRequired()])
     reading3 = FloatField('Reading 3', validators=[DataRequired()])
     submit = SubmitField('Accept and Capture') 
+
+
+class TempPressForm(FlaskForm):
+    temp = FloatField('Temperature', validators=[DataRequired()])
+    press = FloatField('Pressure', validators=[DataRequired()])
+    submit = SubmitField('Submit') 
+
 
     
 

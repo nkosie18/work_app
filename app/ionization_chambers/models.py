@@ -80,6 +80,17 @@ class Sr_checks(db.Model):
     def __repr__(self):
         return "<{}>".format(self.date)
 
+class Temp_press(db.Model):
+    __tablename__='temp_press'
+    id = db.Column(db.Integer, primary_key=True)
+    date_time = db.Column(db.DateTime)
+    temp = db.Column(db.Float)
+    press = db.Column(db.Float)
+
+    def __repr__(self):
+        return "<{}>".format(self.date_time)
+
+
 
 '''
 class Sr_checksSchema(ma.SQLAlchemyAutoSchema):
