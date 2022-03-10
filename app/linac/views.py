@@ -6,7 +6,7 @@ from app import db
 from app.linac.models import Machine, Photon_energy, Electron_energy
 from app.linac.forms import AddMachineForm, AddBeamsPhotons, AddBeamsElectrons
 from flask_login import current_user, login_required
-from sqlalchemy import and_
+from sqlalchemy import and_, asc, desc
 
 linac_bp = Blueprint('linac',__name__, template_folder='templates', static_folder='static')
 
@@ -48,11 +48,12 @@ def linacs():
 @linac_bp.route('/linacViewProcess', methods=['POST'])
 @login_required
 def linacViewProcess():
-    selected_machine_id = request.form['machine_id'].strip()
+    selected_machine_name = request.form['machine_id'].strip()
+    selected_machine = Machine.query.filter_by(n_name = selected_machine_name).first()
     selected_qc = request.form['test_name'].strip()
-    print('The selected machine id is : {} \n The selected QC test is: {}'.format(selected_machine_id, selected_qc))
+    if selected_qc == 'trs398':
+        trs398_data = []
+        
 
-    selected_machine = Machine.query.filter_by(n_name = selected_machine_id).first()
-    machine_name = selected_machine.n_name
-    return jsonify({'result': 'success', 'selected_machine_name': machine_name})
+    return jsonify({'result': 'success'})
 
