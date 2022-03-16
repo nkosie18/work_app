@@ -7,7 +7,11 @@ from app.trs398.models import Trs398_photons, Trs398_electrons
 from app.linac.models import Machine, Photon_energy, Electron_energy
 from app.linac.forms import AddMachineForm, AddBeamsPhotons, AddBeamsElectrons
 from flask_login import current_user, login_required
+<<<<<<< HEAD
 from sqlalchemy import and_ , desc
+=======
+from sqlalchemy import and_, asc, desc
+>>>>>>> 664f338b5b75047fca40dd99dd2e996e127412d3
 
 linac_bp = Blueprint('linac',__name__, template_folder='templates', static_folder='static')
 
@@ -49,7 +53,8 @@ def linacs():
 @linac_bp.route('/linacViewProcess', methods=['POST'])
 @login_required
 def linacViewProcess():
-    selected_machine_id = request.form['machine_id'].strip()
+    selected_machine_name = request.form['machine_id'].strip()
+    selected_machine = Machine.query.filter_by(n_name = selected_machine_name).first()
     selected_qc = request.form['test_name'].strip()
    
 
