@@ -14,6 +14,7 @@ class TRS398_photonsForm(FlaskForm):
     date = DateField('Date', validators=[DataRequired()])
     temp = FloatField('Temperature 0C', validators=[DataRequired()])
     press = FloatField('Pressure (hPa)', validators=[DataRequired()])
+    '''
     m_list = Machine.query.filter_by(hospital_id = 1).all()
     machine = SelectField('Machine', choices = m_list)
     beam = SelectField('Beam Type', choices=['Photon Beam', 'Electron Beam'])
@@ -27,6 +28,6 @@ class TRS398_photonsForm(FlaskForm):
     pdd10_def = SelectField('PDD10', choices=['Use Measured Data', 'Use Commissioning Data'])
     tpr2010 = SelectField('Beam Quality (TPR20,10)', choices=['Use Measured Data', 'Use Commisioning Data'])
     submit = SubmitField('Submit')
-    
+''' 
 
 

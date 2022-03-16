@@ -8,6 +8,7 @@ from app.linac.models import Machine, Photon_energy, Electron_energy
 from app.linac.forms import AddMachineForm, AddBeamsPhotons, AddBeamsElectrons
 from flask_login import current_user, login_required
 from sqlalchemy import and_ , desc
+from datetime import datetime
 
 linac_bp = Blueprint('linac',__name__, template_folder='templates', static_folder='static')
 
@@ -50,13 +51,15 @@ def linacs():
 @login_required
 def linacViewProcess():
     selected_machine_name = request.form['machine_id'].strip()
-    selected_machine = Machine.query.filter_by(n_name = selected_machine_name).first()
     selected_qc = request.form['test_name'].strip()
-   
-
-    selected_machine = Machine.query.filter_by(n_name = selected_machine_id).first()
-    qcdata = []
     if selected_qc == 'trs398':
-        measured_data = Trs398_photons.query.filter_by(machine_id = selected_machine.id).order_by(desc(Trs398_photons.date)).all()
+        measured_data_photons = Machine.query.filter(Machine.n_name == selected_machine_name).join(Trs398_photons).all()
+        measured_data_electrons = Machine.query.filter(Machine.n_name == selected_machine_name).join(Trs398_electrons).all()
+        qcdata_trs398_photons = []
+        qcdata_trs398_electrons = []
+        for item in measured_data_photons:
+            mDate = datetime.strftime(item.date, "%Y-%m-%d")
+
+
     return jsonify({'result': 'success'})
 

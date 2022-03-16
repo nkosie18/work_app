@@ -16,6 +16,7 @@ class Trs398_photons(db.Model):
     m_tpr = db.Column(db.Float)
     m_dose = db.Column(db.Float)
     m_electrometer = db.Column(db.String(128))                          # The electrometer make and model should be added here.
+    m_user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'), nullable = False)
     ion_chamber_id = db.Column(db.Integer, db.ForeignKey("ionization_chambers.id", ondelete='CASCADE'), nullable=False)
     machine_id = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=False)
     beam_id = db.Column(db.Integer, db.ForeignKey("photon_energy.id", ondelete='CASCADE'), nullable=False)
@@ -34,6 +35,7 @@ class Trs398_electrons(db.Model):
     m_pdd10 = db.Column(db.Float)
     m_tpr = db.Column(db.Float)
     m_dose = db.Column(db.Float)
+    b_user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'), nullable = False)
     ion_chamber_id = db.Column(db.Integer, db.ForeignKey("ionization_chambers.id", ondelete='CASCADE'), nullable=False)
     machine_id = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=False)
     beam_id = db.Column(db.Integer, db.ForeignKey("electron_energy.id", ondelete='CASCADE'), nullable=False)
