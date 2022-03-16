@@ -3,10 +3,11 @@ from unittest import result
 from flask import jsonify, render_template, Blueprint, request, flash, redirect, url_for
 from app.hospitals.models import Institution
 from app import db
+from app.trs398.models import Trs398_photons, Trs398_electrons
 from app.linac.models import Machine, Photon_energy, Electron_energy
 from app.linac.forms import AddMachineForm, AddBeamsPhotons, AddBeamsElectrons
 from flask_login import current_user, login_required
-from sqlalchemy import and_
+from sqlalchemy import and_ , desc
 
 linac_bp = Blueprint('linac',__name__, template_folder='templates', static_folder='static')
 
@@ -50,9 +51,11 @@ def linacs():
 def linacViewProcess():
     selected_machine_id = request.form['machine_id'].strip()
     selected_qc = request.form['test_name'].strip()
-    print('The selected machine id is : {} \n The selected QC test is: {}'.format(selected_machine_id, selected_qc))
+   
 
     selected_machine = Machine.query.filter_by(n_name = selected_machine_id).first()
-    machine_name = selected_machine.n_name
-    return jsonify({'result': 'success', 'selected_machine_name': machine_name})
+    qcdata = []
+    if selected_qc == 'trs398':
+        measured_data = Trs398_photons.query.filter_by(machine_id = selected_machine.id).order_by(desc(Trs398_photons.date)).all()
+    return jsonify({'result': 'success'})
 
