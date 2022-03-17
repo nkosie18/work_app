@@ -59,6 +59,12 @@ def linacViewProcess():
         qcdata_trs398_electrons = []
         for item in measured_data_photons:
             mDate = datetime.strftime(item.date, "%Y-%m-%d")
+            mTemp = item.temp
+            mPress = item.press
+            mElectrometer = item.m_electrometer
+            mBiasvoltage = item.m_biasVoltage
+            mAvrgReading = (item.m_reading21 + item.m_reading22 + item.m_reading23 )/3
+            
 
 
     return jsonify({'result': 'success'})
