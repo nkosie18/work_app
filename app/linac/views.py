@@ -57,14 +57,16 @@ def linacViewProcess():
         measured_data_electrons = Machine.query.filter(Machine.n_name == selected_machine_name).join(Trs398_electrons).all()
         qcdata_trs398_photons = []
         qcdata_trs398_electrons = []
-        for item in measured_data_photons:
-            mDate = datetime.strftime(item.date, "%Y-%m-%d")
-            mTemp = item.temp
-            mPress = item.press
-            mElectrometer = item.m_electrometer
-            mBiasvoltage = item.m_biasVoltage
-            mAvrgReading = (item.m_reading21 + item.m_reading22 + item.m_reading23 )/3
-            
+        if  not measured_data_photons is None:
+            for item in measured_data_photons:
+                mDate = datetime.strftime(item.date, "%Y-%m-%d")
+                mTemp = item.temp
+                mPress = item.press
+                mchamber = item.ion_chamber_trs_ph
+                mElectrometer = item.m_electrometer
+                mBiasvoltage = item.m_biasVoltage
+                mAvrgReading = (item.m_reading21 + item.m_reading22 + item.m_reading23 )/3
+
 
 
     return jsonify({'result': 'success'})
