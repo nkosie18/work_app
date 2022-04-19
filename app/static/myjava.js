@@ -368,17 +368,20 @@ $(document).ready(function(){
     $('#calctbl').click(function(event){
         var beam_id = event.target.id
         var number_fractions = $('#numbfr').val()
-        console.log(beam_id)
+        console.log(number_fractions)
         var my_beams = ['beam1','beam2','beam3','beam4','beam5']
-        if (my_beams.includes(beam_id)){
-            $('#'+ beam_id).change(function(){
-                console.log('we are here now!')
-                var ref_dose = calc (beam_id)
-                $('#ivdb' + beam_id[4]).text('Ref Dose: '+ ref_dose + ' Gy')
-                console.log(ref_dose, beam_id[4])
-
-            })
+        if( number_fractions !==''){
+            if (my_beams.includes(beam_id)){
+                $('#'+ beam_id).change(function(){
+                    var ref_dose = calc (beam_id)
+                    $('#ivdb' + beam_id[4]).text('Ref Dose: '+ ref_dose + ' Gy')
+    
+                })
+            }
+            
         }
+        
+        
 
         /*
         $('#'+ beam_id).change(function(){
