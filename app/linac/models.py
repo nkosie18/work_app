@@ -1,3 +1,4 @@
+from operator import index
 from app import db
 #from app.hospitals.models import Institution
 #from app.trs398.models import Trs398_photons, Trs398_electrons
@@ -10,6 +11,7 @@ class Machine(db.Model):
     make = db.Column(db.String(120), index= True)
     n_name = db.Column(db.String(4), index=True)
     com_date = db.Column(db.Date)
+    com_technique = db.Column(db.String(10), index=True)
     hospital_id = db.Column(db.Integer, db.ForeignKey("institution.id", ondelete='CASCADE'))
     photon_en = db.relationship('Photon_energy', backref='machine_en_ph', lazy='dynamic', passive_deletes=True)
     electron_en = db.relationship('Electron_energy', backref='machine_en_el', lazy='dynamic', passive_deletes=True) 

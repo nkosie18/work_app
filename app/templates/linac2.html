@@ -36,13 +36,21 @@ Linear Accelerators
             <button id = "machan" class="w3-bar-item w3-button tablinkr w3-grey" style="width: 55mm; text-align:left">Machanical Checks</button>
           </div>
         </div>
-
-        <div id="qcCheks" class="w3-container w3-responsive">
-          
-
+        <div class="w3-row w3-padding" style="display: none;" >
+          <div id="qcCheks" class="w3-container w3-responsive">
+            <table id="data_table" class="w3-table-all">
+              <tr><td>Date</td><td>Temperature</td><td>Pressure</td><td>Ionization Chamber</td><td>Bias Voltage</td> <td>Dose <sub>Z_max</sub></td><td>Percent diff</td></tr> 
+            </table>
+            
+  
+          </div>
         </div>
+ 
       </div>
+
+      
 <!---
+    <button id = ${} class="w3-button w3-blue w3-round w3-border">View</button>
       <div id="L1" class="w3-border-left w3-border-right w3-border-bottom machine">
         <div class="w3-responsive">
           <div class="w3-bar w3-light-grey">

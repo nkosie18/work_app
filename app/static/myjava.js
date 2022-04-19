@@ -209,7 +209,6 @@ $(document).ready(function(){
     
 
             if(document.getElementById("bodyup").style.display != "block"){
-                console.log("the block was not showing so we showed it")
                 $("#bodyup").css("display", "block")
 
             };
@@ -226,8 +225,50 @@ $(document).ready(function(){
                         type: 'POST',
                         data: {machine_id:machine, test_name : qachecks2}
                     });
-                }   
-            };
+
+                    req_data.done(function(data){
+                        var status = data.result
+                        if(status == '502'){
+                            console.log(data.data)
+                        }
+                        else{
+                            var size1 = Object.keys(data.data_p).length
+                            for(let i=0; i<size1; i++){
+                                var date = data.data_p[i].date
+                                var temp = data.data_p[i].temp
+                                var press = data.data_p[i].press
+                                var chamber = data.data_p[i].chamber
+                                var bvoltage = data.data_p[i].bias_voltage
+                                var dase_max = data.data_p[i].dose_dmax
+                                var pdiff = data.data_p[i].percent_diff
+                                
+                                loop_string += `<tr><td>${date}</td><td>${temp}</td><td>${press}</td><td>${chamber}</td><td>${bvoltage}</td><td>${dase_max}</td><td>${pdiff}</td><td> <button id ="phot_${date}" class="w3-button w3-blue w3-round w3-border">View</button></td></tr>`
+                            }
+        
+                            new_string = '<tr><td>Date</td><td>Temperature</td><td>Pressure</td><td>Ionization Chamber</td><td>Bias Voltage</td> <td>Dose<sub>Z_max</sub></td><td>Percent diff</td></tr>' + loop_string
+                            $('#data_table').innerHTML(new_string)
+                            
+                            $('#data_table').DataTable({"lengthMenu": [[5, 10, -1], [5, 10, "All"]],
+                            "aoColumns": [
+                                { "orderSequence": [ "desc" ] },
+                                null,
+                                null,
+                                null,
+                                null,
+                                null,
+                                null,
+                                null
+                                ]
+                                                
+                            });
+                        }
+                    })
+                }
+            }            
+        }
+    });
+        
+
 
            
             //$("#qabuttons").append(``);
@@ -243,10 +284,7 @@ $(document).ready(function(){
             });
             }
             else{console.log('You did not click the button on the table')} */
-        };
         
-
-    });
 
     $("#qabuttons").click(function(event){
         var qachecks = event.target.id
@@ -268,12 +306,96 @@ $(document).ready(function(){
             }
         }
         var current_machine = machine
-        var current_check = qachecks
-    
-        console.log(current_machine)
-        console.log(current_check)
+        var current_check = qachecks 
+        
+
+        req3_data = $.ajax({
+            url : '/linacViewProcess',
+            type : 'POST',
+            data: {machine_id: current_machine, test_name: current_check}
+
+        });
+
+        req3_data.done(function(data){
+            var status = data.result
+            if(status == '502'){
+                console.log(data.data)
+            }
+            else{
+                var loop_string = ""
+                var size1 = Object.keys(data.data_p).length
+                for(let i=0; i<size1; i++){
+                    var date = data.data_p[i].date
+                    var temp = data.data_p[i].temp
+                    var press = data.data_p[i].press
+                    var chamber = data.data_p[i].chamber
+                    var bvoltage = data.data_p[i].bias_voltage
+                    var dase_max = data.data_p[i].dose_dmax
+                    var pdiff = data.data_p[i].percent_diff
+                    loop_string += `<tr><td>${date}</td><td>${temp}</td><td>${press}</td><td>${chamber}</td><td>${bvoltage}</td><td>${dase_max}</td><td>${pdiff}</td><td> <button id ="phot_${date}" class="w3-button w3-blue w3-round w3-border">View</button></td></tr>`
+                    }
+
+                new_string = '<tr><td>Date</td><td>Temperature</td><td>Pressure</td><td>Ionization Chamber</td><td>Bias Voltage</td> <td>Dose <sub>Z_max</sub></td><td>Percent diff</td></tr>' + loop_string
+                $('#data_table').innerHTML(new_string)
+                
+                $('#data_table').DataTable({"lengthMenu": [[5, 10, -1], [5, 10, "All"]],
+                "aoColumns": [
+                    { "orderSequence": [ "desc" ] },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                    ]   
+            
+                });
+            }
+        })
 
     });
+
+    function calc (a){
+        var number_fractions = $('#numbfr').val()
+        var beam_numbe = $('#' + a).val()
+        if(beam_numbe !== null || beam_numbe !== 'Undefined'){
+            var ans = (beam_numbe/number_fractions).toFixed(3)
+            return ans
+        }
+    }
+
+    $('#calctbl').click(function(event){
+        var beam_id = event.target.id
+        var number_fractions = $('#numbfr').val()
+        console.log(beam_id)
+        var my_beams = ['beam1','beam2','beam3','beam4','beam5']
+        if (my_beams.includes(beam_id)){
+            $('#'+ beam_id).change(function(){
+                console.log('we are here now!')
+                var ref_dose = calc (beam_id)
+                $('#ivdb' + beam_id[4]).text('Ref Dose: '+ ref_dose + ' Gy')
+                console.log(ref_dose, beam_id[4])
+
+            })
+        }
+
+        /*
+        $('#'+ beam_id).change(function(){
+            console.log('we are here now')
+            if (my_beams.includes(beam_id)){
+                console.log('The beam id is in the list')
+                var ref_dose = calc(beam_id)
+                console.log(ref_dose)
+                $('#ivdb' + beam_id[4]).text('Ref Dose: '+ ref_dose + ' Gy')
+            }
+        });
+        */
+
+        
+    });
+ 
+
 
 
     

@@ -37,15 +37,49 @@
         </div>
 
     </div>
-    <div class="w3-col m2 l2"> <h4></h4></div>
-    <div class="w3-col m5 l5">
+    <div class="w3-col m4 l4">
+        <div class="w3-container w3-padding-64 w3-margin-left">
+
+            <h1 style="color: whitesmoke;">Dmax Points Calc</h1>
+            <div class="w3-row w3-padding" style="margin-top: 1mm;">
+                <h3 style="color: whitesmoke;">Fraction Number </h3> 
+                <p style="color: whitesmoke;"> <input type="text" id="numbfr" class  style="height: 0.8cm; width:2cm"> Fractions </p>
+                <h3 style="color: whitesmoke;"> Dose per fraction</h3>
+                <div class="w3-responsive">
+                    <table class="w3-table-all" style="width: 10cm; margin-top:5mm;" id ="calctbl">
+                        <tr>
+                            <td style="width: 2.5cm;"> Beam 1</td> <td> <input type="text" id="beam1" placeholder="Undefined" style="width: 2cm;"> </td> <td id="ivdb1"> Undefined </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 2.5cm;"> Beam 2</td> <td> <input type="text" id="beam2" placeholder="Undefined" style="width: 2cm;"> </td> <td id="ivdb2"> Undefined </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 2.5cm;"> Beam 3</td> <td> <input type="text" id="beam3" placeholder="Undefined" style="width: 2cm;"> </td> <td id="ivdb3"> Undefined </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 2.5cm;"> Beam 4</td> <td> <input type="text" id="beam4" placeholder="Undefined" style="width: 2cm;"> </td> <td id="ivdb4"> Undefined </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 2.5cm;"> Beam 5</td> <td> <input type="text" id="beam5" placeholder="Undefined" style="width: 2cm;"> </td> <td id="ivdb5"> Undefined </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="w3-col m4 l4">
 
         <div class="w3-container w3-padding-64 w3-margin-left">
 
             <h1 style="color: whitesmoke;">{{today}}</h1> 
             <h6 style="color: whitesmoke; margin-top:-5mm;">{{date1}}</h6> 
                 <table class="w3-table">
-                    <tr><th> <h2 style="color: whitesmoke; margin-top:-3mm;"><u>Physics Daily QA List</u></h2></th></tr>    
+                    <tr><td> <h2 style="color: whitesmoke; margin-top:-3mm;"><u>Physics Daily QA List</u></h2></td></tr>    
                     {%for each in roster1%}
 
                         <tr>
@@ -58,6 +92,8 @@
                 </table>
 
         </div>
+
+       
 
 
             

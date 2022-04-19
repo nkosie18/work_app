@@ -57,17 +57,54 @@ def linacViewProcess():
         measured_data_electrons = Machine.query.filter(Machine.n_name == selected_machine_name).join(Trs398_electrons).all()
         qcdata_trs398_photons = []
         qcdata_trs398_electrons = []
-        if  not measured_data_photons is None:
+        if measured_data_photons:
             for item in measured_data_photons:
                 mDate = datetime.strftime(item.date, "%Y-%m-%d")
                 mTemp = item.temp
                 mPress = item.press
-                mchamber = item.ion_chamber_trs_ph
-                mElectrometer = item.m_electrometer
+                mChamber = '{}-{}'.format(item.ion_chamber_trs_ph.make, item.ion_chamber_trs_ph.sn)
                 mBiasvoltage = item.m_biasVoltage
-                mAvrgReading = (item.m_reading21 + item.m_reading22 + item.m_reading23 )/3
+                mDoseMax = item.m_dose_max
+                mPdiff = item.m_pdiff
+
+                qcdata_trs398_photons.append({
+                    'date': mDate,
+                    'temp' : mTemp,
+                    'press' : mPress,
+                    'chamber': mChamber,
+                    'biase_voltay' : mBiasvoltage,
+                    'dose_dmax': mDoseMax,
+                    'percent_diff': mPdiff    
+                })
+
+        if measured_data_electrons:
+            for item in measured_data_electrons:
+                bDate = datetime.strftime(item.date, "%Y-%m-%d")
+                bTemp = item.temp
+                bPress = item.press
+                bChamber = '{}-{}'.format(item.ion_chamber_trs_el.make, item.ion_chamber_trs_el.sn)
+                bBiasvoltage = item.m_biasVoltage
+                bDoseMax = item.b_dose_max
+                bPdiff = item.b_pdiff
+
+                qcdata_trs398_electrons.append({
+                    'date': bDate,
+                    'temp' : bTemp,
+                    'press' : bPress,
+                    'chamber': bChamber,
+                    'biase_voltay' : bBiasvoltage,
+                    'dose_dmax': bDoseMax,
+                    'percent_diff': bPdiff    
+                })
+
+        if measured_data_electrons and measured_data_electrons:       
+            return jsonify({'result': 'success', 'data_p':qcdata_trs398_photons, 'data_e': qcdata_trs398_electrons})
+
+        else:
+            return jsonify({'result':'502','data':'The code exacuted fine, but there is no data in your database'})
 
 
 
-    return jsonify({'result': 'success'})
+
+    
 
