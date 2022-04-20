@@ -50,8 +50,8 @@ def linacs():
 @linac_bp.route('/linacViewProcess', methods=['POST'])
 @login_required
 def linacViewProcess():
-    selected_machine_name = request.form['machine_id'].strip()
-    selected_qc = request.form['test_name'].strip()
+    selected_machine_name = request.form['machine_id'].strip(" ")
+    selected_qc = request.form['test_name'].strip(" ")
     if selected_qc == 'trs398':
         measured_data_photons = Machine.query.filter(Machine.n_name == selected_machine_name).join(Trs398_photons).all()
         measured_data_electrons = Machine.query.filter(Machine.n_name == selected_machine_name).join(Trs398_electrons).all()
