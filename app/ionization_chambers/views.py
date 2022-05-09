@@ -9,8 +9,10 @@ from datetime import datetime, timedelta
 import math
 import numpy as np
 from sqlalchemy import and_, asc, desc
+from app.ionization_chambers.unidos import Unidos
 
 
+e = Unidos()
 
 ion_chamber_bp = Blueprint('ion_chamber',__name__, template_folder= 'templates', static_folder='static')
 reg_chamber_bp = Blueprint('reg_chamber',__name__, template_folder= 'templates', static_folder='static')
@@ -84,7 +86,7 @@ def sr_checks_m():
                         return redirect(url_for('ion_chamber.ion_chamber'))
 
             return render_template('sr_chechs_do.html', form=form, temp = checkTempPress.temp, press = checkTempPress.press)
-
+ 
 
 
 @ion_chamber_bp.route('/chambViewProcess', methods=['POST'])
@@ -132,7 +134,7 @@ def chamberViewProcess():
                 'date': date1,
                 'mean_exposure': avrg,
                 'm_temp' : each.m_temp,
-                'm_press' : each.m_press,
+                'm_press' : each.m_press, 
                 'ktp' : ktp,
                 'decay': decay,
                 'exposure_corr' : exposure_corr,
@@ -196,6 +198,26 @@ def reg_chamber():
     
     else:
         return render_template('newChamberRegistration.html',form = form)
+
+@ion_chamber_bp.route('/auto_sr_checks', methods=["GET"])
+@login_required
+def automate():
+    return render_template('automate.html')
+
+
+@ion_chamber_bp.route('/respond/connect', methods=["POST"])
+@login_required
+def responce_automate():
+    e.connect()
+    status = e.telegram("PTW")
+    if status[0:6]== "UNIDOS":
+        return jsonify({"status":"success"})
+    
+    else:
+         return jsonify({"status": "Failed to connect"})
+    
+
+
 
 
 

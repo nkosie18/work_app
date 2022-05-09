@@ -40,7 +40,7 @@ class Trs398_electrons(db.Model):
     m_reading31 = db.Column(db.Float)   #nC
     m_reading32 = db.Column(db.Float)   #nC
     m_R50 = db.Column(db.Float)
-    m_Rp = db.Column(db.Float)
+    m_R80 = db.Column(db.Float)
     b_kpol = db.Column(db.Float)
     b_ks = db.Column(db.Float)
     b_kqq = db.Column(db.Float)

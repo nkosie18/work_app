@@ -1,4 +1,3 @@
-from email import message
 from flask_wtf import FlaskForm
 from  wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, DateField, FloatField
 from wtforms import validators
@@ -31,7 +30,7 @@ class AddBeamsPhotons(FlaskForm):
                 raise ValidationError(message='This field is used in calculations and only accept values less then 1 (This is the ratio of measurements at referent depth and depth maximum)')
         
         elif not isinstance(com_pdd10, float):
-            raise ValidationError(message='This field is used in calculations and only takes numbers, Pleas enter the ratio of measurements at referent depth and depth maximum.')
+            raise ValidationError(message='This field is used in calculations and only takes numbers, Pleas enter the TPR2010 value (This is denoted by IQ on the PTW software).')
     
     
     
