@@ -59,8 +59,7 @@
         <div id = "mydiv1" class="w3-col m6 l6"> 
             <div class="w3-container w3-padding-64">
                     <div class="w3-row">
-                        <div id="refmeas_b" class="w3-col l8 m8">
-    
+                        <div id="refmeas_b" class="w3-col l8 m8">  
                         </div>
                     </div>
 
@@ -78,7 +77,7 @@
         <div class="w3-col l6 ">
             <h2>Navigator</h2>
             <p><button type="button" onclick="location.href='{{url_for('reg_chamber.reg_chamber')}}'" class="w3-button w3-blue w3-round-large w3-small"> Add a New Chamber to the Chamber Library </button></p>
-            <p><button type="button" onclick="location.href='{{url_for('ion_chamber.sr_checks_m')}}'" class="w3-button w3-blue w3-round-large"> Perform Ionization Chamber Stability checks using Sr-90 check Source. </button>  <a href="">  </a></p>
+            <p><button type="button" onclick="location.href='{{url_for('ion_chamber.select_measurements_method')}}'" class="w3-button w3-blue w3-round-large"> Perform Ionization Chamber Stability checks using Sr-90 check Source. </button>  <a href="">  </a></p>
             <p><button type="button" onclick="location.href='{{url_for('ion_chamber.Cal_certs')}}'" class="w3-button w3-blue w3-round-large"> Add a New Calibration Certificate to the Database </button></p>
             <br>
         </div>

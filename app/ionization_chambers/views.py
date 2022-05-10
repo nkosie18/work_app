@@ -48,6 +48,32 @@ def Cal_certs():
                 
     return render_template('calCetificate.html', form = form)
 
+@ion_chamber_bp.route('/sr-90_measurements', methods=['GET','POST'])
+@login_required
+def select_measurements_method():
+    checkTempPress = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
+    if not checkTempPress == None:
+        if (checkTempPress.date_time + timedelta(minutes = 30)) < datetime.now():
+            form1 = TempPressForm()
+            if request.method == 'POST':
+                if form1.validate_on_submit():
+                    new_tp_data = Temp_press(date_time = datetime.now(), temp = form1.temp.data, press = form1.press.data)
+                    db.session.add(new_tp_data)
+                    db.session.commit()
+                    return redirect(url_for('ion_chamber.select_measurements_method'))
+            return render_template('tempPress.html', form = form1)
+        else:
+            return render_template('sr_90_method.html')
+##########################################################################
+#################################################################
+##################################################################
+
+@ion_chamber_bp.route('/sr_90_automated')
+@login_required
+def auto_measure_sr_checks():
+
+    return "work needed here"
+
 @ion_chamber_bp.route('/Sr-90 check source measurement', methods=['GET', 'POST'])
 @login_required
 def sr_checks_m():

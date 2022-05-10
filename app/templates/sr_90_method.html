@@ -1,9 +1,36 @@
 {% extends 'base.html' %} {% block title %} Measurement Method {% endblock %} {%
 block content %}
-<div class="w3-container-fluid">
-  <div class="w3-row">
-    <h1>Select the method to be used for Measurement</h1>
+<div class="w3-container">
+  <div class="w3-row" style="margin-top: 5mm">
+    <h1>Select Measurement Method</h1>
   </div>
-  <div class="w3-row"></div>
+  <div class="w3-row">
+    <div class="w3-col l4 m4">
+      <p>
+        <button
+          type="button"
+          onclick="location.href='{{url_for('ion_chamber.auto_measure_sr_checks')}}'"
+          class="w3-button w3-blue w3-round-large w3-small"
+        >
+          Automatic Measurements
+        </button>
+      </p>
+      <p>
+        <button
+          type="button"
+          onclick="location.href='{{url_for('ion_chamber.sr_checks_m')}}'"
+          class="w3-button w3-blue w3-round-large w3-small"
+        >
+          Manual measurements
+        </button>
+      </p>
+    </div>
+    <div class="w3-col l8 m8">
+      <p>
+        Manual Measurements: The measurements are recorded manually onto a form
+        and uploaded on the system for each detector and Sr-90 combination.
+      </p>
+    </div>
+  </div>
 </div>
 {% endblock %}
