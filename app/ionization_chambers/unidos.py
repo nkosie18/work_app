@@ -63,7 +63,7 @@ class Unidos:
         
     def disconnect(self):      # Member function to disconnect from the electrometer
         print("\n\nReleasing Keypad & Disconnecting")
-        self.telegram("T1") if self.webline else self.telegram("Te1")  # Unlock the keypad.
+        self.telegram("T1") if self.webline else self.telegram("T1")  # Unlock the keypad.
         self.s.close()         # Close the serial port.
         
     def telegram(self, tele):   # Member function to send a message to the electrometer and recieve a reply. Note: The UNIDOS works on a purely ping-pong relationship. 

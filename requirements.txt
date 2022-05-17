@@ -2,7 +2,7 @@ alembic==1.7.5
 argue==0.3.1
 cached-property==1.5.2
 click==8.0.3
-colorama==0.4.4
+colorama==0.4.4 
 cycler==0.11.0
 Flask==2.0.2
 Flask-Alembic==2.0.1

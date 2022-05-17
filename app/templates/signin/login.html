@@ -1,104 +1,159 @@
-{%extends "signin/base1.html"%}
+{%extends "signin/base1.html"%} {% block head %}
+<script src="{{url_for('static', filename='scripts/signin.js')}}"></script>
+{% endblock %} {%block title%} Sign In {%endblock%} {%block content%}
 
-{%block title%} Sign In {%endblock%}
+<div class="w3-row w3-padding" style="margin-top: 1mm">
+  <div class="w3-col m4 l4">
+    <div class="w3-container w3-padding-64 w3-margin-left">
+      <h1
+        style="
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+            Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          color: whitesmoke;
+        "
+      >
+        Sign In
+      </h1>
+      <form action="" method="POST" novalidate>
+        {{form.hidden_tag()}}
 
-{%block content%}
+        <p style="color: whitesmoke">
+          {{form.username.label}} <br />
+          {{form.username(size=32)}} <br />
+          {% for error in form.username.errors%}
+          <span style="color: rgb(150, 48, 48)">{{error}}</span>
+          {%endfor%}
+        </p>
 
-<div class="w3-row w3-padding" style="margin-top: 1mm;">
-    <div class="w3-col m4 l4">
-        <div class="w3-container w3-padding-64 w3-margin-left">
-            <h1 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; color:whitesmoke;"> Sign In</h1>
-            <form action="" method="POST" novalidate>
-                {{form.hidden_tag()}}
-        
-                <p style="color: whitesmoke;">
-                    {{form.username.label}} <br>
-                    {{form.username(size=32)}} <br>
-                    {% for error in form.username.errors%}
-                        <span style="color: rgb(150, 48, 48);">{{error}}</span>
-                    {%endfor%}
-                </p>
-        
-                <p style="color: whitesmoke;">
-                    {{form.password.label}} <br>
-                    {{form.password(size=32)}} <br>
-                    {% for error in form.username.errors %}
-                        <span style="color: rgb(150, 48, 48);">{{error}}</span>
-                    {%endfor%}
-                </p>
-        
-                <p style="color: whitesmoke;">{{form.remember_me()}}{{form.remember_me.label}}</p>
-        
-                <p> {{form.submit()}}</p>
-        
-            </form>
-        
-        
-        </div>
+        <p style="color: whitesmoke">
+          {{form.password.label}} <br />
+          {{form.password(size=32)}} <br />
+          {% for error in form.username.errors %}
+          <span style="color: rgb(150, 48, 48)">{{error}}</span>
+          {%endfor%}
+        </p>
 
+        <p style="color: whitesmoke">
+          {{form.remember_me()}}{{form.remember_me.label}}
+        </p>
+
+        <p>{{form.submit()}}</p>
+      </form>
     </div>
-    <div class="w3-col m4 l4">
-        <div class="w3-container">
-            <h1 style="color: whitesmoke;">Dmax Points Calc</h1>
-            <div class="w3-row w3-padding" style="margin-top: 1mm;">
-                <h3 style="color: whitesmoke;">Fraction Number </h3> 
-                <p style="color: whitesmoke;"> <input type="text" id="numbfr" class  style="height: 0.8cm; width:2cm"> Fractions </p>
-                <h3 style="color: whitesmoke;"> Dose per fraction</h3>
-                <div class="w3-responsive">
-                    <table class="w3-table-all" style="width: 10cm; margin-top:5mm;" id ="calctbl">
-                        <tr>
-                            <td style="width: 2.5cm;"> Beam 1</td> <td> <input type="text" id="beam1" placeholder="Undefined" style="width: 2cm;"> </td> <td id="ivdb1"> Undefined </td>
-                        </tr>
+  </div>
+  <div class="w3-col m4 l4">
+    <div class="w3-container">
+      <h1 style="color: whitesmoke">Dmax Points Calc</h1>
+      <div class="w3-row w3-padding" style="margin-top: 1mm">
+        <h3 style="color: whitesmoke">Fraction Number</h3>
+        <p style="color: whitesmoke">
+          <input
+            type="text"
+            id="numbfr"
+            class
+            style="height: 0.8cm; width: 2cm"
+          />
+          Fractions
+        </p>
+        <h3 style="color: whitesmoke">Dose per fraction</h3>
+        <div class="w3-responsive">
+          <table
+            class="w3-table-all"
+            style="width: 10cm; margin-top: 5mm"
+            id="calctbl"
+          >
+            <tr>
+              <td style="width: 2.5cm">Beam 1</td>
+              <td>
+                <input
+                  type="text"
+                  id="beam1"
+                  placeholder="Undefined"
+                  style="width: 2cm"
+                />
+              </td>
+              <td id="ivdb1">Undefined</td>
+            </tr>
 
-                        <tr>
-                            <td style="width: 2.5cm;"> Beam 2</td> <td> <input type="text" id="beam2" placeholder="Undefined" style="width: 2cm;"> </td> <td id="ivdb2"> Undefined </td>
-                        </tr>
+            <tr>
+              <td style="width: 2.5cm">Beam 2</td>
+              <td>
+                <input
+                  type="text"
+                  id="beam2"
+                  placeholder="Undefined"
+                  style="width: 2cm"
+                />
+              </td>
+              <td id="ivdb2">Undefined</td>
+            </tr>
 
-                        <tr>
-                            <td style="width: 2.5cm;"> Beam 3</td> <td> <input type="text" id="beam3" placeholder="Undefined" style="width: 2cm;"> </td> <td id="ivdb3"> Undefined </td>
-                        </tr>
+            <tr>
+              <td style="width: 2.5cm">Beam 3</td>
+              <td>
+                <input
+                  type="text"
+                  id="beam3"
+                  placeholder="Undefined"
+                  style="width: 2cm"
+                />
+              </td>
+              <td id="ivdb3">Undefined</td>
+            </tr>
 
-                        <tr>
-                            <td style="width: 2.5cm;"> Beam 4</td> <td> <input type="text" id="beam4" placeholder="Undefined" style="width: 2cm;"> </td> <td id="ivdb4"> Undefined </td>
-                        </tr>
+            <tr>
+              <td style="width: 2.5cm">Beam 4</td>
+              <td>
+                <input
+                  type="text"
+                  id="beam4"
+                  placeholder="Undefined"
+                  style="width: 2cm"
+                />
+              </td>
+              <td id="ivdb4">Undefined</td>
+            </tr>
 
-                        <tr>
-                            <td style="width: 2.5cm;"> Beam 5</td> <td> <input type="text" id="beam5" placeholder="Undefined" style="width: 2cm;"> </td> <td id="ivdb5"> Undefined </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
+            <tr>
+              <td style="width: 2.5cm">Beam 5</td>
+              <td>
+                <input
+                  type="text"
+                  id="beam5"
+                  placeholder="Undefined"
+                  style="width: 2cm"
+                />
+              </td>
+              <td id="ivdb5">Undefined</td>
+            </tr>
+          </table>
         </div>
+      </div>
     </div>
-    <div class="w3-col m4 l4">
+  </div>
+  <div class="w3-col m4 l4">
+    <div class="w3-container w3-padding-64 w3-margin-left">
+      <h1 style="color: whitesmoke">{{today}}</h1>
+      <h6 style="color: whitesmoke; margin-top: -5mm">{{date1}}</h6>
+      <table class="w3-table">
+        <tr>
+          <td>
+            <h2 style="color: whitesmoke; margin-top: -3mm">
+              <u>Physics Daily QA List</u>
+            </h2>
+          </td>
+        </tr>
+        {%for each in roster1%}
 
-        <div class="w3-container w3-padding-64 w3-margin-left">
-
-            <h1 style="color: whitesmoke;">{{today}}</h1> 
-            <h6 style="color: whitesmoke; margin-top:-5mm;">{{date1}}</h6> 
-                <table class="w3-table">
-                    <tr><td> <h2 style="color: whitesmoke; margin-top:-3mm;"><u>Physics Daily QA List</u></h2></td></tr>    
-                    {%for each in roster1%}
-
-                        <tr>
-                            <td>
-                                <h6 style="color: whitesmoke;"> {{each}} </h6>
-                            </td>
-                        </tr>
-                    {%endfor%}
-
-                </table>
-
-        </div>
-
-       
-
-
-            
-
+        <tr>
+          <td>
+            <h6 style="color: whitesmoke">{{each}}</h6>
+          </td>
+        </tr>
+        {%endfor%}
+      </table>
     </div>
-
+  </div>
 </div>
 
 {%endblock%}

@@ -1,90 +1,99 @@
-{% extends "base.html" %}
-
-{%block title%}Chamber mantainance form{%endblock%}
-
+{% extends "base.html" %} {%block title%}Chamber mantainance form{%endblock%}
 {%block content%}
 
-<div class="w3-cntainer" style="margin-top:10mm;">
-    <h1>Check source measurements with a Sr-90 source</h1>
-    <div style="margin-left: 20mm;">
-        <table class="w3-table-all" style="width: 40mm;">
-            <tr>
-                <td>Temperature:</td> <td>{{temp}}</td>
-            </tr>
-            <tr>
-                <td>Pressure:</td> <td>{{press}}</td>
-            </tr>
-        </table>
-
+<div class="w3-cntainer" style="margin-top: 10mm">
+  <h1>Check source measurements with a Sr-90 source</h1>
+  <div style="margin-left: 20mm">
+    <table class="w3-table-all" style="width: 40mm">
+      <tr>
+        <td>Temperature:</td>
+        <td>{{temp}}</td>
+      </tr>
+      <tr>
+        <td>Pressure:</td>
+        <td>{{press}}</td>
+      </tr>
+    </table>
+    <div class="w3-row">
+      <div class="w3-col m5 l5">
         <form class="w3-form" action="" method="POST" novalidate>
-            {{form.hidden_tag()}}
-            <p>
-                {{form.date.label}}
-                {{form.date}} <br>
-                {% for error in form.date.errors %}
-                    <span style="color: red;">{{error}}</span>
-                {%endfor%}
-            </p>
-            
-            <p>
-                {{form.chamber.label}}
-                {{form.chamber}} <br>
-                {% for error in form.chamber.errors %}
-                    <span style="color: red;">{{error}}</span>
-                {%endfor%}
-            </p>
-            <p>
-                {{form.source.label}}
-                {{form.source}} <br>
-                {% for error in form.source.errors %}
-                    <span style="color: red;">{{error}}</span>
-                {%endfor%}
-            </p>
-            
-            <p>
-                {{form.electrometer.label}} 
-                {{form.electrometer(size=20)}} <br>
-                {% for error in form.electrometer.errors %}
-                    <span style="color: red;">{{error}}</span>
-                {%endfor%}
-            </p> 
-    
-            <p>
-                {{form.elect_voltage.label}} 
-                {{form.elect_voltage(size=20)}} <br>
-                {% for error in form.elect_voltage.errors %}
-                    <span style="color: red;">{{error}}</span>
-                {%endfor%}
-            </p>
+          {{form.hidden_tag()}}
 
-            <p>
-                {{form.reading1.label}} 
-                {{form.reading1}} <br>
-                {% for error in form.reading1.errors %}
-                    <span style="color: red;">{{error}}</span>
-                {%endfor%}
-            </p>
-            <p>
-                {{form.reading2.label}} 
-                {{form.reading2}} <br>
-                {% for error in form.reading2.errors %}
-                    <span style="color: red;">{{error}}</span>
-                {%endfor%}
-            </p>
-            <p>
-                {{form.reading3.label}} 
-                {{form.reading3}} <br>
-                {% for error in form.reading3.errors %}
-                    <span style="color: red;">{{error}}</span>
-                {%endfor%}
-            </p>
-    
+          <div class="w3-row">
+            <div class="w3-col m6 l6">
+              <p>{{form.date.label}}</p>
+            </div>
+            <div class="w3-col m6 l6"><p>{{form.date}}</p></div>
+          </div>
+          {% for error in form.date.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+
+          <div class="w3-row">
+            <div class="w3-col m6 l6"><p>{{form.chamber.label}}</p></div>
+            <div class="w3-col m6 l6"><p>{{form.chamber}}</p></div>
+          </div>
+          {% for error in form.chamber.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+
+          <div class="w3-row">
+            <div class="w3-col m6 l6"><p>{{form.source.label}}</p></div>
+            <div class="w3-col m6 l6"><p>{{form.source}}</p></div>
+          </div>
+          {% for error in form.source.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+
+          <div class="w3-row">
+            <div class="w3-col m6 l6"><p>{{form.electrometer.label}}</p></div>
+            <div class="w3-col m6 l6">
+              <p>{{form.electrometer(size=20)}}</p>
+            </div>
+          </div>
+          {% for error in form.electrometer.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+          <div class="w3-row">
+            <div class="w3-col m6 l6"><p>{{form.elect_voltage.label}}</p></div>
+            <div class="w3-col m6 l6">
+              <p>{{form.elect_voltage(size=20)}}</p>
+            </div>
+          </div>
+          {% for error in form.elect_voltage.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+          <div class="w3-row">
+            <div class="w3-col m6 l6"><p>{{form.reading1.label}}</p></div>
+            <div class="w3-col m6 l6"><p>{{form.reading1}} mGy</p></div>
+          </div>
+          {% for error in form.reading1.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+
+          <div class="w3-row">
+            <div class="w3-col m6 l6"><p>{{form.reading2.label}}</p></div>
+            <div class="w3-col m6 l6"><p>{{form.reading2}} mGy</p></div>
+          </div>
+          {% for error in form.reading2.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+
+          <div class="w3-row">
+            <div class="w3-col m6 l6"><p>{{form.reading3.label}}</p></div>
+            <div class="w3-col m6 l6"><p>{{form.reading3}} mGy</p></div>
+          </div>
+          {% for error in form.reading3.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+          <div class="w3-row">
             <p>{{form.submit()}}</p>
+          </div>
         </form>
-
-
+      </div>
+      <div class="w3-col m7 l7"><p></p></div>
     </div>
-
+  </div>
 </div>
 
 {%endblock%}

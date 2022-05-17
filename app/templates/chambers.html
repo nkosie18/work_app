@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block head %}
+<script src="{{url_for('static', filename='scripts/chambers.js')}}"> </script>
+{% endblock %}
+
 {% block title %} Ionization Chambers {%endblock%}
 
 {% block content%}

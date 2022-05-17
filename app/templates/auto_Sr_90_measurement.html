@@ -1,0 +1,96 @@
+{% extends "base.html" %} {% block title %} Automatic Measurements Sr-90 checks
+{% endblock %} {% block head %}
+<script src="{{url_for('static', filename='scripts/electrometer.js')}}"></script>
+{% endblock %} {% block content %}
+<div class="w3-container-fluid" style="margin-top: 8mm">
+  <div class="connecting-alert w3-panel w3-pale-yellow" style="display: none">
+    <i class="fa fa-cog w3-spin"></i>
+    Connecting to an electrometer.
+  </div>
+  <div class="success-alert w3-panel w3-pale-green" style="display: none">
+    Electrometer connected successfully!
+  </div>
+  <div class="failed-alert w3-panel w3-pale-red" style="display: none">
+    Failed to connect to an electrometer!!!
+  </div>
+</div>
+<div class="w3-container" style="margin-top: 5mm">
+  <h1>Ionization chamber stability checks using Sr-90 source.</h1>
+  <div class="w3-row">
+    <div class="w3-col m4 l4 left_small_row">
+      <div class="w3-row Temp_and_press">
+        <p>Temperature: {{temp_press_obj.temp}} <sup>0</sup>C</p>
+        <p>Pressure: {{temp_press_obj.press}} mmHg</p>
+      </div>
+      <div class="w3-container-responsive">
+        <table class="w3-table-all" style="width: auto">
+          <tr>
+            <td>Electrometer:</td>
+            <td>
+              <select name="electrometer" class="selected_electrometer">
+                <option value="unidos">UNIDOS 1</option>
+                <option value="beamScan">BEAMSCAN</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Source ID:</td>
+            <td>
+              <select name="source" class="selected_source">
+                <option value="sn_48002-0762">Sr-90 (48002-0762)</option>
+                <option value="sn_8921-1732">Sr-90 (8921-1732)</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="w3-col m8 l8 right_larg_row">
+      <div class="container">
+        <div class="w3-row connect_electrometer">
+          <div class="w3-col m5 l5">
+            <div
+              class="electrometer1 w3-panel w3-pale-red w3-border w3-center"
+              style="
+                width: 80mm;
+                height: 20mm;
+                vertical-align: middle;
+                line-height: 20mm;
+              "
+            >
+              NO Electrometer Connected
+            </div>
+          </div>
+          <div class="w3-col m6 l6">
+            <button id="connect" class="w3-button w3-blue w3-round">
+              Connect
+            </button>
+            <button
+              id="disconnect"
+              class="w3-button w3-blue w3-round"
+              style="display: none"
+            >
+              Disconnect
+            </button>
+          </div>
+        </div>
+        <div class="w3-row">
+          <table class="w3-table">
+            <tr>
+              <td>Detector:</td>
+              <td><select name="detectors" id="chamb_list"></select></td>
+              <td>
+                <button class="w3-button w3-blue w3-round">
+                  Start Measurements
+                </button>
+              </td>
+            </tr>
+          </table>
+          <div id="setMeas" class="w3-row"></div>
+          <div class="w3-col m4 l4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

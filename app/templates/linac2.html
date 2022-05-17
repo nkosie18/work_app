@@ -1,55 +1,87 @@
-{% extends 'base.html' %}
-{% block title %}
-Linear Accelerators
-{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block head %}
+<script src="{{url_for('static', filename='scripts/linacs.js')}}"></script>
+{% endblock %} {% block title %} Linear Accelerators {% endblock %} {% block
+content %}
 
 <div class="w3-display-container w3-row w3-nkosie">
-    <img
+  <img
     src="{{url_for('static', filename='images/versa_m.jpg')}}"
     class="w3-right w3-hide-small"
     width="500"
     height="auto"
   />
 
-  <h1 class="w3-left" style="margin-top: 48mm; margin-left: 10mm;">Linacs</h1>
+  <h1 class="w3-left" style="margin-top: 48mm; margin-left: 10mm">Linacs</h1>
 </div>
 
 <div class="">
   <div class="w3-row">
     <div class="w3-col l9 m10">
-
-
       <div id="linacs" class="w3-bar w3-blackies">
         {% for item in linacs %}
-        <button id = "{{item.n_name}}" class="w3-bar-item w3-button w3-large w3-border-left w3-border-top w3-nkosie w3-enabled tablink">Linac {{item.n_name[1]}}</button>
+        <button
+          id="{{item.n_name}}"
+          class="w3-bar-item w3-button w3-large w3-border-left w3-border-top w3-nkosie w3-enabled tablink"
+        >
+          Linac {{item.n_name[1]}}
+        </button>
         {% endfor %}
-        
       </div>
-      <div id ="bodyup" class="w3-border-left w3-border-right w3-border-bottom" style="display: none;">
+      <div
+        id="bodyup"
+        class="w3-border-left w3-border-right w3-border-bottom"
+        style="display: none"
+      >
         <div class="w3-responsive">
           <div id="qabuttons" class="w3-bar w3-light-grey">
-            <button id = "trs398"class="w3-bar-item w3-button tablinkr w3-grey" style="width: 55mm; text-align:left">TRS-398</button>
-            <button id = "energy_chk" class="w3-bar-item w3-button tablinkr w3-grey" style="width: 55mm; text-align:left">Energy Checks</button>
-            <button id = "flat_sym" class="w3-bar-item w3-button tablinkr w3-grey" style="text-align:left">Flatness and Symmetry</button>
-            <button id = "machan" class="w3-bar-item w3-button tablinkr w3-grey" style="width: 55mm; text-align:left">Machanical Checks</button>
+            <button
+              id="trs398"
+              class="w3-bar-item w3-button tablinkr w3-grey"
+              style="width: 55mm; text-align: left"
+            >
+              TRS-398
+            </button>
+            <button
+              id="energy_chk"
+              class="w3-bar-item w3-button tablinkr w3-grey"
+              style="width: 55mm; text-align: left"
+            >
+              Energy Checks
+            </button>
+            <button
+              id="flat_sym"
+              class="w3-bar-item w3-button tablinkr w3-grey"
+              style="text-align: left"
+            >
+              Flatness and Symmetry
+            </button>
+            <button
+              id="machan"
+              class="w3-bar-item w3-button tablinkr w3-grey"
+              style="width: 55mm; text-align: left"
+            >
+              Machanical Checks
+            </button>
           </div>
         </div>
-        <div class="w3-row w3-padding" style="display: none;" >
+        <div class="w3-row w3-padding" style="display: none">
           <div id="qcCheks" class="w3-container w3-responsive">
             <table id="data_table" class="w3-table-all">
-              <tr><td>Date</td><td>Temperature</td><td>Pressure</td><td>Ionization Chamber</td><td>Bias Voltage</td> <td>Dose <sub>Z_max</sub></td><td>Percent diff</td></tr> 
+              <tr>
+                <td>Date</td>
+                <td>Temperature</td>
+                <td>Pressure</td>
+                <td>Ionization Chamber</td>
+                <td>Bias Voltage</td>
+                <td>Dose <sub>Z_max</sub></td>
+                <td>Percent diff</td>
+              </tr>
             </table>
-            
-  
           </div>
         </div>
- 
       </div>
 
-      
-<!---
+      <!---
     <button id = ${} class="w3-button w3-blue w3-round w3-border">View</button>
       <div id="L1" class="w3-border-left w3-border-right w3-border-bottom machine">
         <div class="w3-responsive">
@@ -103,10 +135,6 @@ Linear Accelerators
       </div>
 
     -->
-    
-
-
-
 
       <!--
         <div class="w3-responsive">
@@ -127,23 +155,12 @@ Linear Accelerators
       -->
     </div>
 
-    <div class="w3-col l3 m2"> 
-      <div class="w3-container">
-
-        
-
-      </div>
+    <div class="w3-col l3 m2">
+      <div class="w3-container"></div>
     </div>
-    
   </div>
-  
 
-  <div>
-
-  </div>
-  
-
-
+  <div></div>
 </div>
 
 <!--
@@ -177,4 +194,4 @@ Linear Accelerators
   }
 </script>
 -->
-{% endblock %} 
+{% endblock %}

@@ -1,3 +1,4 @@
+from logging import raiseExceptions
 from flask import Blueprint, request, flash, redirect, url_for, render_template, jsonify
 from flask_login import login_required
 from sqlalchemy.sql.expression import asc
@@ -71,8 +72,66 @@ def select_measurements_method():
 @ion_chamber_bp.route('/sr_90_automated')
 @login_required
 def auto_measure_sr_checks():
+    chambers = Ionization_chambers.query.all()
+    temp_press_obj = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
 
-    return "work needed here"
+    return render_template('auto_Sr_90_measurement.html', chambers = chambers, temp_press_obj = temp_press_obj )
+
+##Get the list of chambers from the database
+@ion_chamber_bp.route('/sr_checks/chamber_list')
+@login_required
+def list_chambers():
+    today = datetime.now().date()
+    chambers = Ionization_chambers.query.join(Sr_checks.query.filte(Sr_checks.date != datetime.now().date() )).all()
+    list_chamb = []
+    for each in chambers:
+        list_chamb.append('{}-{}'.format(each.make, each.sn))
+    return jsonify({'status':'success', 'chamb_list':list_chamb})
+
+
+
+@ion_chamber_bp.route('/sr_checks/disconnect electrometer')
+@login_required
+def disconnect_electrometer():
+    try:
+        e.disconnect()
+        return jsonify({'status':'success', 'message':'Electrometer disconnected successfully'})
+    except:
+        return jsonify({'status':'failor', 'message': 'I dont know what the problem is'})
+
+@ion_chamber_bp.route('/sr_checks/checkConnection')
+@login_required
+def check_connections():
+    try:
+        elect = e.telegram('PTW')[0:6]
+        if  elect == "UNIDOS":
+            serial_number = e.telegram("SER")
+            return jsonify({'status':'success', 'message':'Electrometer already connected', 'electrometer': 'UNIDOS-'+serial_number})
+        elif e.telegram('PTW') == "NULL SERIAL":
+            return jsonify({'status':'failor', 'message': 'No electrometer is connected'})
+    except:
+        print('There is something wrong')
+        return jsonify({'status':'failor', 'message': 'An Unexpected error has occured'})
+
+
+@ion_chamber_bp.route('/sr_checks/connect electrometer')
+@login_required
+def connect_electrometer():
+    try:
+        if e.telegram('PTW')[0:6] == 'UNIDOS':
+            serial_number = e.telegram("SER")
+            return jsonify({'status':'success', 'message':'Electrometer already connected', 'electrometer': 'UNIDOS-'+serial_number})
+        else:
+            raise Exception('Unidose not found!')
+            
+    except:
+        if e.connect():
+            if e.telegram('PTW')[0:6] == "UNIDOS":
+                serial_number = e.telegram("SER")
+                return jsonify({'status':'success', 'message': 'Electrometer found', 'electrometer': 'UNIDOS-'+serial_number})
+    else:
+        return jsonify({'status':'failor', 'message': 'No electrometer was found'})
+
 
 @ion_chamber_bp.route('/Sr-90 check source measurement', methods=['GET', 'POST'])
 @login_required
@@ -96,6 +155,7 @@ def sr_checks_m():
             if request.method == 'POST':
                 if form.validate_on_submit():
                     chamber = form.chamber.data
+                    print(chamber[10:])
                     chamb_obj = Ionization_chambers.query.filter_by(sn = chamber[10:]).first()
                     check1 = Sr_checks.query.filter(and_(Sr_checks.date == form.date.data, Sr_checks.ion_chamber_id == chamb_obj.id)).first()
                     if check1 is None:
