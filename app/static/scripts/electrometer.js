@@ -55,7 +55,7 @@ $(document).ready(function () {
             }
           },
         });
-      }, 3000);
+      }, 2000);
     }
   });
 
@@ -77,4 +77,22 @@ $(document).ready(function () {
       },
     });
   });
+  // $.ajax({
+  //   type: "GET",
+  //   url: "/sr_checks/chamber_list",
+  //   success: function (data) {
+  //     var list_chamb_available = data.chamb_list_todo;
+  //     var list_chamb_unavailable = data.chamb_list_done;
+
+  //     for (var i = 0; list_chamb_available.length - 1; i++) {
+  //       $("#chamb_list").append(
+  //         '<option value="' +
+  //           list_chamb_available[i] +
+  //           '">' +
+  //           list_chamb_available[i] +
+  //           "</option>"
+  //       );
+  //     }
+  //   },
+  // });
 });

@@ -78,7 +78,15 @@
           <table class="w3-table">
             <tr>
               <td>Detector:</td>
-              <td><select name="detectors" id="chamb_list"></select></td>
+              <td>
+                <select name="detectors" id="chamb_list">
+                  {%for each in chambers%}
+                  <option value="{{each.sn}}">
+                    {{'{}-{}'.format(each.make, each.sn)}}
+                  </option>
+                  {%endfor%}
+                </select>
+              </td>
               <td>
                 <button class="w3-button w3-blue w3-round">
                   Start Measurements

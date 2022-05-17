@@ -1,7 +1,7 @@
 There are a few things that you need to do after doing changes to the application.
 # the first is to update the git repository using the git commands: 
-git statusn      #This gives you the status of your git repository
-git add --all     #This adds all the changes to made in your local repository and gets them readt to commit
+git status      #This gives you the status of your git repository
+git add --all     #This adds all the changes you made in your local repository and gets them readt to commit
 git commit -m "message of the changes to to be commited, give details of the changes done since the last commit"
 
 because the application is now on heroku, the git push command will not work. instead, we need to run the:

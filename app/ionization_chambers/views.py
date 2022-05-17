@@ -72,7 +72,7 @@ def select_measurements_method():
 @ion_chamber_bp.route('/sr_90_automated')
 @login_required
 def auto_measure_sr_checks():
-    chambers = Ionization_chambers.query.all()
+    chambers = Ionization_chambers.query.join(Sr_checks.query.filter(Sr_checks.date != datetime.now().date()).subquery()).all()
     temp_press_obj = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
 
     return render_template('auto_Sr_90_measurement.html', chambers = chambers, temp_press_obj = temp_press_obj )
@@ -81,12 +81,20 @@ def auto_measure_sr_checks():
 @ion_chamber_bp.route('/sr_checks/chamber_list')
 @login_required
 def list_chambers():
-    today = datetime.now().date()
-    chambers = Ionization_chambers.query.join(Sr_checks.query.filte(Sr_checks.date != datetime.now().date() )).all()
-    list_chamb = []
-    for each in chambers:
-        list_chamb.append('{}-{}'.format(each.make, each.sn))
-    return jsonify({'status':'success', 'chamb_list':list_chamb})
+    chambers1 = Ionization_chambers.query.join(Sr_checks.query.filter(Sr_checks.date != datetime.now().date()).subquery()).all()
+    chambers2 = Ionization_chambers.query.join(Sr_checks.query.filter(Sr_checks.date == datetime.now().date()).subquery()).all()
+    list_chamb2 = []
+    list_chamb1 = []
+    for each in chambers1:
+        list_chamb1.append('{}-{}'.format(each.make, each.sn))
+
+    for each in chambers2:
+        list_chamb2.append('{}-{}'.format(each.make, each.sn))
+    return jsonify({'status':'success', 'chamb_list_todo':list_chamb1, 'chamb_list_done': list_chamb2})
+
+    
+
+
 
 
 
