@@ -88,14 +88,38 @@
                 </select>
               </td>
               <td>
-                <button class="w3-button w3-blue w3-round">
+                <button id="start_meas" class="w3-button w3-blue w3-round">
                   Start Measurements
+                </button>
+              </td>
+
+              <td>
+                <button
+                  id="null"
+                  class="w3-button w3-blue w3-round"
+                  style="display: none"
+                >
+                  Null Electrometer
                 </button>
               </td>
             </tr>
           </table>
           <div id="setMeas" class="w3-row"></div>
-          <div class="w3-col m4 l4"></div>
+          <div class="m_inProgress w3-col m4 l4" style="display: none">
+            <h1>Measurements in Progress ....</h1>
+            <p>PLEASE DO NOT REFRESH THE PAGE</p>
+          </div>
+          <div class="m_comSuccess w3-col m4 l4" style="display: none">
+            <h1>Measurements Completed Successfully ....</h1>
+            <p>
+              <button
+                onclick="location.href='{{url_for('ion_chamber.auto_measure_sr_checks')}}'"
+                class="w3-button w3-blue w3-round"
+              >
+                Next Chamber
+              </button>
+            </p>
+          </div>
         </div>
       </div>
     </div>

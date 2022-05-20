@@ -1,7 +1,6 @@
-from logging import raiseExceptions
+import time
 from flask import Blueprint, request, flash, redirect, url_for, render_template, jsonify
-from flask_login import login_required
-from sqlalchemy.sql.expression import asc
+from flask_login import login_required, current_user
 from app.ionization_chambers.models import Ionization_chambers, Sr_checks, Chamber_calfactor, Temp_press
 from app.ionization_chambers.forms import CheckSourceForm, NewChamberForm, CalibrationCertForm, TempPressForm
 from flask_login import current_user
@@ -14,6 +13,12 @@ from app.ionization_chambers.unidos import Unidos
 
 
 e = Unidos()
+
+def selector(abc :str):
+    while True:
+        e.telegram("U")
+        if e.telegram("?W") == abc:
+            break
 
 ion_chamber_bp = Blueprint('ion_chamber',__name__, template_folder= 'templates', static_folder='static')
 reg_chamber_bp = Blueprint('reg_chamber',__name__, template_folder= 'templates', static_folder='static')
@@ -72,28 +77,72 @@ def select_measurements_method():
 @ion_chamber_bp.route('/sr_90_automated')
 @login_required
 def auto_measure_sr_checks():
-    chambers = Ionization_chambers.query.join(Sr_checks.query.filter(Sr_checks.date != datetime.now().date()).subquery()).all()
+    
+    chamber_used_today = Ionization_chambers.query.join(Sr_checks.query.filter(Sr_checks.date == datetime.now().date()).subquery()).all()
+    chambers = Ionization_chambers.query.all()
+    list_chambers = []
+    for each in chambers:
+        if not each in chamber_used_today:
+            list_chambers.append(each)
     temp_press_obj = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
 
-    return render_template('auto_Sr_90_measurement.html', chambers = chambers, temp_press_obj = temp_press_obj )
+    return render_template('auto_Sr_90_measurement.html', chambers = list_chambers, temp_press_obj = temp_press_obj )
+@ion_chamber_bp.route('/sr_checks/null')
+@login_required
+def null_electrometer():
+    if e.telegram("N") == 'N':
+        while True:
+            time.sleep(1)
+            if e.telegram("?S") in ['RES', 'E14']:
+                break
+        if e.telegram("?S") =='E14':
+            e.telegram("E")
+            return jsonify({'status': 'failor', 'message':'Nulling of electrometer not possible.'})
+        if e.telegram('?S') == 'RES':
+            return jsonify({'status':'success', 'message':'Electrometer nulling completed successfully.'})
+
 
 ##Get the list of chambers from the database
-@ion_chamber_bp.route('/sr_checks/chamber_list')
+@ion_chamber_bp.route('/sr_checks/auto_measure', methods=['POST'])
 @login_required
-def list_chambers():
-    chambers1 = Ionization_chambers.query.join(Sr_checks.query.filter(Sr_checks.date != datetime.now().date()).subquery()).all()
-    chambers2 = Ionization_chambers.query.join(Sr_checks.query.filter(Sr_checks.date == datetime.now().date()).subquery()).all()
-    list_chamb2 = []
-    list_chamb1 = []
-    for each in chambers1:
-        list_chamb1.append('{}-{}'.format(each.make, each.sn))
-
-    for each in chambers2:
-        list_chamb2.append('{}-{}'.format(each.make, each.sn))
-    return jsonify({'status':'success', 'chamb_list_todo':list_chamb1, 'chamb_list_done': list_chamb2})
-
+def auto_measure():
+    selected_chamb = request.form['selected_chamber'].strip()
+    selected_elect = request.form['selected_electrometer'].strip()
+    selected_source = request.form['selected_source'].strip()
+    selected_chamb_sn = selected_chamb.split('-')[2]
+    if len(selected_chamb_sn)< 5:
+        new_sn = selected_chamb_sn[1:]
+    elif len(selected_chamb_sn) > 4:
+        new_sn = selected_chamb_sn[2:]
+    print(new_sn)
+    e.get_to_home()
+    e.change_mode_dose()
+    time.sleep(1)
+    e.select_chamber(new_sn)
     
-
+    e.change_range(1)
+    measurement_list = []
+    for x in range (0,3):
+        if e.telegram("I") == 'I':
+            time.sleep(2)
+            while True:
+                if e.telegram("?S") == 'HLD':
+                    break
+                time.sleep(1)
+            ms = e.telegram("V").split('s')[1]
+            m1 = ms.lstrip().split(' ')[0]
+            m2 = float(m1)*1000
+            measurement_list.append(m2)
+            
+    if len(measurement_list) == 3:
+        chamber_in_use = Ionization_chambers.query.filter_by(sn = selected_chamb_sn).first()
+        electrometer1 = '{} {}'.format(selected_elect.split(' ')[0], e.telegram("SER"))
+        date1 = datetime.now().date()
+        temp_press1 = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
+        new_record = Sr_checks(date = date1, sr_source = selected_source, m_electrometer = electrometer1, elect_voltage = '+ 400V', m_reading1 = measurement_list[0], m_reading2 =measurement_list[1], m_reading3 = measurement_list[2], m_temp = temp_press1.temp, m_press = temp_press1.press, ion_chamber_id = chamber_in_use.id, hospitals_id = chamber_in_use.institution_id)
+        db.session.add(new_record)
+        db.session.commit()
+    return jsonify({'status':'success'})
 
 
 
@@ -137,8 +186,8 @@ def connect_electrometer():
             if e.telegram('PTW')[0:6] == "UNIDOS":
                 serial_number = e.telegram("SER")
                 return jsonify({'status':'success', 'message': 'Electrometer found', 'electrometer': 'UNIDOS-'+serial_number})
-    else:
-        return jsonify({'status':'failor', 'message': 'No electrometer was found'})
+        else:
+            return jsonify({'status':'failor', 'message': 'No electrometer was found'})
 
 
 @ion_chamber_bp.route('/Sr-90 check source measurement', methods=['GET', 'POST'])
@@ -207,7 +256,7 @@ def chamberViewProcess():
 
     chamber_cert = Chamber_calfactor.query.filter_by(chamber_id1 = chamb.id).all()
 
-    sr_checks = Sr_checks.query.filter(and_(Sr_checks.ion_chamber_id == chamb.id, Sr_checks.base_line != True)).order_by(asc(Sr_checks.date)).all()
+    sr_checks = Sr_checks.query.filter(and_(Sr_checks.ion_chamber_id == chamb.id, Sr_checks.base_line != True)).order_by(desc(Sr_checks.date)).all()
     jata = []
     cert_data = []
     if sr_checks !="":

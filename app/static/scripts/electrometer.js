@@ -9,7 +9,6 @@ $(document).ready(function () {
         );
         alert_message("success-alert");
         $(".electrometer1").text(data["electrometer"] + " connected!");
-        console.log(data["electrometer"]);
         $(".electrometer1").removeClass("w3-pale-red");
         $(".electrometer1").addClass("w3-pale-green");
         $("#connect").css("display", "none");
@@ -49,6 +48,7 @@ $(document).ready(function () {
               $(".electrometer1").addClass("w3-pale-green");
               $("#connect").css("display", "none");
               $("#disconnect").css("display", "block");
+              $("#null").css("display", "none");
             }
             if (data["status"] == "failor") {
               alert_message("failed-alert");
@@ -61,6 +61,7 @@ $(document).ready(function () {
 
   $("#disconnect").click(function (e) {
     e.preventDefault();
+
     $.ajax({
       type: "GET",
       url: "/sr_checks/disconnect electrometer",
@@ -72,11 +73,83 @@ $(document).ready(function () {
           $(".electrometer1").addClass("w3-pale-red");
           $(".electrometer1").removeClass("w3-pale-green");
           $("#connect").css("display", "block");
+          $("#start_meas").css("display", "none");
           $("#disconnect").css("display", "none");
+          $("#null").css("display", "none");
         }
       },
     });
   });
+
+  $("#start_meas").click(function (e) {
+    e.preventDefault();
+    var selected_ch = $("#chamb_list :selected").text();
+    var electrometer = $(".selected_electrometer :selected").text();
+    var source = $(".selected_source :selected").text();
+    $("#disconnect").css("display", "none");
+    $("#null").css("display", "none");
+    $(".success-alert").text("Measurements started successfully.");
+    alert_message("success-alert");
+    $(".electrometer1").text("Measurement in Progress....");
+    setTimeout(function () {
+      $("#start_meas").css("display", "none");
+    }, 1000);
+    $(".m_inProgress").css("display", "block");
+    $.ajax({
+      type: "POST",
+      url: "/sr_checks/auto_measure",
+      data: {
+        selected_chamber: selected_ch,
+        selected_electrometer: electrometer,
+        selected_source: source,
+      },
+      success: function (data) {
+        if (data["status"] == "success") {
+          $(".m_inProgress").css("display", "none");
+          $(".m_comSuccess").css("display", "block");
+        }
+      },
+    });
+  });
+
+  // $("#next_m").click(function (e) {
+  //   e.preventDefault();
+  //   location.reload();
+  // });
+
+  $("#null").click(function (e) {
+    e.preventDefault();
+
+    $(".success-alert").text("Nulling electrometer started successfully.");
+    alert_message("success-alert");
+    $(".electrometer1").text("Nulling electrometer in Progress....");
+    setTimeout(function () {
+      $("#null").css("display", "none");
+      $("#disconnect").css("display", "none");
+      $("#start_meas").css("display", "none");
+    }, 1000);
+    $.ajax({
+      type: "GET",
+      url: "/sr_checks/null",
+      success: function (data) {
+        if (data["status"] == "success") {
+          $(".success-alert").text(
+            "Nulling electrometer completed successfully."
+          );
+          alert_message("success-alert");
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        }
+        if (data["status"] == "failor") {
+          $(".failed-alert").text(data["message"]);
+          alert_message("failed-alert");
+          $(".electrometer1").text("Nulling of Electrometer Not Possible....");
+        }
+      },
+    });
+  });
+
   // $.ajax({
   //   type: "GET",
   //   url: "/sr_checks/chamber_list",

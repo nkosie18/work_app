@@ -222,7 +222,8 @@ class Unidos:
         #time.sleep(0.1)
         self.get_to_home()
 
-    def select_chamber(self, chamber:str):
+    def select_chamber(self, chamber):
+        self.get_to_home()
         while True: 
             check = self.telegram("?W")
             if check == "03":
@@ -234,16 +235,22 @@ class Unidos:
         self.telegram("E")
         #time.sleep(0.1)
         self.telegram("E")
-        while True:
-            chack = self.telegram("V").split(" ")[4]
-            if chack == chamber:
-                break
-            else:
-                self.telegram("D")
-                #time.sleep(0.1)
+        time.sleep(1)
+        while self.telegram("V").split(' ')[4] != chamber:
+            print(self.telegram("V"))
+            time.sleep(2)
+            self.telegram("U")
+        print(self.telegram("V"))
         self.telegram("E")
-        time.sleep(5.1)
+        time.sleep(3.1)
         self.get_to_home()
+
+    def change_range(self, rng:int):
+        if rng in [0, 1]:
+            self.telegram("R"+ str(rng) )
+        else:
+            raise Exception('Out of range error')
+
 
     
 '''
