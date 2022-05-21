@@ -19,6 +19,8 @@ class User(UserMixin, db.Model):
     institution_id = db.Column(db.Integer,  db.ForeignKey("institution.id", ondelete='CASCADE'))
     b_trs398_photons = db.relationship('Trs398_photons', backref='physicist_phot', lazy='dynamic', passive_deletes=True)
     b_trs398_electrons = db.relationship('Trs398_electrons', backref='physicist_elec', lazy='dynamic', passive_deletes=True)
+    b_pdd_photons = db.relationship('Pdd_data_photons', backref='added_by_p', lazy = 'dynamic', passive_deletes=True)
+    b_pdd_electrons = db.relationship('Pdd_data_electrons', backref='added_by_e', lazy = 'dynamic', passive_deletes=True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, request
-from app.trs398.models import Trs398_electrons, Trs398_photons
+from app.trs398.models import Pdd_data_photons, Trs398_electrons, Trs398_photons
 from app.ionization_chambers.models import Ionization_chambers, Chamber_calfactor
 from app.trs398.forms import TRS398_photonsForm
 from flask_login import current_user, login_required
-from sqlalchemy import and_, asc
+from sqlalchemy import and_, asc, desc
 import numpy as np
 from app.trs398.energyCorrections import Kq_photons
 
@@ -43,9 +43,14 @@ def trs_398_photons():
                 m_ratio = m_v1_avrg/m_v2_avrg                                       # M1/M2
                 k_s = round(k_recomb(v_ratio, m_ratio),3)
                 k_pol = round(k_poll(m_v1_avrg, m_v_1_avrg),3)
+                chamber_selected = Ionization_chambers.query.filter_by(sn = form.chamber.data.split('-')[2]).order_by(desc(Chamber_calfactor.date_loaded)).subquery()
+                chamber_ndw = Chamber_calfactor.query.join(chamber_selected).first()
+                beam_energy = 'nmnmnm'
 
-                if form.chamber[0:3] == 'PTW':
-                    chamber_ndw = Chamber_calfactor.query.join(Ionization_chambers.query.filter_by(sn = form.chamber.split('-')[1])).order_by(asc(Chamber_calfactor.date_loaded)).first()
+                #tpr2010 = Pdd_data_photons.query.filter_by(linac_energy_photon = ).order_by()
+
+                #if form.chamber.data[0:3] == 'PTW':
+                    
 
 
                 

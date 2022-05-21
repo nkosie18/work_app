@@ -9,8 +9,7 @@ class TRS398_photonsForm(FlaskForm):
     date = DateField('Date', validators=[DataRequired()], default = datetime.now().date())
     temp = FloatField('Temperature (<sup>0</sup>C)', validators=[DataRequired()])
     press = FloatField('Pressure (hPa)', validators=[DataRequired()])
-    pdd10 = FloatField('PDD<sub>10</sub>', validators=[DataRequired()])
-    tpr_2010 = FloatField('TPR<sub>20,10</sub>', validators=[DataRequired()])
+    photon_energy = SelectField('Photon Energy', choices=['6X-WFF', '10X-WFF', '18X-WFF', '6X-FFF', '10X-FFF'])
     chamber = SelectField('Ionization Chamber', choices=['PTW 30013-0391', 'PTW 30013-011795', 'PTW 30013-011794', 'PTW 30013-0390'])
     electrometer = SelectField('Electrometer', choices=['Unidose-11126', 'BEAM-SCAN','OTHER'])
     electrometer_other = StringField('Electrometer (name and SN)')
@@ -27,20 +26,6 @@ class TRS398_photonsForm(FlaskForm):
     m32_reading = FloatField('M<sub>1</sub> (nC)')
     submit = SelectField('Submit')
 
-
-    def validati_tpr(self, tpr_2010):
-        if isinstance(tpr_2010, float):
-            if tpr_2010 > 1:
-                raise ValidationError (message='The value for Tissue Phantom Ratio at depth 20 cm and 10 cm cannot be greater then 1. Please check this value')
-            elif not isinstance(tpr_2010, float):
-                raise ValidationError(message='This field is used in calculations and only takes numbers, Pleas enter the ratio of measurements at referent depth and depth maximum.')
-    
-    def validati_pdd(self, pdd10):
-        if isinstance(pdd10, float):
-            if pdd10 > 1:
-                raise ValidationError (message='Please enter a value less then 1. This should be charge or absorbed dose readings depending on the detector used, normalized to depth of maximum dose measured on the central axis.')
-            elif not isinstance(pdd10, float):
-                raise ValidationError(message='This field is used in calculations and only takes numbers, Pleas enter the ratio of measurements at referent depth and depth maximum.')
 
 class TRS398_electronForm(FlaskForm):
     date = DateField('Date', validators=[DataRequired()], default = datetime.now().date())
