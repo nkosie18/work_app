@@ -18,8 +18,6 @@ class Trs398_photons(db.Model):
     m_ks = db.Column(db.Float)
     m_kqq = db.Column(db.Float)
     m_dose_ref = db.Column(db.Float)
-    m_dose_max = db.Column(db.Float)
-    m_pdiff = db.Column(db.Float)
     m_electrometer = db.Column(db.String(128))
     m_biasVoltage = db.Column(db.String(10))                      # The electrometer make and model should be added here.
     m_user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'), nullable = False)
@@ -65,6 +63,7 @@ class Pdd_data_photons(db.Model):
     tpr2010 = db.Column(db.Float)
     user_added_by_p = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'))  #added_by_p
     beam_energy_p = db.Column(db.Integer, db.ForeignKey("photon_energy.id", ondelete='CASCADE')) #linac_energy_photon
+    machine_scaned_p = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete = 'CASCADE'))   #machine_pdd_ph
     
 
     def __repr__(self):
@@ -79,6 +78,7 @@ class Pdd_data_electrons(db.Model):
     r80ion = db.Column(db.Float)
     user_added_by_e = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'))  #added_by_e
     beam_energy_e = db.Column(db.Integer, db.ForeignKey("electron_energy.id", ondelete='CASCADE')) #linac_energy_electron
+    machine_scaned_e = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete = 'CASCADE'))   #machine_pdd_el
     
     def __repr__(self):
         return '<%s>' %self.date
