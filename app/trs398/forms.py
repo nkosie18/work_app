@@ -13,16 +13,16 @@ class TRS398_photonsForm(FlaskForm):
     chamber = SelectField('Ionization Chamber', choices=['PTW 30013-0391', 'PTW 30013-011795', 'PTW 30013-011794', 'PTW 30013-0390'])
     electrometer = SelectField('Electrometer', choices=['Unidose-11126', 'BEAM-SCAN','OTHER'])
     bias_voltage1 = SelectField('Voltage(V1)', choices=[-400, -300, -200, -150, -100, 0, +400, +300, +200, +150, +100])
-    m11_reading = FloatField('M<sub>1</sub> (nC)', validators=[DataRequired()])
-    m12_reading = FloatField('M<sub>2</sub> (nC)', validators=[DataRequired()])
-    m13_reading = FloatField('M<sub>3</sub> (nC)', validators=[DataRequired()])
+    m11_reading = FloatField('M1 (nC)', validators=[DataRequired()])
+    m12_reading = FloatField('M2 (nC)', validators=[DataRequired()])
+    m13_reading = FloatField('M3 (nC)', validators=[DataRequired()])
     bias_voltage2 = SelectField('Reduced voltage(V2)', choices=[-200, -150, -100, +200, +150, +100])
     #change voltage for calculation of the recombination correction
-    m21_reading = FloatField('M<sub>1</sub> (nC)')
-    m22_reading = FloatField('M<sub>2</sub> (nC)')
+    m21_reading = FloatField('M1 (nC)')
+    m22_reading = FloatField('M2 (nC)')
     #reversed polarity for calculation of polarity correction
-    m31_reading = FloatField('M<sub>1</sub> (nC)')
-    m32_reading = FloatField('M<sub>1</sub> (nC)')
+    m31_reading = FloatField('M1 (nC)')
+    m32_reading = FloatField('M1 (nC)')
     submit = SelectField('Submit')
 
 
