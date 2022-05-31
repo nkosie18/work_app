@@ -21,6 +21,24 @@ $(document).ready(function () {
         if (tablinke[i].className.includes("w3-disabled")) {
           qachecks2 = tablinke[i].id;
 
+          if (qachecks2 == "trs398") {
+            $("#trs_398e").css("display", "block");
+          } else {
+            $("#trs_398e").css("display", "none");
+          }
+
+          $("#trs_398ee").click(function (e) {
+            e.preventDefault();
+            $.ajax({
+              type: "GET",
+              url: "/trs_398/photons",
+              data: { linac: machine },
+              success: function (data) {
+                console.log("mmeeee");
+              },
+            });
+          });
+
           console.log(machine);
           console.log(qachecks2);
 
@@ -110,6 +128,24 @@ $(document).ready(function () {
     }
     var current_machine = machine;
     var current_check = qachecks;
+
+    if (current_check == "trs398") {
+      $("#trs_398e").css("display", "block");
+    } else {
+      $("#trs_398e").css("display", "none");
+    }
+
+    $("#trs_398ee").click(function (e) {
+      e.preventDefault();
+      $.ajax({
+        type: "GET",
+        url: "/trs_398/photons",
+        data: { linac: current_machine },
+        success: function (data) {
+          console.log("mmeeee");
+        },
+      });
+    });
 
     req3_data = $.ajax({
       url: "/linacViewProcess",

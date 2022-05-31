@@ -30,7 +30,7 @@ class Photon_energy(db.Model):
     energy = db.Column(db.String(10), index = True)
     com_pdd10 = db.Column(db.Float)
     com_tpr = db.Column(db.Float) 
-    machine_id_p = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=False)
+    machine_id_p = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=True)
     trs398_readings = db.relationship('Trs398_photons', backref='trs398_cal_energy', lazy='dynamic', passive_deletes=True)
     pdd_energy_checks_p = db.relationship('Pdd_data_photons', backref='linac_energy_photon', lazy='dynamic', passive_deletes=True)
 
@@ -47,7 +47,7 @@ class Electron_energy(db.Model):
     com_r50ion = db.Column(db.Float)
     com_r80ion = db.Column(db.Float)
     mean_energy = db.Column(db.Float)
-    machine_id_e = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=False)
+    machine_id_e = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=True)
     trs398_readings = db.relationship('Trs398_electrons', backref='ion_chamber_elen', lazy='dynamic', passive_deletes=True)
     pdd_energy_checks_e = db.relationship('Pdd_data_electrons', backref='linac_energy_electron', lazy='dynamic', passive_deletes=True)
 

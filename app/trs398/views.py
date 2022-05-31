@@ -1,13 +1,13 @@
+from datetime import datetime
 from flask import Blueprint, render_template, request
-from app.linac.models import Machine
+from app.linac.models import Machine, Photon_energy, Electron_energy
 from app.trs398.models import Pdd_data_photons, Trs398_electrons, Trs398_photons
-from app.ionization_chambers.models import Ionization_chambers, Chamber_calfactor
+from app.ionization_chambers.models import Ionization_chambers, Chamber_calfactor, Temp_press
 from app.trs398.forms import TRS398_photonsForm
 from flask_login import current_user, login_required
 from sqlalchemy import and_, asc, desc
 import numpy as np
 from app.trs398.energyCorrections import Kq_photons
-from linac.models import Photon_energy, Electron_energy
 
 def k_recomb(volt_ratio, charge_ratio):
     voltage_ratio = [2, 2.5, 3, 3.5, 4, 5]
@@ -31,9 +31,22 @@ def k_tp(temp, press):
 trs_398_bp = Blueprint('trs_398', __name__, template_folder='templates', static_folder='static')
 @trs_398_bp.route('/trs_398/photons', methods=['GET','POST'])
 @login_required
-def trs_398_photons(linac):
+def trs_398_photons():
     form = TRS398_photonsForm()
-    machine = Machine.query.filter_by(n_name = linac).first()
+    print(request.args.get('linac'))
+    machine = Machine.query.filter_by(n_name = request.args.get('linac')).first()
+    temp_press = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
+    chambers = Ionization_chambers.query.all()
+
+
+    beam_energies = machine.photon_en.all()  #list of all the energies oblects
+    beamEnergy_used_today = Photon_energy.query.join(Trs398_photons.query.filter(and_(Trs398_photons.date == datetime.now().date(), Trs398_photons.machine_id == machine.id)).subquery()).all()
+    
+    list_beams = []
+    for each in chambers:
+        if not each in beamEnergy_used_today:
+            list_beams.append(each)
+
     if request.method == 'POST':
         if form.validate_on_submit():
             date_1 = form.date.data
@@ -63,4 +76,4 @@ def trs_398_photons(linac):
                 electrometer = form.electrometer.data
                 dose_refDepth = (m_v1_avrg * ktp) * chamber_certificate.ndw * kqq * k_s * k_pol
  
-    return render_template('trs398.html', form=form, linac_obj = machine)
+    return render_template('trs398.html', form=form, linac_obj = machine, energies = beam_energies, environ = temp_press, beams = list_beams)

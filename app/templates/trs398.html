@@ -1,9 +1,229 @@
 {% extends 'base.html' %} {% block head %}
 <script src="{{url_for('static', filename = '/scripts/trs398.js')}}"></script>
-{% endblock %} {% block tittle %} TRS398 reference dose calibration for {{linac_obj.n_name}} {% endblock
-%} {% block content %}
-<h1>Reference dose calibration of {{linac_obj.n_name}} following TRS-398 Code of Practice</h1>
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename = '/css/trs_398.css')}}"
+/>
+{% endblock %} {% block tittle %} TRS398 reference dose calibration for
+{{linac_obj.n_name}} {% endblock %} {% block content %}
+<h1>
+  Reference dose calibration of {{linac_obj.n_name}} following TRS-398 Code of
+  Practice
+</h1>
 
+<div class="w3-container-fluid">
+  <div class="w3-row">
+    <!--
+      This is the left column that just act as a margine. Might have to delete it later. We will see how it turn out.
+    -->
+    <div class="w3-col m1 l1">
+      <p></p>
+    </div>
+    <!--
+      This is the center column, where the magic happens, ok I am only joking, this is the main form.
+    -->
+    <div class="w3-col m8 l8">
+      <form action="" method="POST" novalidate>
+        {{form.hidden_tag()}}
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.date.label}}</div>
+          <div class="w3-col m6 l6">{{form.date(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.date.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.chamber.label}}</div>
+          <div class="w3-col m6 l6">{{form.chamber(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.chamber.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.electrometer.label}}</div>
+          <div class="w3-col m6 l6">{{form.electrometer(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.electrometer.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.bias_voltage1.label}}</div>
+          <div class="w3-col m6 l6">{{form.bias_voltage1(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.bias_voltage1.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.m11_reading.label}}</div>
+          <div class="w3-col m6 l6">{{form.m11_reading(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.m11_reading.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.m12_reading.label}}</div>
+          <div class="w3-col m6 l6">{{form.m12_reading(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.m12_reading.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.m13_reading.label}}</div>
+          <div class="w3-col m6 l6">{{form.m13_reading(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.m13_reading.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+        <div class="w3-row">
+          <p>
+            Determination of K<sub>s</sub>. Use reduced bias voltage as defined
+            in TRS-398
+          </p>
+        </div>
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.bias_voltage2.label}}</div>
+          <div class="w3-col m6 l6">{{form.bias_voltage2(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.bias_voltage2.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.m21_reading.label}}</div>
+          <div class="w3-col m6 l6">{{form.m21_reading(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.m21_reading.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.m22_reading.label}}</div>
+          <div class="w3-col m6 l6">{{form.m22_reading(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.m22_reading.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+
+        <div class="w3-row">
+          <p>
+            Determination of K<sub>pol</sub>. Reversing the elevtrometer
+            polarity as defined in TRS-398
+          </p>
+        </div>
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.m31_reading.label}}</div>
+          <div class="w3-col m6 l6">{{form.m31_reading(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.m31_reading.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+
+        <div class="w3-row">
+          <div class="w3-col m6 l6">{{form.m32_reading.label}}</div>
+          <div class="w3-col m6 l6">{{form.m32_reading(size=24)}}</div>
+        </div>
+        <div class="w3-row">
+          {% for error in form.m32_reading.errors %}
+          <span style="color: red">{{error}}</span>
+          {%endfor%}
+        </div>
+      </form>
+    </div>
+
+    <!--
+      This is the far right column where we update the environmentals. 
+      So I have taken the approche to use environmentals of the day and one will have the options to update the environmentals
+    -->
+    <div class="far_right w3-col m3 l3">
+      <div class="w3-row">
+        <p><b>Machine:</b> {{linac_obj.n_name}}</p>
+      </div>
+      <div class="w3-row">
+        <p>
+          <b>Beam Energy:</b>
+          <select name="beams" id="sele_beam">
+            {% for each in beams %}
+            <option value="{{each.energy}}">{{each.energy}}</option>
+            {% endfor%}
+          </select>
+        </p>
+      </div>
+      <div class="w3-row">
+        <table class="w3-table">
+          <tr>
+            <td id="temp_d">Temp:</td>
+            <td>{{environ.temp}}</td>
+          </tr>
+          <tr>
+            <td id="pres_d">Press:</td>
+            <td>{{environ.press}}</td>
+          </tr>
+          <tr>
+            <td>
+              <button id="tem_pres_u" class="w3-button w3-blue w3-round">
+                Update Log
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="update_env w3-row">
+        <form action="" method="POST" class="w3-container">
+          <p>
+            <label for="temp"><b>Temp:</b></label>
+            <input
+              id="temp_u"
+              type="number"
+              class="w3-input w3-border w3-round"
+              name="temp"
+            />
+            <sup>0</sup>C
+          </p>
+          <p>
+            <label for="press"><b>Press:</b></label>
+            <input
+              id="press_u"
+              type="number"
+              class="w3-input w3-border w3-round"
+              name="press"
+            />
+            hPa
+          </p>
+          <p><button class="w3-button w3-blue w3-round">Update</button></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
 <form action="" method="POST" novalidate>
   {{form.hidden_tag()}}
   <p>
@@ -50,4 +270,5 @@
     {%endfor%}
   </p>
 </form>
+-->
 {% endblock %}
