@@ -34,7 +34,7 @@ trs_398_bp = Blueprint('trs_398', __name__, template_folder='templates', static_
 def trs_398_photons():
     form = TRS398_photonsForm()
     print(request.args.get('linac'))
-    machine = Machine.query.filter_by(n_name = request.args.get('linac')).first()
+    machine = Machine.query.filter_by(n_name = request.args.get('machine')).first()
     temp_press = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
     chambers = Ionization_chambers.query.all()
 
@@ -43,10 +43,10 @@ def trs_398_photons():
     beamEnergy_used_today = Photon_energy.query.join(Trs398_photons.query.filter(and_(Trs398_photons.date == datetime.now().date(), Trs398_photons.machine_id == machine.id)).subquery()).all()
     
     list_beams = []
-    for each in chambers:
+    for each in beam_energies:
         if not each in beamEnergy_used_today:
             list_beams.append(each)
-
+    print(beam_energies)
     if request.method == 'POST':
         if form.validate_on_submit():
             date_1 = form.date.data

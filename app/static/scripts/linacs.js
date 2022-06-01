@@ -29,19 +29,8 @@ $(document).ready(function () {
 
           $("#trs_398ee").click(function (e) {
             e.preventDefault();
-            $.ajax({
-              type: "GET",
-              url: "/trs_398/photons",
-              data: { linac: machine },
-              success: function (data) {
-                console.log("mmeeee");
-              },
-            });
+            location = "/trs_398/photons?machine=" + machine;
           });
-
-          console.log(machine);
-          console.log(qachecks2);
-
           req_data = $.ajax({
             url: "/linacViewProcess",
             type: "POST",
@@ -135,16 +124,9 @@ $(document).ready(function () {
       $("#trs_398e").css("display", "none");
     }
 
-    $("#trs_398ee").click(function (e) {
+    $("#trs_398ph").click(function (e) {
       e.preventDefault();
-      $.ajax({
-        type: "GET",
-        url: "/trs_398/photons",
-        data: { linac: current_machine },
-        success: function (data) {
-          console.log("mmeeee");
-        },
-      });
+      location = "/trs_398/photons?machine=" + machine;
     });
 
     req3_data = $.ajax({
