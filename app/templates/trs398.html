@@ -20,6 +20,7 @@
       -->
       <div class="center_row w3-col m8 l8 s7">
         <h2>Reference calibration: {{linac_obj.n_name}}</h2>
+        <h3><i>IAEA TRS-398 of 2006</i></h3>
         <form action="" method="POST" novalidate>
           {{form.hidden_tag()}}
           <div class="w3-row">
@@ -178,11 +179,11 @@
               <table class="w3-table class="tll"">
                 <tr>
                   <td id="temp_d" >Temp:</td>
-                  <td>{{environ.temp}}</td>
+                  <td>{{environ.temp}} <sup>0</sup>C</td> 
                 </tr>
                 <tr>
                   <td id="pres_d">Press:</td>
-                  <td>{{environ.press}}</td>
+                  <td>{{round(environ.press * 0.133322, 2)}} kPa</td>
                 </tr>
               </table>
               <button id="tem_pres_u" class="w3-button w3-blue w3-round">

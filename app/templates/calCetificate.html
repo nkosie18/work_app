@@ -1,82 +1,142 @@
 {% extends 'base.html' %} {% block title %} Add Chamber Calibration Certificate
 {% endblock %} {% block content %}
 
-<div class="w3-container w3-grey" style="margin-top: 9mm;">
-    <h1>Calibration Certificates Upoad Form</h1>
+<div class="w3-container w3-grey" style="margin-top: 9mm">
+  <h1>Calibration Certificates Upoad Form</h1>
 </div>
 <div class="w3-display-container" style="margin-left: 8mm">
-  
-
+  <div class="w3-row">
+    <div class="w3-col l4 m4 s12">
       <form action="" method="POST" novalidate>
         {{form.hidden_tag()}}
+        <div class="w3-row">
+          <div class="w3-col s12 m6 l6">
+            <p>{{form.electrometer.label}}</p>
+          </div>
+          <div class="w3-col s12 m6 l6">
+            <p>
+              {{form.electrometer}} {% for error in form.electrometer.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
 
-        <p>
-          {{form.electrometer.label}} {{form.electrometer(size=20)}} <br />
-          {% for error in form.electrometer.errors %}
-          <span style="color: red">{{error}}</span>
-          {%endfor%}
-        </p>
+        <div class="w3-row">
+          <div class="w3-col s12 m6 l6">
+            <p>{{form.electrometerCalFactor.label}}</p>
+          </div>
+          <div class="w3-col s12 m6 l6">
+            <p>
+              {{form.electrometerCalFactor(size=20)}} {% for error in
+              form.electrometerCalFactor.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
 
-        <p>
-          {{form.electrometerCalFactor.label}}
-          {{form.electrometerCalFactor(size=20)}} <br />
-          {% for error in form.electrometerCalFactor.errors %}
-          <span style="color: red">{{error}}</span>
-          {%endfor%}
-        </p>
-        <p>
-          {{form.calVoltage.label}} {{form.calVoltage(size=20)}} <br />
-          {% for error in form.calVoltage.errors %}
-          <span style="color: red">{{error}}</span>
-          {%endfor%}
-        </p>
+        <div class="w3-row">
+          <div class="w3-col s12 m6 l6">
+            <p>{{form.calVoltage.label}}</p>
+          </div>
+          <div class="w3-col s12 m6 l6">
+            <p>
+              {{form.calVoltage(size=20)}} {% for error in
+              form.calVoltage.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
 
-        <p>
-          {{form.calfactor.label}} {{form.calfactor(size=20)}} <br />
-          {% for error in form.calfactor.errors %}
-          <span style="color: red">{{error}}</span>
-          {%endfor%}
-        </p>
+        <div class="w3-row">
+          <div class="w3-col s12 m6 l6">
+            <p>{{form.calfactor.label}}</p>
+          </div>
+          <div class="w3-col s12 m6 l6">
+            <p>
+              {{form.calfactor(size=20)}} {% for error in form.calfactor.errors
+              %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
 
-        <p>
-          {{form.cal_date.label}} {{form.cal_date(size=20)}} <br />
-          {% for error in form.cal_date.errors %}
-          <span style="color: red">{{error}}</span>
-          {%endfor%}
-        </p>
+        <div class="w3-row">
+          <div class="w3-col s12 m6 l6">
+            <p>{{form.cal_date.label}}</p>
+          </div>
+          <div class="w3-col s12 m6 l6">
+            <p>
+              {{form.cal_date(size=20)}} {% for error in form.cal_date.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
 
-        <p>
-          {{form.cal_lab.label}} {{form.cal_lab(size=20)}} <br />
-          {% for error in form.cal_lab.errors %}
-          <span style="color: red">{{error}}</span>
-          {%endfor%}
-        </p>
+        <div class="w3-row">
+          <div class="w3-col s12 m6 l6">
+            <p>{{form.cal_lab.label}}</p>
+          </div>
+          <div class="w3-col s12 m6 l6">
+            <p>
+              {{form.cal_lab(size=20)}} {% for error in form.cal_lab.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
 
-        <p>
-          {{form.beamQuality.label}} {{form.beamQuality}} <br />
-          {% for error in form.beamQuality.errors %}
-          <span style="color: red">{{error}}</span>
-          {%endfor%}
-        </p>
+        <div class="w3-row">
+          <div class="w3-col s12 m6 l6">
+            <p>{{form.beamQuality.label}}</p>
+          </div>
+          <div class="w3-col s12 m6 l6">
+            <p>
+              {{form.beamQuality}} {% for error in form.beamQuality.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
 
-        <p>
-          {{form.calMachine.label}} {{form.calMachine}} <br />
-          {% for error in form.calMachine.errors %}
-          <span style="color: red">{{error}}</span>
-          {%endfor%}
-        </p>
+        <div class="w3-row">
+          <div class="w3-col s12 m6 l6">
+            <p>{{form.calMachine.label}}</p>
+          </div>
+          <div class="w3-col s12 m6 l6">
+            <p>
+              {{form.calMachine}} {% for error in form.calMachine.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
 
-        <p>
-          {{form.chambers.label}} {{form.chambers}} <br />
-          {% for error in form.chambers.errors %}
-          <span style="color: red">{{error}}</span>
-          {%endfor%}
-        </p>
-
-        <p>{{form.submit()}}</p>
+        <div class="w3-row">
+          <div class="w3-col s12 m6 l6">
+            <p>{{form.chambers.label}}</p>
+          </div>
+          <div class="w3-col s12 m6 l6">
+            <p>
+              {{form.chambers}} {% for error in form.chambers.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </p>
+          </div>
+        </div>
+        <div class="w3-row">
+          <p>{{form.submit()}}</p>
+        </div>
       </form>
     </div>
-
-    {% endblock %}
+    <div class="w3-col l8 m8 s12">
+      <p></p>
+    </div>
   </div>
 </div>
+
+{% endblock %}
