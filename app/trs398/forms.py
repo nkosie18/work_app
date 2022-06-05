@@ -7,9 +7,6 @@ from wtforms.validators import DataRequired, ValidationError
 
 class TRS398_photonsForm(FlaskForm):
     date = DateField('Date', validators=[DataRequired()], default = datetime.now().date())
-    temp = FloatField('Temperature (<sup>0</sup>C)', validators=[DataRequired()])
-    press = FloatField('Pressure (hPa)', validators=[DataRequired()])
-    photon_energy = SelectField('Photon Energy', choices=['6X-WFF', '10X-WFF', '18X-WFF', '6X-FFF', '10X-FFF'])
     chamber = SelectField('Ionization Chamber', choices=['PTW 30013-0391', 'PTW 30013-011795', 'PTW 30013-011794', 'PTW 30013-0390'])
     electrometer = SelectField('Electrometer', choices=['Unidose-11126', 'BEAM-SCAN','OTHER'])
     bias_voltage1 = SelectField('Voltage(V1)', choices=[-400, -300, -200, -150, -100, 0, +400, +300, +200, +150, +100])

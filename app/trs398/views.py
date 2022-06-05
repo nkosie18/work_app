@@ -1,4 +1,6 @@
 from datetime import datetime
+from flask import jsonify
+from app import db
 from flask import Blueprint, render_template, request
 from app.linac.models import Machine, Photon_energy, Electron_energy
 from app.trs398.models import Pdd_data_photons, Trs398_electrons, Trs398_photons
@@ -29,6 +31,19 @@ def k_tp(temp, press):
 
 
 trs_398_bp = Blueprint('trs_398', __name__, template_folder='templates', static_folder='static')
+
+@trs_398_bp.route('/trs398/update_tp', methods=['POST'])
+@login_required
+def update_tp():
+    temp = request.form['temp']
+    press = round(float(request.form['press'].strip())/1.333224,2)  # convert to mmHg
+    temp_press_obj = Temp_press(date_time= datetime.now() ,temp=temp, press=press)
+    db.session.add(temp_press_obj)
+    db.session.commit()
+    return jsonify({'success': True})
+
+
+
 @trs_398_bp.route('/trs_398/photons', methods=['GET','POST'])
 @login_required
 def trs_398_photons():
@@ -46,7 +61,7 @@ def trs_398_photons():
     for each in beam_energies:
         if not each in beamEnergy_used_today:
             list_beams.append(each)
-    print(beam_energies)
+
     if request.method == 'POST':
         if form.validate_on_submit():
             date_1 = form.date.data

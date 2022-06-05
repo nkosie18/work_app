@@ -166,20 +166,71 @@ content %}
           <button class="w3-bar-item w3-button w3-large w3-border-top tablink w3-nkosie" onclick="selectMachine(event,'L2')">Linac 2</button>
         <button class="w3-bar-item w3-button w3-large w3-border-top tablink w3-nkosie" onclick="selectMachine(event,'L3')">Linac 3</button>
 
+        style="background-color: #003d4f; color: whitesmoke"
 
       -->
     </div>
 
-    <div
-      class="w3-col l3 m2"
-      style="background-color: #003d4f; color: whitesmoke"
-    >
+    <div class="w3-col l3 m2">
       <div class="w3-container">
         <div class="w3-responsive">
-          <h4>Linacs QA status</h4>
-          <table class="w3-table">
+          <h4>Linac QA Monthly status</h4>
+          <p style="color: red">
+            I have decided to put this part on ICE, I will come back to it at
+            the end when all thother functions are done.
+          </p>
+          <table id="machine_stats" class="w3-table-all w3-border">
             <tr>
-              <b></b>
+              <td>Linacs</td>
+              <td>Progress</td>
+            </tr>
+            <tr id="l1_data">
+              <td>
+                <a href="#"><b id="l1_prog">L1</b></a>
+              </td>
+              <td>
+                <div class="w3-progress-container">
+                  <div
+                    id="l1_status"
+                    class="w3-progressbar w3-green w3-round-large w3-border"
+                    style="width: 10%"
+                  >
+                    <div class="w3-center w3-text-black">10%</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr id="l2_data">
+              <td>
+                <a href="#"><b id="l2_prog">L2</b></a>
+              </td>
+              <td>
+                <div class="w3-progress-container">
+                  <div
+                    id="l2_status"
+                    class="w3-progressbar w3-green w3-round-large w3-border"
+                    style="width: 10%"
+                  >
+                    <div class="w3-center w3-text-black">10%</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr id="l3_data">
+              <td>
+                <a href="#"><b id="l3_prog">L3</b></a>
+              </td>
+              <td>
+                <div class="w3-progress-container">
+                  <div
+                    id="l3_status"
+                    class="w3-progressbar w3-green w3-round-large w3-border"
+                    style="width: 10%"
+                  >
+                    <div class="w3-center w3-text-black">10%</div>
+                  </div>
+                </div>
+              </td>
             </tr>
           </table>
         </div>

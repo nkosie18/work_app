@@ -1,74 +1,53 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {%block title %} New Ionization Chamber Registration
+Form {%endblock%} {%block content%}
 
-{%block title %} New Ionization Chamber Registration Form {%endblock%}
+<div class="w3-container w3-padding" style="margin-top: 10mm">
+  <h1>New Chamber Registration</h1>
 
-{%block content%}
+  <div class="w3-container w3-magine-left">
+    <h4 style="color: tomato">
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %} {{message}} {%endfor%} {%endif%} {%endwith%}
+    </h4>
+  </div>
 
-<div class="w3-container w3-padding" style="margin-top: 10mm;">
-
-    <h1>New Chamber Registration</h1>
-
-    <div class=" w3-container w3-magine-left">
-        <h4 style="color: tomato;">
-            {% with messages = get_flashed_messages() %}
-
-            {% if messages %}
-                {% for message in messages %}
-                    {{message}}
-                {%endfor%}
-            {%endif%}
-        {%endwith%}
-        </h4>
-    </div>
-
-<form action="" method="POST" novalidate>
+  <form action="" method="POST" novalidate>
     {{form.hidden_tag()}}
 
     <p>
-        {{form.date_add.label}} <br>
-        {{form.date_add(size=20)}} <br>
-        {% for error in form.date_add.errors %}
-            <span style="color: red;">{{error}}</span>
-        {%endfor%}
-
+      {{form.date_add.label}} <br />
+      {{form.date_add(size=20)}} <br />
+      {% for error in form.date_add.errors %}
+      <span style="color: red">{{error}}</span>
+      {%endfor%}
     </p>
 
     <p>
-        {{form.make.label}} <br>
-        {{form.make(size=20)}} <br>
-        {% for error in form.make.errors %}
-            <span style="color: red;">{{error}}</span>
-        {%endfor%}
-
+      {{form.make.label}} <br />
+      {{form.make(size=20)}} <br />
+      {% for error in form.make.errors %}
+      <span style="color: red">{{error}}</span>
+      {%endfor%}
     </p>
 
     <p>
-        {{form.sn.label}} <br>
-        {{form.sn(size=20)}} <br>
-        {% for error in form.sn.errors %}
-            <span style="color: red;">{{error}}</span>
-        {%endfor%}
-
+      {{form.sn.label}} <br />
+      {{form.sn(size=20)}} <br />
+      {% for error in form.sn.errors %}
+      <span style="color: red">{{error}}</span>
+      {%endfor%}
     </p>
 
     <p>
-        {{form.chamber_type.label}} <br>
-        {{form.chamber_type}} <br>
-        {% for error in form.chamber_type.errors %}
-            <span style="color: red;">{{error}}</span>
-        {%endfor%}
-
+      {{form.chamber_type.label}} <br />
+      {{form.chamber_type}} <br />
+      {% for error in form.chamber_type.errors %}
+      <span style="color: red">{{error}}</span>
+      {%endfor%}
     </p>
-
 
     <p>{{form.submit()}}</p>
-
-
-    
-</form>
-
-
+  </form>
 </div>
-
 
 {%endblock%}

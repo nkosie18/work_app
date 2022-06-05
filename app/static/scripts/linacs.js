@@ -178,6 +178,48 @@ $(document).ready(function () {
     });
   });
 
+  $("#machine_stats").click(function (e) {
+    e.preventDefault();
+    var machine_stat = e.target.id;
+    if (
+      machine_stat === "l1_prog" ||
+      machine_stat === "l2_prog" ||
+      machine_stat === "l3_prog"
+    ) {
+      console.log(machine_stat.substring(0, 2) + "_data");
+      m_name = machine_stat.substring(0, 2);
+
+      $.ajax({
+        type: "GET",
+        url: "/linac/status",
+        data: { machine_selected: m_name },
+        success: function (data) {},
+      });
+
+      $("#" + m_name + "_data").replaceWith(`
+      <tr>
+              <td><b>L${m_name.substring(1, 2)}</b></td>
+              <td>
+                <ul>
+                  <li>TRS-398: <span id="trs_stat_1" style="color: red;">Not Done</span></li>
+                </ul>
+                <ul>
+                  <li>Energy checks: <span id="eng_stat_1" style="color: red;">Not Done</span></li>
+                </ul>
+                <ul>
+                  <li>Machanicals: <span id="trs_stat_1" style="color: red;">Not Done</span></li>
+                </ul>
+                <ul>
+                  <li>Flat and Sym: <span id="trs_stat_1" style="color: red;">Not Done</span></li>
+                </ul>
+              </td>
+            </tr>
+      `);
+    } else {
+      console.log("You did not click the button on the table");
+    }
+  });
+
   /*
     $("#addmore").click(function(){
         $("#mytable").append("<tr><td>Mfeka</dt><td>J. P</dt><td>KZ003344</dt><td>10 MV</dt></tr>");

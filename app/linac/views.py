@@ -46,7 +46,13 @@ def linacs():
     linacs = Machine.query.all()
     return render_template('linac2.html', linacs=linacs)
 
-
+@linac_bp.route('/linac/status')
+@login_required
+def linac_status():
+    arg_data = request.args.get('machine_selected')
+    striped_arg = arg_data.strip()[1]
+    linac_selected = Machine.query.filter_by(n_name = "L"+striped_arg).first()
+    print(linac_selected.make)
 @linac_bp.route('/linacViewProcess', methods=['POST'])
 @login_required
 def linacViewProcess():
