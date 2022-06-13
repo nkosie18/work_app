@@ -12,8 +12,8 @@ import re
 import numpy as np
 import pandas as pd
 from typing import Union
-from pymcc.wtscans import XyProfile, PDD
-from pymcc.array import STARCHECK, OCT729, OCT1000, OCT1500
+from app.trs398.wtscans import XyProfile, PDD
+from app.trs398.array import STARCHECK, OCT729, OCT1000, OCT1500
 
 
 def read_file(filepath: str) -> Union[list, STARCHECK, OCT729, OCT1000, OCT1500]:
@@ -90,7 +90,7 @@ def read_file(filepath: str) -> Union[list, STARCHECK, OCT729, OCT1000, OCT1500]
             
             # FF or FFF beam
             if line.split('=')[0] == "FILTER":
-                filter = line.split('=')[1]
+                filter1 = line.split('=')[1]
 
             # get geometry information
             if line.split("=")[0] == "ISOCENTER":
@@ -136,7 +136,7 @@ def read_file(filepath: str) -> Union[list, STARCHECK, OCT729, OCT1000, OCT1500]
                     data = conv_data(lines)
                     energy = scan_energy + modality
 
-                    data_obj.append(PDD(modality, energy, data_type, data))
+                    data_obj.append(PDD(modality, filter1, energy, data_type, data))
 
 
                     # removed: offset, nominal_fs, filter, isocenter, ssd, scan_depth

@@ -6,6 +6,7 @@ Created on Fri Aug 13 13:20:39 2021
 @author: tbezo
 """
 
+from operator import mod
 import numpy as np
 import pandas as pd
 import pylinac
@@ -17,7 +18,7 @@ class PDD:
     Calculate the field parameters asked for in DIN6847-5
     """
     
-    def __init__(self, mod: str, energy:str, curve_type: str, datafr: pd.DataFrame()) -> None:
+    def __init__(self, mod: str, filter1: str, energy:str, curve_type: str, datafr: pd.DataFrame()) -> None:
                  
                  # offset: float, offaxis: float,
                  # nominal_fs: float, filter: str, isocenter: float, 
@@ -27,6 +28,7 @@ class PDD:
         self.modality = mod
         self.dataframe = datafr
         self.energy = energy
+        self.filter1 = filter1
         #self.isocenter = isocenter
         #self.scan_depth = scan_depth
         #self.offset = offset
@@ -351,6 +353,7 @@ class PDD:
         if self.modality == "EL":
             results = {
                 "Energy": self.energy,
+                'modality': mod,
                 "Type": self.curve_type,
                 "R80": round(self.depth_x(80.0), 3),
                 "R50": {"R50 (DIN)": round(self.calc_R50_din(), 3), 
@@ -359,6 +362,8 @@ class PDD:
                 }
         elif self.modality == "X":
             results = {
+                "modality":self.mod,
+                'filter':self.filter1,
                 "Energy": self.energy,
                 "Type": self.curve_type,
                 "Q Index": round(self.calc_q_index(), 3),

@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block head %}
+<script src="{{url_for('static', filename = '/scripts/energy.js')}}"></script>
+{% endblock %} {% block tittle %} Energy Checks {% endblock %} {% block content
+%}
+
+<div class="w3-container-fluid">
+  <div class="w3-row" style="margin-top: 5mm">
+    <h2>Energy checks</h2>
+    <p>
+      The energy checked are done automaticaly by tracking different
+      characteristics of the PDDs
+    </p>
+  </div>
+  <div class="w3-row">
+    <h3>PDD Upload</h3>
+  </div>
+</div>
+
+//upload file button
+<div class="w3-row">
+  <div class="w3-col l1 m1 w3-hide-small"><p></p></div>
+  <div class="w3-col m8 l8">
+    <div class="w3-row">
+      <label for="pdd_files">Upload PDD files to be analysed:</label>
+      <input type="file" id="pdd_files" accept=".mcc" name="pdd_files" />
+      <p>The selected files should be mcc files</p>
+    </div>
+  </div>
+  <div class="w3-col m3 l3"></div>
+</div>
+
+{% block head %}

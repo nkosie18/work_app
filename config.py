@@ -10,6 +10,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.environ.get('SECRETE_KEY') or 'ThiS-iS-a-VeRY-seCRET-kEY'
     LDAP_LOGIN_VIEW = 'login.login'
-    UPLOAD_PATH = 'Uploads'
+    UPLOAD_PATH = '/Uploads'
+    MAX_CONTENT_LENGTH = 1024 * 1024
+    ALLOWED_EXTENSIONS = {'.mcc'}
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=60)
-

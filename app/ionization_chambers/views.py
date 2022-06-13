@@ -114,7 +114,6 @@ def auto_measure():
         new_sn = selected_chamb_sn[1:]
     elif len(selected_chamb_sn) > 4:
         new_sn = selected_chamb_sn[2:]
-    print(new_sn)
     e.get_to_home()
     e.change_mode_dose()
     time.sleep(1)
@@ -127,6 +126,7 @@ def auto_measure():
             time.sleep(2)
             while True:
                 if e.telegram("?S") == 'HLD':
+                    time.sleep(0.5)
                     break
                 time.sleep(1)
             ms = e.telegram("V").split('s')[1]
