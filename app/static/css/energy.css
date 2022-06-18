@@ -1,0 +1,14 @@
+hr {
+  border-top: 1px solid #ccc;
+  border-radius: 2px;
+}
+.heading {
+  border-bottom: 1px solid #ccc;
+  padding-left: 10px;
+  padding-top: 15px;
+  background-color: aliceblue;
+}
+
+.heading2 {
+  border-bottom: 1px solid #ccc;
+}

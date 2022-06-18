@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block head %}
+<script src="{{url_for('static', filename = '/scripts/energyChecks,js')}}"></script>
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename = '/css/energy.css')}}"
+/>
+{% endblock %} {% block title %} Upload Photons PDD Data {% endblock %} {% block
+content %}
+<div class="heading">
+  <h2>Energy checks</h2>
+</div>
+<div class="w3-container fluid">
+  <div class="w3-container w3-magine-left">
+    <h4 style="color: tomato">
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %} {{message}}<br />
+      {%endfor%} {%endif%} {%endwith%}
+    </h4>
+  </div>
+  <div class="heading2 w3-row">
+    <h3>PDD Upload</h3>
+  </div>
+
+  <div class="w3-row">
+    <div class="w3-col l1 m1 w3-hide-small"><p></p></div>
+    <div class="w3-col m8 l8">
+      <div class="w3-row">
+        <form method="POST" novalidate enctype="multipart/form-data">
+          <label for="pdd_files">Upload PDD files to be analysed:</label
+          ><br /><br />
+          <input
+            type="file"
+            id="pdd_files"
+            accept=".mcc"
+            name="file[]"
+            multiple=""
+          />
+          <br /><br />
+          <input type="submit" value="Upload" />
+        </form>
+      </div>
+    </div>
+    <div class="w3-col m3 l3"></div>
+  </div>
+</div>
+{% endblock %}

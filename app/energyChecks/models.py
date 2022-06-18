@@ -1,6 +1,6 @@
 from app import db
 
-
+'''
 class Pdd_data_photons(db.Model):
     __tablename__='pdd_data_photons'
     id = db.Column(db.Integer, primary_key = True)
@@ -28,3 +28,22 @@ class Pdd_data_electrons(db.Model):
     
     def __repr__(self):
         return '<%s>' %self.date
+
+        [<6X-WFF>, <10X-WFF>, <18X-WFF>, <6X-FFF>, <10X-FFF>]
+
+        [<4E>, <6E>, <9E>, <12E>, <15E>]
+        
+        LINAC 1 ELEKTA
+
+        L1 ELEKTA VERSA
+
+        L1 ELEKTA VERSA
+
+        ELEKTA LINAC 2
+        ELEKTA LINAC 2
+
+        L3 ELEKTA SYNERGY
+        L3 ELEKTA SYNERGY
+        L3 ELEKTA SYNERGY
+
+'''

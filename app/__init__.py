@@ -34,6 +34,7 @@ from app.cbct.views import cbct_bp
 from app.mri.views import mri_bp
 from app.petct.views import petct_bp
 from app.cbct.views import cbct_form_bp
+from app.energyChecks.views import energyChecks_bp
 
 
 
@@ -57,6 +58,8 @@ app.register_blueprint(cbct_bp)
 app.register_blueprint(mri_bp)
 app.register_blueprint(petct_bp)
 app.register_blueprint(cbct_form_bp)
+app.register_blueprint(energyChecks_bp)
+
 
 
 login.login_view = 'login.login'

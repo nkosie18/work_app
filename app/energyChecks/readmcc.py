@@ -12,8 +12,8 @@ import re
 import numpy as np
 import pandas as pd
 from typing import Union
-from app.trs398.wtscans import XyProfile, PDD
-from app.trs398.array import STARCHECK, OCT729, OCT1000, OCT1500
+from app.energyChecks.wtscans import XyProfile, PDD
+from app.energyChecks.array import STARCHECK, OCT729, OCT1000, OCT1500
 
 
 def read_file(filepath: str) -> Union[list, STARCHECK, OCT729, OCT1000, OCT1500]:
@@ -57,6 +57,15 @@ def read_file(filepath: str) -> Union[list, STARCHECK, OCT729, OCT1000, OCT1500]
             # elektrons or photons?
             if line.split('=')[0] == "MODALITY":
                 modality = line.split('=')[1]
+
+            # machine scanned
+            if line.split('=')[0] == "LINAC":
+                if line.split('=')[1].strip() in ['LINAC 1 ELEKTA', 'L1 ELEKTA VERSA', 'L1 ELEKTA', 'L1 ELEKTA VERSA HD', 'L1', 'ELEKTA L1', 'ELEKTA VERSA L1', 'ELEKTA L1 VERSA', 'ELEKTA L1 VERSA HD', 'ELEKTA LINAC 1']:
+                    machine = "L1"
+                elif line.split('=')[1].strip() in ['LINAC 2 ELEKTA', 'L2 ELEKTA VERSA', 'L2 ELEKTA', 'L2 ELEKTA VERSA HD', 'L2', 'ELEKTA L2', 'ELEKTA VERSA L2', 'ELEKTA L2 VERSA', 'ELEKTA L2 VERSA HD', 'ELEKTA LINAC 2']:
+                    machine = "L2"
+                elif line.split('=')[1].strip() in ['LINAC 3 ELEKTA', 'L3 ELEKTA SYNERGY', 'L3 ELEKTA', 'L3 ELEKTA SYNERGY', 'L3', 'ELEKTA L3', 'ELEKTA SYNERGY L3', 'ELEKTA L3 SYNERGY', 'ELEKTA L3 SYNERGY', 'ELEKTA LINAC 3']:
+                    machine = "L3"
             
             if line.split('=')[0] == "ENERGY":
                 results = line.split('=')[1]
@@ -89,8 +98,11 @@ def read_file(filepath: str) -> Union[list, STARCHECK, OCT729, OCT1000, OCT1500]
                     errors.append('set-field cross_plane not 10 x 10')
             
             # FF or FFF beam
-            if line.split('=')[0] == "FILTER":
-                filter1 = line.split('=')[1]
+            if line.split('=')[0] == "ENERGY":
+                if line.split('=')[1] in ['16.00','110.00' ]:
+                    filter1 = "FFF"
+                else:
+                    filter1 = "FF"
 
             # get geometry information
             if line.split("=")[0] == "ISOCENTER":
@@ -136,7 +148,7 @@ def read_file(filepath: str) -> Union[list, STARCHECK, OCT729, OCT1000, OCT1500]
                     data = conv_data(lines)
                     energy = scan_energy + modality
 
-                    data_obj.append(PDD(modality, filter1, energy, data_type, data))
+                    data_obj.append(PDD(modality, filter1, machine, energy, data_type, data))
 
 
                     # removed: offset, nominal_fs, filter, isocenter, ssd, scan_depth
