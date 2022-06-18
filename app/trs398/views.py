@@ -91,4 +91,4 @@ def trs_398_photons():
                 electrometer = form.electrometer.data
                 dose_refDepth = (m_v1_avrg * ktp) * chamber_certificate.ndw * kqq * k_s * k_pol
  
-    return render_template('trs398.html', form=form, linac_obj = machine, energies = beam_energies, environ = temp_press, beams = list_beams, round = round)
+    return render_template('trs398.html', form=form, linac_obj = machine, environ = temp_press, beams = list_beams, round = round)
