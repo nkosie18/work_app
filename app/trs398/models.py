@@ -58,6 +58,7 @@ class Trs398_electrons(db.Model):
 class Pdd_data_photons(db.Model):
     __tablename__='pdd_data_photons'
     id = db.Column(db.Integer, primary_key = True)
+    uid_new_p = db.Column(db.String(128))
     date = db.Column(db.Date)
     pdd10 = db.Column(db.Float)
     tpr2010 = db.Column(db.Float)
@@ -72,6 +73,7 @@ class Pdd_data_photons(db.Model):
 class Pdd_data_electrons(db.Model):
     __tablename__= 'pdd_data_electrons'
     id = db.Column(db.Integer, primary_key = True)
+    uid_new_e = db.Column(db.String(128))
     date = db.Column(db.Date)
     r50ion = db.Column(db.Float)
     e_not = db.Column(db.String(10))

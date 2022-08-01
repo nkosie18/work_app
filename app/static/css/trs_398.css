@@ -39,3 +39,8 @@ input[type="number"] {
   text-align: left;
   width: 20mm;
 }
+
+.left_col {
+  padding: 32px;
+  background-color: #79aab3;
+}

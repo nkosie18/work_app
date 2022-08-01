@@ -4,11 +4,27 @@ hr {
 }
 .heading {
   border-bottom: 1px solid #ccc;
-  padding-left: 10px;
+  padding-left: 15px;
   padding-top: 15px;
   background-color: aliceblue;
 }
 
 .heading2 {
   border-bottom: 1px solid #ccc;
+}
+
+.Pass {
+  color: white;
+  background-color: green;
+  width: 50px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.Fail {
+  color: white;
+  background-color: red;
+  width: 50px;
+  padding-right: 5px;
+  padding-left: 5px;
 }

@@ -122,6 +122,7 @@ def auto_measure():
     e.change_range(1)
     measurement_list = []
     for x in range (0,3):
+        e.telegram("R")
         if e.telegram("I") == 'I':
             time.sleep(2)
             while True:
@@ -370,3 +371,4 @@ def responce_automate():
 
 
 
+ 

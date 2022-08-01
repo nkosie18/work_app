@@ -1,0 +1,146 @@
+{% extends 'base.html' %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename = '/css/energy.css')}}"
+/>
+{% endblock head %} {% block title %} Energy Checks results photons {% endblock
+%} {% block content %}
+<div class="heading w3-container-fluid">
+  <h2>PDD Analysis Results (Photons)</h2>
+  <div class="w3-row">
+    <div class="w3-col l6 m6">
+      {% for each in results %}
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>Machine:</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <p>{{each.machine}}</p>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>Beam:</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <p>{{each.beam}}</p>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>PDD<sub>10</sub>:</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <p>{{round(each.pdd10_curr,2)}}</p>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>Compared to previous PDD<sub>10</sub>:</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <div class="w3-row">
+            <div class="w3-col l6 m6 s6">
+              <p>
+                {{ round(100 * (each.pdd10_curr - each.pdd10_prev) /
+                each.pdd10_prev),2}}%
+              </p>
+            </div>
+            <div class="w3-col l6 m6 s6">
+              {% if abs(100 * (each.pdd10_curr - each.pdd10_prev)/
+              each.pdd10_prev) < 3 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>Compared to Commissioning PDD<sub>10</sub>:</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <div class="w3-row">
+            <div class="w3-col l6 m6 s6">
+              <p>
+                {{ round(100 * (each.pdd10_curr - each.pdd_comm) /
+                each.pdd_comm),2}}%
+              </p>
+            </div>
+            <div class="w3-col l6 m6 s6">
+              {% if abs(100 * (each.pdd10_curr - each.pdd_comm)/ each.pdd_comm)
+              < 3 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <br /><br />
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>TPR<sub>20,10</sub> :</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <p>{{each.tpr2010_curr}}</p>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>Compared to previous TPR<sub>20,10</sub>:</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <div class="w3-row">
+            <div class="w3-col l6 m6 s6">
+              <p>
+                {{ round(100 * (each.tpr2010_curr - each.tpr2010_prev) /
+                each.tpr2010_prev),2}}%
+              </p>
+            </div>
+            <div class="w3-col l6 m6 s6">
+              {% if abs(100 * (each.tpr2010_curr - each.tpr2010_prev)/
+              each.tpr2010_prev) < 3 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>Compared to Commissioning TPR<sub>20,10</sub>:</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <div class="w3-row">
+            <div class="w3-col l6 m6 s6">
+              <p>
+                {{ round(100 * (each.tpr2010_curr - each.tpr2010_comm) /
+                each.tpr2010_comm),2}}%
+              </p>
+            </div>
+            <div class="w3-col l6 m6 s6">
+              {% if abs(100 * (each.tpr2010_curr - each.tpr2010_comm)/
+              each.tpr2010_comm) < 3 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <br /><br />
+      {% endfor %}
+    </div>
+    <div class="w3-col l6 m6 w3-hide-small">
+      <p></p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

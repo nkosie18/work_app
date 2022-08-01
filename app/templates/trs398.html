@@ -12,13 +12,38 @@
       <!--
         This is the left column that just act as a margine. Might have to delete it later. We will see how it turn out.
       -->
-      <div class="w3-col m2 l2 w3-hide-small">
-        <p></p>
+      <div class="w3-col m3 l3 w3-hide-small">
+        <div class="left_col">
+
+          <b>Setup Instruction</b>
+        <div class="w3-row">
+          <p> Field size: 10 cm x 10 cm </p>
+        </div>
+        <div class="w3-row">
+          <p>SSD: 100 cm</p>
+        </div>
+        <div class="w3-row">
+          <p>Depth: 10 cm</p>
+        </div>
+        <div class="w3-row">
+          <p>Phantom: liquid water</p>
+        </div>
+
+        <div class="w3-row">
+          <b>Beam Data </b>
+
+          <p>
+            <button class="w3-button w3-round w3-blue" id="beam_data"> Update </button>
+          </p> 
+        </div>
+
+        </div>
+        
       </div>
       <!--
         This is the center column, where the magic happens, ok I am only joking, this is the main form.
       -->
-      <div class="center_row w3-col m8 l8 s7">
+      <div class="center_row w3-col m7 l7 s7">
         <h2>Reference calibration: {{linac_obj.n_name}}</h2>
         <h3><i>IAEA TRS-398 of 2006</i></h3>
         <form action="" method="POST" novalidate>

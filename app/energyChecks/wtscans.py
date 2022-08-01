@@ -372,6 +372,7 @@ class PDD:
                 "Type": self.curve_type,
                 "Q Index": round(self.calc_q_index(), 3),
                 "Surface Dose": round(self.calc_surface_dose(),3),
+                "D max": round( self.depth_max, 3),
                 "D100": round(self.dose_100(), 3),
                 "D200": round(self.dose_200(), 3)
                 }
