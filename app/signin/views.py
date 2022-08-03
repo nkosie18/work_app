@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash, session
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session, abort
 from flask_login import current_user, login_user, logout_user, login_manager, login_required
 from werkzeug.urls import url_parse
+from app.hospitals.models import Institution
 from app.signin.models import User
 from app.signin.forms import LoginForm, RegistrationForm
 from app import db
@@ -55,33 +56,43 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login.login'))
+
+@register_bp.route('/confirm new user', methods=["GET"])
+@login_required
+def confirm():
+    new_user = request.args.get('registered_user')
+    print(new_user)
+    if not new_user is None:
+        return "The user was registered correctly"
+
+    return 'There is something wrong with the code'
+
 @register_bp.route('/register_user', methods=['GET', 'POST'])
 @login_required
 def register():
     if current_user.is_authenticated:
         if current_user.role == 'Admin':
             form = RegistrationForm()
-
             if form.validate_on_submit():
                 str_password = form.password.data
                 min_length = len(str_password)
                 if min_length < 8 or str.islower(str_password) or str.isupper(str_password) or str.isdigit(str_password) or str.isalpha(str_password):
                     flash('Your password need to be at least 8 cherectors long and have a combination of upper, lower case charactors and numbers')
                     return redirect(url_for('register.register'))
-
-                new_user = User(username=form.username.data, role = form.role.data, status = 'Active')
+                hospital = Institution.query.filter_by(inst_name = form.hospitals.data).first()
+                new_user = User(username=form.username.data, role = form.role.data, status = form.status.data, institution = hospital )
                 new_user.set_password(form.password.data)
                 db.session.add(new_user)
                 db.session.commit()
 
-                flash('New user has been added successfully! ')
-                return redirect(url_for('confirm.confirm'))
+                flash('The New user with username: %s has been added successfully!' %new_user.username)
+                return redirect(url_for('home'))
 
             return render_template('register_newUser.html', form = form) 
 
         else:
-            return render_template('errors/unauthorized.html')
+            abort(403)
 
     else:
-        return render_template('errors/unauthorized.html')
+        abort(403)
 

@@ -26,6 +26,12 @@
 <!--
     
 -->
+<div class="w3-row">
+  <p>
+    {% with massages = get_flashed_messages() %} {% if massages %} {% for
+    message in massages %} {{message}} {%endfor%} {%endif%} {%endwith%}
+  </p>
+</div>
 <div class="w3-display-container w3-row w3-nkosi">
   <img
     src="{{url_for('static', filename='images/logo2.jpg')}}"
@@ -113,4 +119,3 @@
 </div>
 
 {%endblock%}
- 

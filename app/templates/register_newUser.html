@@ -1,70 +1,63 @@
-{%extends "base.html"%}
-
-{% block title %} New User Registration Form {%endblock%}
-
-{% block content %}
+{%extends "base.html"%} {% block title %} New User Registration Form
+{%endblock%} {% block content %}
 
 <div class="w3-row w3-light-grey">
-
-    <h2 style="margin: 3mm; margin-top:7mm">New user registration form.</h2>
-
+  <h2 style="margin: 3mm; margin-top: 7mm">New user registration form.</h2>
 </div>
 
-    <div class="w3-row w3-padding-24 w3-margin-left">
-        <div class="w3-col l2 m2">  </div>
-        <div class="w3-col l8 m8">
-            <form action="" method="POST" novalidate>
-                {{form.hidden_tag()}}
-                <p>
-                    {{form.username.label}} <br>
-                    {{form.username(size=24)}} <br>
-                    {% for error in form.username.errors %}
-                        <span style="color: red;">{{error}}</span>
-                    {%endfor%}
-                </p>
+<div class="w3-row w3-padding-24 w3-margin-left">
+  <div class="w3-col l2 m2"></div>
+  <div class="w3-col l8 m8">
+    <form action="" method="POST" novalidate>
+      {{form.hidden_tag()}}
+      <p>
+        {{form.username.label}} <br />
+        {{form.username(size=24)}} <br />
+        {% for error in form.username.errors %}
+        <span style="color: red">{{error}}</span>
+        {%endfor%}
+      </p>
 
-                <p>
-                    {{form.password.label}} <br>
-                    {{form.password(size=24)}} <br>
-                    {% for error in form.password.errors %}
-                        <span style="color: red;">{{error}}</span>
-                    {%endfor%}
-                </p>
-                <p>
-                    {{form.confirm_password.label}} <br>
-                    {{form.confirm_password(size=24)}} <br>
-                    {% for error in form.confirm_password.errors %}
-                        <span style="color: red;">{{error}}</span>
-                    {%endfor%}
-                </p>
+      <p>
+        {{form.password.label}} <br />
+        {{form.password(size=24)}} <br />
+        {% for error in form.password.errors %}
+        <span style="color: red">{{error}}</span>
+        {%endfor%}
+      </p>
+      <p>
+        {{form.confirm_password.label}} <br />
+        {{form.confirm_password(size=24)}} <br />
+        {% for error in form.confirm_password.errors %}
+        <span style="color: red">{{error}}</span>
+        {%endfor%}
+      </p>
 
-                <p>
-                    {{form.role.label}} <br>
-                    {{form.role}} <br>
+      <p>
+        {{form.hospitals.label}} <br />
+        {{form.hospitals}} <br />
+      </p>
 
+      <p>
+        {{form.role.label}} <br />
+        {{form.role}} <br />
+      </p>
 
-                </p>
+      <p>
+        {{form.status.label}} <br />
+        {{form.status}} <br />
+      </p>
 
-                <p>{{form.submit()}}</p>
+      <p>{{form.submit()}}</p>
 
-                <div class=" w3-container w3-magine-left">
-                    <h4 style="color: tomato;">
-                        {% with messages = get_flashed_messages() %}
-        
-                        {% if messages %}
-                            {% for message in messages %}
-                                {{message}}
-                            {%endfor%}
-                        {%endif%}
-                    {%endwith%}
-                    </h4>
-                </div>
-
-
-            </form>
-
-        </div>
-
-    </div>
+      <div class="w3-container w3-magine-left">
+        <h4 style="color: tomato">
+          {% with messages = get_flashed_messages() %} {% if messages %} {% for
+          message in messages %} {{message}} {%endfor%} {%endif%} {%endwith%}
+        </h4>
+      </div>
+    </form>
+  </div>
+</div>
 
 {%endblock%}

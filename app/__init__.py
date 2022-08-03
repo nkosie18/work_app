@@ -34,12 +34,13 @@ from app.energyChecks.views import energyChecks_bp
 
 
 
-app.register_blueprint(hospitals_bp)
+
 app.register_blueprint(trs_398_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(logout_bp)
 app.register_blueprint(register_bp)
 app.register_blueprint(linac_bp)
+
 app.register_blueprint(ct_bp)
 app.register_blueprint(ion_chamber_bp)
 app.register_blueprint(reg_chamber_bp)
@@ -55,6 +56,7 @@ app.register_blueprint(mri_bp)
 app.register_blueprint(petct_bp)
 app.register_blueprint(cbct_form_bp)
 app.register_blueprint(energyChecks_bp)
+app.register_blueprint(hospitals_bp)
 
 
 

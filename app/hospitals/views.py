@@ -5,5 +5,6 @@ hospitals_bp = Blueprint('hospitals', __name__, template_folder='templates', sta
 
 @hospitals_bp.route('/hospitals')
 def hospitals():
+    hospital_list = Institution.query.all()
     return 'work is still needed here!'
 

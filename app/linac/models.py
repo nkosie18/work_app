@@ -12,7 +12,7 @@ class Machine(db.Model):
     n_name = db.Column(db.String(4), index=True)
     com_date = db.Column(db.Date)
     com_technique = db.Column(db.String(10), index=True)
-    hospital_id = db.Column(db.Integer, db.ForeignKey("institution.id", ondelete='CASCADE'))
+    hospital_id = db.Column(db.Integer,  db.ForeignKey("institution.id", ondelete='CASCADE'))
     photon_en = db.relationship('Photon_energy', backref='machine_en_ph', lazy='dynamic', passive_deletes=True)
     electron_en = db.relationship('Electron_energy', backref='machine_en_el', lazy='dynamic', passive_deletes=True) 
     m_trs398_photons = db.relationship('Trs398_photons', backref='machine_trs_ph', lazy='dynamic', passive_deletes=True)
