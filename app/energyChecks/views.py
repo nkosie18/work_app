@@ -1,4 +1,3 @@
-from msilib import UuidCreate
 from flask import Blueprint, current_app, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 from app.trs398.models import Pdd_data_photons, Pdd_data_electrons
@@ -37,7 +36,6 @@ class energy_check():
 def upload_status():
     uid_from_session = request.args.get('uid_new')
     new_photon_data = Pdd_data_photons.query.filter_by(uid_new_p = uid_from_session).all()
-    print(new_photon_data)
     results = []
     for each_beam in new_photon_data:
         machine_id = each_beam.machine_scaned_p
@@ -75,7 +73,7 @@ def update_pdd():
         uid_new = str(uuid4())
         for file in uploaded_files:
             if file.filename =='':
-                flash('No file selected!, Please select a file to upload.')
+                flash('No file selected!, Please select at least one file to upload.')
                 return redirect(url_for('energyChecks.update_pdd'))
 
             if not file.filename =='':
@@ -95,6 +93,7 @@ def update_pdd():
                                 date_today = datetime.now().date()
                                 machine = Machine.query.filter_by(n_name = each_scan.calc_results()['machine']).first_or_404()
                                 beamEnergy = each_scan.calc_results()['Energy']
+                                print('the dose at depth max is: %s' %each_scan.calc_results()['D max'])
                                 if not beamEnergy in ['16X','110X']:
                                     machine_energy = Photon_energy.query.filter(and_(Photon_energy.energy == '%sX-WFF' %beamEnergy[0:-1], Photon_energy.machine_id_p == machine.id)).first_or_404()
                                 if beamEnergy == '16X':
@@ -106,11 +105,11 @@ def update_pdd():
                                 
                                 checkDuplicate = Pdd_data_photons.query.filter(and_(Pdd_data_photons.date == date_today, Pdd_data_photons.machine_scaned_p == machine.id, Pdd_data_photons.beam_energy_p == machine_energy.id)).first()
                                 if not checkDuplicate is None:
-                                    flash(' %s : PDD data already exists for %s %s' %(file_name, machine.n_name, machine_energy.energy))
+                                    flash(' %s : This PDD data already exists!  (Machine: %s, Energy: %s)' %(file_name, machine.n_name, machine_energy.energy))
                                     
                                 if checkDuplicate is None:
-                                    db.session.add(pdd_data)
-                                    db.session.commit()
+                                    #db.session.add(pdd_data)
+                                    #db.session.commit()
                                     flash('%s : PDD data added for %s %s' %(file_name, machine.n_name, machine_energy.energy))
 
                             if each_scan.calc_results()['modality'] == 'EL':

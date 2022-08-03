@@ -44,14 +44,16 @@
                     <th>Chamber Make</th>
                     <th>Chamber S/N </th>
                     <th> Used As </th>
+                    <th id="status_chamb"> Last Check </th>
                     <th></th>
                 </tr>
                 {%for item in chambers %}
                 <tr>
                     <td>{{datetime.strftime(item.date_add, "%d %b %Y")}}</td>
                     <td> {{item.make}} </td>
-                    <td id="serial"> {{item.sn}} </td>
+                    <td id = {{item.sn}}> {{item.sn}} </td>
                     <td>{{item.chamber_type}}</td>
+                    <td id="last_cal_{{item.sn}}"></td>
                     <td> <button type="button" id="{{item.sn}}" class="w3-button w3-blue w3-round-large">View</button></td>
                 </tr>
                 {%endfor%}

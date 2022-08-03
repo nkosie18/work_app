@@ -8,6 +8,11 @@
 <div class="heading w3-container-fluid">
   <h2>PDD Analysis Results (Photons)</h2>
   <div class="w3-row">
+    <p style="color: tomato">
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %} {{message}}<br />
+      {%endfor%} {%endif%} {%endwith%}
+    </p>
     <div class="w3-col l6 m6">
       {% for each in results %}
       <div class="w3-row">

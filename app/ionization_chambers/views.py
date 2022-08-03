@@ -29,6 +29,7 @@ reg_chamber_bp = Blueprint('reg_chamber',__name__, template_folder= 'templates',
 @login_required
 def ion_chamber():
     chambers = Ionization_chambers.query.all()
+
     #cals = Chamber_calfactor
     return render_template('chambers.html', chambers=chambers, datetime = datetime)
 
@@ -232,6 +233,22 @@ def sr_checks_m():
             return render_template('sr_chechs_do.html', form=form, temp = checkTempPress.temp, press = checkTempPress.press)
  
 
+@ion_chamber_bp.route('/chamberCalStatus', methods = ['GET'])
+@login_required
+def daysAfterCheck():
+    chamber_list = Ionization_chambers.query.filter_by(institution_id = current_user.institution_id).all()
+    
+    chambers_data = []
+    today = datetime.now().date()
+    for each in chamber_list:
+        chamber_dict = {}
+        last_measurement = Sr_checks.query.filter(Sr_checks.ion_chamber == each).order_by(desc(Sr_checks.date)).first()
+        days_gone = today - last_measurement.date
+        chamber_dict['chamber'] = '{}-{}'.format(each.make, each.sn)
+        chamber_dict['chamb_sn'] = each.sn
+        chamber_dict['cal_date'] = str(days_gone).split(" ")[0]
+        chambers_data.append(chamber_dict)
+    return jsonify({'status':'success','chamb_dates': chambers_data })
 
 @ion_chamber_bp.route('/chambViewProcess', methods=['POST'])
 @login_required

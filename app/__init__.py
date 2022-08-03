@@ -13,10 +13,6 @@ login = LoginManager(app)
 
 
 
-@app.route('/test2')
-def test2():
-    a = "nkosie"
-    return render_template('test2.html', name = a)
 from app.signin.views import login_bp, logout_bp, register_bp
 from app.linac.views import linac_bp
 from app.ct.views import ct_bp

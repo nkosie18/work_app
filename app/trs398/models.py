@@ -60,6 +60,7 @@ class Pdd_data_photons(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     uid_new_p = db.Column(db.String(128))
     date = db.Column(db.Date)
+    dose_dmax = db.Column(db.Float)
     pdd10 = db.Column(db.Float)
     tpr2010 = db.Column(db.Float)
     user_added_by_p = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'))  #added_by_p

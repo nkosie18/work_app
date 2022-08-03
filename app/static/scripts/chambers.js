@@ -1,4 +1,19 @@
 $(document).ready(function () {
+  $.ajax({
+    url: "/chamberCalStatus",
+    type: "GET",
+    success: function (data) {
+      if (data.status == "success") {
+        var size = Object.keys(data.chamb_dates).length;
+        for (let i = 0; i < size; i++) {
+          $("#last_cal_" + data.chamb_dates[i].chamb_sn).html(
+            data.chamb_dates[i].cal_date + " days ago"
+          );
+        }
+      }
+    },
+  });
+
   $("#chambst").click(function (event) {
     //event.preventDefault();
 

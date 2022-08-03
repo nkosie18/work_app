@@ -12,5 +12,5 @@ class Config(object):
     LDAP_LOGIN_VIEW = 'login.login'
     UPLOAD_PATH = 'Uploads'
     MAX_CONTENT_LENGTH = 1024 * 1024
-    ALLOWED_EXTENSIONS = ['.mcc']
+    ALLOWED_EXTENSIONS = ['.mcc','.txt']
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=60)
