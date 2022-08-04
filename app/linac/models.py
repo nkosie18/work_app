@@ -1,4 +1,3 @@
-from operator import index
 from app import db
 #from app.hospitals.models import Institution
 #from app.trs398.models import Trs398_photons, Trs398_electrons
@@ -28,7 +27,7 @@ class Photon_energy(db.Model):
     __tablename__= 'photon_energy'
     id = db.Column(db.Integer, primary_key =True)
     energy = db.Column(db.String(10), index = True)
-    dose_dmax = db.Column(db.Float)
+    com_dose_dmax = db.Column(db.Float)     #mm
     com_pdd10 = db.Column(db.Float)
     com_tpr = db.Column(db.Float) 
     machine_id_p = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=True)
