@@ -38,7 +38,7 @@ class Trs398_electrons(db.Model):
     m_reading31 = db.Column(db.Float)   #nC
     m_reading32 = db.Column(db.Float)   #nC
     m_R50 = db.Column(db.Float)
-    m_R80 = db.Column(db.Float)
+    m_Rp = db.Column(db.Float)
     b_kpol = db.Column(db.Float)
     b_ks = db.Column(db.Float)
     b_kqq = db.Column(db.Float)
@@ -76,9 +76,9 @@ class Pdd_data_electrons(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     uid_new_e = db.Column(db.String(128))
     date = db.Column(db.Date)
-    r50ion = db.Column(db.Float)
-    e_not = db.Column(db.String(10))
-    r80ion = db.Column(db.Float)
+    R50 = db.Column(db.Float)
+    E_not = db.Column(db.String(10))
+    Rp = db.Column(db.Float)
     user_added_by_e = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'))  #added_by_e
     beam_energy_e = db.Column(db.Integer, db.ForeignKey("electron_energy.id", ondelete='CASCADE')) #linac_energy_electron
     machine_scaned_e = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete = 'CASCADE'))   #machine_pdd_el

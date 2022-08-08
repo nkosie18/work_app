@@ -108,18 +108,29 @@ def update_pdd():
                                     flash(' %s : This PDD data already exists!  (Machine: %s, Energy: %s)' %(file_name, machine.n_name, machine_energy.energy))
                                     
                                 if checkDuplicate is None:
-                                    #db.session.add(pdd_data)
-                                    #db.session.commit()
+                                    db.session.add(pdd_data)
+                                    db.session.commit()
                                     flash('%s : PDD data added for %s %s' %(file_name, machine.n_name, machine_energy.energy))
-
+########################################################################################
+####         ELECTRONS PDD HANDLER #####################################################
+########################################################################################
                             if each_scan.calc_results()['modality'] == 'EL':
                                 date_today = datetime.now().date()
                                 machine = Machine.query.filter_by(n_name = each_scan.calc_results()['machine']).first_or_404()
                                 beamEnergy = each_scan.calc_results()['Energy']
-                                e_not = round(float(each_scan.calc_results()['R50']['R50']) * 2.33, 2)
+                                r50 = each_scan.calc_results()['R50']['R50']
+                                Rp = each_scan.calc_results()['Rp']
+                                E_not = round(float(each_scan.calc_results()['R50']['R50']) * 2.33, 2)
                                 machine_energy = Electron_energy.query.filter(and_(Electron_energy.energy == beamEnergy[0:-1], Electron_energy.machine_id_e == machine.id)).first_or_404()
-                                pdd_data = Pdd_data_electrons(uid_new_e = uid_new ,date = date_today, r50ion = float(each_scan.calc_results()['R50']['R50']), e_not = e_not, r80ion = float(each_scan.calc_results()['R80']), machine_scaned_e = machine.id, beam_energy_e = machine_energy.id,  user_added_by_e = current_user.id)
-                                print(beamEnergy[0:-1])
+                                pdd_data = Pdd_data_electrons(uid_new_e = uid_new ,date = date_today, R50 = float(r50), E_not = E_not, Rp = float(Rp), machine_scaned_e = machine.id, beam_energy_e = machine_energy.id,  user_added_by_e = current_user.id)
+                                check_duplicates = Pdd_data_electrons.query,filter(and_(Pdd_data_electrons.date == date_today, Pdd_data_electrons.machine_scaned_e == machine.id, Pdd_data_electrons.beam_energy_e == machine_energy.id)).first()
+                                if not check_duplicates is None:
+                                    flash(' %s : This PDD data already exists!  (Machine: %s, Energy: %s)' %(file_name, machine.n_name, machine_energy.energy))
+                                    
+                                if checkDuplicate is None:
+                                    db.session.add(pdd_data)
+                                    db.session.commit()
+                                    flash('%s : PDD data added for %s %s' %(file_name, machine.n_name, machine_energy.energy))
                         if not each_scan.calc_results()['Type'] == 'PDD':
                             flash('%s : This is not a PDD scan, please select a PDD scan to upload.' %file_name)
                 if not file_ext in current_app.config['ALLOWED_EXTENSIONS']:

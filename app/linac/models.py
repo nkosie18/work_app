@@ -44,8 +44,8 @@ class Electron_energy(db.Model):
     __tablename__= 'electron_energy'
     id = db.Column(db.Integer, primary_key = True)
     energy = db.Column(db.String(10), index = True)
-    com_r50ion = db.Column(db.Float)
-    com_r80ion = db.Column(db.Float)
+    com_R50 = db.Column(db.Float)
+    com_Rp = db.Column(db.Float)
     mean_energy = db.Column(db.Float)
     machine_id_e = db.Column(db.Integer, db.ForeignKey("machine.id", ondelete='CASCADE'), nullable=True)
     trs398_readings = db.relationship('Trs398_electrons', backref='ion_chamber_elen', lazy='dynamic', passive_deletes=True)

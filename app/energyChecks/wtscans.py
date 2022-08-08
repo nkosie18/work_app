@@ -358,10 +358,10 @@ class PDD:
                 "Energy": self.energy,
                 'modality': self.modality,
                 "Type": self.curve_type,
-                "R80": round(self.depth_x(80.0), 3),
-                "R50": {"R50 (DIN)": round(self.calc_R50_din(), 3), 
-                        "R50": round(self.depth_x(50.0), 3)},
-                "Rp": round(self.calc_Rp(), 3)
+                "R80": round(self.depth_x(80.0), 2),
+                "R50": {"R50 (DIN)": round(self.calc_R50_din(), 2), 
+                        "R50": round(self.depth_x(50.0), 2)},
+                "Rp": round(self.calc_Rp(), 2)
                 }
         elif self.modality == "X":
             results = {
