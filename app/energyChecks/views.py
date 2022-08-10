@@ -84,8 +84,8 @@ def upload_status():
         beam_obje = Electron_energy.query.filter_by(id = beam_id_e).first()  # This is the commissioning data for the electrns.
         previous_data_e = Pdd_data_electrons.query.filter(and_(Pdd_data_electrons.machine_scaned_e == machine_id_e, Pdd_data_electrons.beam_energy_e == beam_id_e, Pdd_data_electrons.uid_new_e != uid_from_session)).order_by(desc(Pdd_data_electrons.date)).first()
         if not previous_data_e is None:
-            json_obj_e = 
-
+            json_obj_e = energy_checks_e(machine_obje.n_name, beam_obje.energy, each_e_beam.R50, previous_data_e.R50, beam_obje.com_R50, each_e_beam.Rp, previous_data_e.Rp, beam_obje.com_Rp, each_e_beam.E_not, previous_data_e.E_not, beam_obje.mean_energy)  )
+            results_e.append(json_obj_e)
 
     return render_template('energyChecks/upload_status.html',round = round, results_p = results_p, abs = abs, float = float )
 
