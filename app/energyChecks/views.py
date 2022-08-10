@@ -20,7 +20,7 @@ def energyChecks():
     electron_energies = Pdd_data_electrons.query.all()
     return   'hello world' #render_template(energyChecks.htnl, photons = photon_energies, electrons = electron_energies)
 
-class energy_check():
+class energy_check_p():
     def __init__(self, machine, beam, pdd10_curr, pdd10_prev, pdd_comm, tpr2010_curr, tpr2010_prev, tpr2010_comm, dmax_curr, dmax_prev, dmax_comm):
         self.machine = machine
         self.beam = beam
@@ -34,34 +34,60 @@ class energy_check():
         self.tpr2010_prev = tpr2010_prev
         self.tpr2010_comm = tpr2010_comm
 
+class energy_checks_e():
+    def __init__(self, machine, beam, R50_curr, R50_prev, R50_comm, Rp_curr, Rp_prev, Rp_comm, mean_e_curr, mean_e_prev, mean_e_comm):
+        self.machine = machine
+        self.beam = beam
+        self.R50_curr = R50_curr
+        self.R50_prev = R50_prev
+        self.R50_comm = R50_comm
+        self.Rp_curr = Rp_curr
+        self.Rp_prev = Rp_prev
+        self.Rp_comm = Rp_comm
+        self.mean_e_curr = mean_e_curr
+        self.mean_e_prev = mean_e_prev
+        self.mean_e_comm = mean_e_comm
+
+
 @energyChecks_bp.route('/energyChecks/upload_status', methods = ['GET'])
 @login_required
 def upload_status():
     uid_from_session = request.args.get('uid_new')
     new_photon_data = Pdd_data_photons.query.filter_by(uid_new_p = uid_from_session).all()
     new_electron_data = Pdd_data_electrons.query.filter_by(uid_new_e = uid_from_session).all()
-    results = []
+    results_p = []
+    results_e = []
 
     ###########
     # Photon data
     #############
-    for each_beam in new_photon_data:
-        machine_id = each_beam.machine_scaned_p
-        beam_id = each_beam.beam_energy_p
+    for each_p_beam in new_photon_data:
+        machine_id = each_p_beam.machine_scaned_p
+        beam_id = each_p_beam.beam_energy_p
         machine_obj = Machine.query.filter_by(id = machine_id).first()
         beam_obj = Photon_energy.query.filter_by(id = beam_id).first()   # this is the commissioning data
         name_combined = '{}_{}'.format(machine_obj.n_name, beam_obj.energy)
         #comm_data = Photon_energy.query.filter(and_(Photon_energy.machine_id_p == machine_id, Photon_energy.id == beam_id)).first()
-        previous_data = Pdd_data_photons.query.filter(and_(Pdd_data_photons.machine_scaned_p == machine_id, Pdd_data_photons.beam_energy_p == beam_id, Pdd_data_photons.uid_new_p != uid_from_session)).order_by(desc(Pdd_data_photons.date)).first()
-        if previous_data is not None:
-            print("dmax: %s" %each_beam.dose_dmax)
-            json_obj = energy_check(machine_obj.n_name, beam_obj.energy, each_beam.pdd10, previous_data.pdd10, beam_obj.com_pdd10, each_beam.tpr2010, previous_data.tpr2010, beam_obj.com_tpr, each_beam.dose_dmax, previous_data.dose_dmax, beam_obj.com_dose_dmax)
-            results.append(json_obj)
-        if previous_data is None:
-            json_obj = energy_check(machine_obj.n_name, beam_obj.energy, each_beam.pdd10, beam_obj.com_pdd10, beam_obj.com_pdd10, each_beam.tpr2010, beam_obj.com_tpr, beam_obj.com_tpr, each_beam.dose_dmax, beam_obj.com_dose_dmax, beam_obj.com_dose_dmax)
-            results.append(json_obj)
+        previous_data_p = Pdd_data_photons.query.filter(and_(Pdd_data_photons.machine_scaned_p == machine_id, Pdd_data_photons.beam_energy_p == beam_id, Pdd_data_photons.uid_new_p != uid_from_session)).order_by(desc(Pdd_data_photons.date)).first()
+        if previous_data_p is not None:
+            print("dmax: %s" %each_p_beam.dose_dmax)
+            json_obj_p = energy_check_p(machine_obj.n_name, beam_obj.energy, each_p_beam.pdd10, previous_data_p.pdd10, beam_obj.com_pdd10, each_p_beam.tpr2010, previous_data_p.tpr2010, beam_obj.com_tpr, each_p_beam.dose_dmax, previous_data_p.dose_dmax, beam_obj.com_dose_dmax)
+            results_p.append(json_obj_p)
+        if previous_data_p is None:
+            json_obj_p = energy_check_p(machine_obj.n_name, beam_obj.energy, each_p_beam.pdd10, beam_obj.com_pdd10, beam_obj.com_pdd10, each_p_beam.tpr2010, beam_obj.com_tpr, beam_obj.com_tpr, each_p_beam.dose_dmax, beam_obj.com_dose_dmax, beam_obj.com_dose_dmax)
+            results_p.append(json_obj_p)
 
-    return render_template('energyChecks/upload_status.html',round = round, results = results, abs = abs, float = float )
+    for each_e_beam in new_electron_data:
+        machine_id_e = each_e_beam.machine_scaned_e
+        beam_id_e = each_e_beam
+        machine_obje = Machine.query.filter_by(id = machine_id_e).first()
+        beam_obje = Electron_energy.query.filter_by(id = beam_id_e).first()  # This is the commissioning data for the electrns.
+        previous_data_e = Pdd_data_electrons.query.filter(and_(Pdd_data_electrons.machine_scaned_e == machine_id_e, Pdd_data_electrons.beam_energy_e == beam_id_e, Pdd_data_electrons.uid_new_e != uid_from_session)).order_by(desc(Pdd_data_electrons.date)).first()
+        if not previous_data_e is None:
+            json_obj_e = 
+
+
+    return render_template('energyChecks/upload_status.html',round = round, results_p = results_p, abs = abs, float = float )
 
         
             
