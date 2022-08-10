@@ -45,3 +45,9 @@ flask run
 
 # all HTML files live in templates, all javascripts files live in static, including images and CSS stuff.
 
+
+
+#08/08/2022
+
+I need to work on the page that is going to display the data from energy checks views.
+From there I need to complete the photon_energy TRS-398 model and move on to the electrons model

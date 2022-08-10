@@ -6,7 +6,9 @@
 {% endblock head %} {% block title %} Energy Checks results photons {% endblock
 %} {% block content %}
 <div class="heading w3-container-fluid">
-  <h2>PDD Analysis Results (Photons)</h2>
+  <br />
+  <h2>Energy checks</h2>
+  <h4>PDD Analysis Results (Photons)</h4>
   <div class="w3-row">
     <p style="color: tomato">
       {% with messages = get_flashed_messages() %} {% if messages %} {% for
@@ -36,7 +38,7 @@
           <p>PDD<sub>10</sub>:</p>
         </div>
         <div class="w3-col l6 m6 s6">
-          <p>{{round(each.pdd10_curr,2)}}</p>
+          <p>{{round(each.pdd10_curr,2)}} %</p>
         </div>
       </div>
       <div class="w3-row">
@@ -48,7 +50,7 @@
             <div class="w3-col l6 m6 s6">
               <p>
                 {{ round(100 * (each.pdd10_curr - each.pdd10_prev) /
-                each.pdd10_prev),2}}%
+                each.pdd10_prev),2}} % Different
               </p>
             </div>
             <div class="w3-col l6 m6 s6">
@@ -71,7 +73,7 @@
             <div class="w3-col l6 m6 s6">
               <p>
                 {{ round(100 * (each.pdd10_curr - each.pdd_comm) /
-                each.pdd_comm),2}}%
+                each.pdd_comm),2}} % Different
               </p>
             </div>
             <div class="w3-col l6 m6 s6">
@@ -103,7 +105,7 @@
             <div class="w3-col l6 m6 s6">
               <p>
                 {{ round(100 * (each.tpr2010_curr - each.tpr2010_prev) /
-                each.tpr2010_prev),2}}%
+                each.tpr2010_prev),2}} % Different
               </p>
             </div>
             <div class="w3-col l6 m6 s6">
@@ -126,7 +128,7 @@
             <div class="w3-col l6 m6 s6">
               <p>
                 {{ round(100 * (each.tpr2010_curr - each.tpr2010_comm) /
-                each.tpr2010_comm),2}}%
+                each.tpr2010_comm),2}} % Different
               </p>
             </div>
             <div class="w3-col l6 m6 s6">
@@ -141,11 +143,68 @@
         </div>
       </div>
       <br /><br />
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>Dose<sub>dmax</sub> :</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <p>{{each.dmax_curr}} mm</p>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>Compared previous Dose<sub>dmax</sub>:</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <div class="w3-row">
+            <div class="w3-col l6 m6 s6">
+              <p>{{round(each.dmax_curr - each.dmax_prev,2)}} mm</p>
+            </div>
+            <div class="w3-col l6 m6 s6">
+              {% if (each.dmax_curr - each.dmax_prev) < 3 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w3-row">
+        <div class="w3-col l6 m6 s6">
+          <p>Compared commissioning Dose<sub>dmax</sub>:</p>
+        </div>
+        <div class="w3-col l6 m6 s6">
+          <div class="w3-row">
+            <div class="w3-col l6 m6 s6">
+              <p>
+                {{round(float(each.dmax_curr) - float(each.dmax_comm),2)}} mm
+              </p>
+            </div>
+            <div class="w3-col l6 m6 s6">
+              {% if (each.dmax_curr - each.dmax_comm) < 2 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr id="bottomline" />
+      <br /><br />
       {% endfor %}
     </div>
     <div class="w3-col l6 m6 w3-hide-small">
       <p></p>
     </div>
+  </div>
+  <div class="w3-row">
+    <br />
+    <h4>PDD Analysis Results (Electrons)</h4>
+    <div class="w3-col l6 m6"></div>
+    <div class="w3-col l6 m6 w3-hide-small"><p></p></div>
   </div>
 </div>
 {% endblock content %}

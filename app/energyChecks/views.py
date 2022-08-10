@@ -21,12 +21,15 @@ def energyChecks():
     return   'hello world' #render_template(energyChecks.htnl, photons = photon_energies, electrons = electron_energies)
 
 class energy_check():
-    def __init__(self, machine, beam, pdd10_curr, pdd10_prev, pdd_comm, tpr2010_curr, tpr2010_prev, tpr2010_comm):
+    def __init__(self, machine, beam, pdd10_curr, pdd10_prev, pdd_comm, tpr2010_curr, tpr2010_prev, tpr2010_comm, dmax_curr, dmax_prev, dmax_comm):
         self.machine = machine
         self.beam = beam
         self.pdd10_curr = pdd10_curr
         self.pdd10_prev = pdd10_prev
         self.pdd_comm = pdd_comm
+        self.dmax_curr = dmax_curr
+        self.dmax_prev = dmax_prev
+        self.dmax_comm = dmax_comm
         self.tpr2010_curr = tpr2010_curr
         self.tpr2010_prev = tpr2010_prev
         self.tpr2010_comm = tpr2010_comm
@@ -36,23 +39,29 @@ class energy_check():
 def upload_status():
     uid_from_session = request.args.get('uid_new')
     new_photon_data = Pdd_data_photons.query.filter_by(uid_new_p = uid_from_session).all()
+    new_electron_data = Pdd_data_electrons.query.filter_by(uid_new_e = uid_from_session).all()
     results = []
+
+    ###########
+    # Photon data
+    #############
     for each_beam in new_photon_data:
         machine_id = each_beam.machine_scaned_p
         beam_id = each_beam.beam_energy_p
         machine_obj = Machine.query.filter_by(id = machine_id).first()
-        beam_obj = Photon_energy.query.filter_by(id = beam_id).first()
+        beam_obj = Photon_energy.query.filter_by(id = beam_id).first()   # this is the commissioning data
         name_combined = '{}_{}'.format(machine_obj.n_name, beam_obj.energy)
         #comm_data = Photon_energy.query.filter(and_(Photon_energy.machine_id_p == machine_id, Photon_energy.id == beam_id)).first()
         previous_data = Pdd_data_photons.query.filter(and_(Pdd_data_photons.machine_scaned_p == machine_id, Pdd_data_photons.beam_energy_p == beam_id, Pdd_data_photons.uid_new_p != uid_from_session)).order_by(desc(Pdd_data_photons.date)).first()
         if previous_data is not None:
-            json_obj = energy_check(machine_obj.n_name, beam_obj.energy, each_beam.pdd10, previous_data.pdd10, beam_obj.com_pdd10, each_beam.tpr2010, previous_data.tpr2010, beam_obj.com_tpr)
+            print("dmax: %s" %each_beam.dose_dmax)
+            json_obj = energy_check(machine_obj.n_name, beam_obj.energy, each_beam.pdd10, previous_data.pdd10, beam_obj.com_pdd10, each_beam.tpr2010, previous_data.tpr2010, beam_obj.com_tpr, each_beam.dose_dmax, previous_data.dose_dmax, beam_obj.com_dose_dmax)
             results.append(json_obj)
         if previous_data is None:
-            json_obj = energy_check(machine_obj.n_name, beam_obj.energy, each_beam.pdd10, beam_obj.com_pdd10, beam_obj.com_pdd10, each_beam.tpr2010, beam_obj.com_tpr, beam_obj.com_tpr)
+            json_obj = energy_check(machine_obj.n_name, beam_obj.energy, each_beam.pdd10, beam_obj.com_pdd10, beam_obj.com_pdd10, each_beam.tpr2010, beam_obj.com_tpr, beam_obj.com_tpr, each_beam.dose_dmax, beam_obj.com_dose_dmax, beam_obj.com_dose_dmax)
             results.append(json_obj)
 
-    return render_template('energyChecks/upload_status.html',round = round, results = results, abs = abs)
+    return render_template('energyChecks/upload_status.html',round = round, results = results, abs = abs, float = float )
 
         
             
@@ -101,7 +110,7 @@ def update_pdd():
                                 
                                 if beamEnergy == '110X':
                                     machine_energy = Photon_energy.query.filter(and_(Photon_energy.energy == '10X-FFF', Photon_energy.machine_id_p == machine.id)).first_or_404()
-                                pdd_data = Pdd_data_photons(uid_new_p = uid_new, date = date_today, pdd10 = float(each_scan.calc_results()['D100']), tpr2010 = float(each_scan.calc_results()['Q Index']), machine_scaned_p = machine.id, beam_energy_p = machine_energy.id,  user_added_by_p = current_user.id)
+                                pdd_data = Pdd_data_photons(uid_new_p = uid_new, date = date_today, pdd10 = float(each_scan.calc_results()['D100']), tpr2010 = float(each_scan.calc_results()['Q Index']), dose_dmax = each_scan.calc_results()['D max'] , machine_scaned_p = machine.id, beam_energy_p = machine_energy.id,  user_added_by_p = current_user.id)
                                 
                                 checkDuplicate = Pdd_data_photons.query.filter(and_(Pdd_data_photons.date == date_today, Pdd_data_photons.machine_scaned_p == machine.id, Pdd_data_photons.beam_energy_p == machine_energy.id)).first()
                                 if not checkDuplicate is None:
