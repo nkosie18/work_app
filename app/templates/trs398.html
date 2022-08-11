@@ -44,7 +44,10 @@
         This is the center column, where the magic happens, ok I am only joking, this is the main form.
       -->
       <div class="center_row w3-col m7 l7 s7">
+        
         <h2>Reference calibration: {{linac_obj.n_name}}</h2>
+        <p id="machine_tag" hidden>{{linac_obj.n_name}}</p>
+
         <h3><i>IAEA TRS-398 of 2006</i></h3>
         <form action="" method="POST" novalidate>
           {{form.hidden_tag()}}
@@ -173,8 +176,11 @@
                 {% endfor%}
               </select>
             </p>
+
             <p>
-              <b>{{form.chamber.label}}</b></p><p></p>
+              <b>{{form.chamber.label}}</b>
+            </p>
+            <p id="sele_chamber">
               {{form.chamber}}
             </p>
             <p>

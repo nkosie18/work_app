@@ -38,4 +38,22 @@ $(document).ready(function () {
       );
     }
   });
+
+  $("#beam_data").click(function (e) {
+    e.preventDefault();
+    var machine = $("#machine_tag").text();
+    var beam = $("#sele_beam").find(":selected").text();
+    var chamber = $("#sele_chamber").find(":selected").text();
+
+    $.ajax({
+      type: "POST",
+      url: "/trs_398/check_beam_data",
+      data: { machine: machine, beam: beam, chamber: chamber },
+
+      success: function (data) {
+        if (data.success) {
+        }
+      },
+    });
+  });
 });

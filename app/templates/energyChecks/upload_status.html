@@ -7,16 +7,17 @@
 %} {% block content %}
 <div class="heading w3-container-fluid">
   <br />
+  <p style="color: tomato">
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for
+    message in messages %} {{message}}<br />
+    {%endfor%} {%endif%} {%endwith%}
+  </p>
   <h2>Energy checks</h2>
   <h4>PDD Analysis Results (Photons)</h4>
+  {% if photon_data == True %}
   <div class="w3-row">
-    <p style="color: tomato">
-      {% with messages = get_flashed_messages() %} {% if messages %} {% for
-      message in messages %} {{message}}<br />
-      {%endfor%} {%endif%} {%endwith%}
-    </p>
     <div class="w3-col l6 m6">
-      {% for each in results %}
+      {% for each in results_p %}
       <div class="w3-row">
         <div class="w3-col l6 m6 s6">
           <p>Machine:</p>
@@ -50,7 +51,7 @@
             <div class="w3-col l6 m6 s6">
               <p>
                 {{ round(100 * (each.pdd10_curr - each.pdd10_prev) /
-                each.pdd10_prev),2}} % Different
+                each.pdd10_prev),2}} % Diff
               </p>
             </div>
             <div class="w3-col l6 m6 s6">
@@ -73,7 +74,7 @@
             <div class="w3-col l6 m6 s6">
               <p>
                 {{ round(100 * (each.pdd10_curr - each.pdd_comm) /
-                each.pdd_comm),2}} % Different
+                each.pdd_comm),2}} % Diff
               </p>
             </div>
             <div class="w3-col l6 m6 s6">
@@ -105,7 +106,7 @@
             <div class="w3-col l6 m6 s6">
               <p>
                 {{ round(100 * (each.tpr2010_curr - each.tpr2010_prev) /
-                each.tpr2010_prev),2}} % Different
+                each.tpr2010_prev),2}} % Diff
               </p>
             </div>
             <div class="w3-col l6 m6 s6">
@@ -128,7 +129,7 @@
             <div class="w3-col l6 m6 s6">
               <p>
                 {{ round(100 * (each.tpr2010_curr - each.tpr2010_comm) /
-                each.tpr2010_comm),2}} % Different
+                each.tpr2010_comm),2}} % Diff
               </p>
             </div>
             <div class="w3-col l6 m6 s6">
@@ -158,7 +159,7 @@
         <div class="w3-col l6 m6 s6">
           <div class="w3-row">
             <div class="w3-col l6 m6 s6">
-              <p>{{round(each.dmax_curr - each.dmax_prev,2)}} mm</p>
+              <p>{{round(each.dmax_curr - each.dmax_prev,2)}} mm Diff</p>
             </div>
             <div class="w3-col l6 m6 s6">
               {% if (each.dmax_curr - each.dmax_prev) < 3 %}
@@ -180,6 +181,7 @@
             <div class="w3-col l6 m6 s6">
               <p>
                 {{round(float(each.dmax_curr) - float(each.dmax_comm),2)}} mm
+                Diff
               </p>
             </div>
             <div class="w3-col l6 m6 s6">
@@ -200,11 +202,195 @@
       <p></p>
     </div>
   </div>
+  {%endif%}
+
+  <h4>PDD Analysis Results (Electrons)</h4>
+  {% if electron_data == True %}
   <div class="w3-row">
-    <br />
-    <h4>PDD Analysis Results (Electrons)</h4>
-    <div class="w3-col l6 m6"></div>
+    <div class="w3-col l6 m6">
+      {% for each_e_beam in results_e%}
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>Machine name:</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <p>{{each_e_beam.machine}}</p>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>Beam:</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <p>{{each_e_beam.beam}}</p>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>R<sub>50</sub>:</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <p>{{each_e_beam.R50_curr}} mm</p>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>Compared to previous R<sub>50</sub>:</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <div class="w3-row">
+            <div class="w3-col m6 l6">
+              <p>
+                {{round(each_e_beam.R50_curr - each_e_beam.R50_prev),2}} mm Diff
+              </p>
+            </div>
+            <div class="w3-col m6 l6">
+              {% if (each_e_beam.R50_curr - each_e_beam.R50_prev) < 2 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>Compared to Commissioning R<sub>50</sub>:</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <div class="w3-row">
+            <div class="w3-col m6 l6">
+              <p>
+                {{round(each_e_beam.R50_curr - each_e_beam.R50_comm),2}} mm Diff
+              </p>
+            </div>
+            <div class="w3-col m6 l6">
+              {% if (each_e_beam.R50_curr - each_e_beam.R50_comm) < 2 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <br /><br />
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>R<sub>p</sub>:</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <p>{{each_e_beam.Rp_curr}} mm</p>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>Compared to previous R<sub>p</sub>:</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <div class="w3-row">
+            <div class="w3-col m6 l6">
+              <p>
+                {{round(each_e_beam.Rp_curr - each_e_beam.Rp_prev),2}} mm Diff
+              </p>
+            </div>
+            <div class="w3-col m6 l6">
+              {% if (each_e_beam.Rp_curr - each_e_beam.Rp_prev) < 2 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>Compared to Commissioning R<sub>p</sub>:</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <div class="w3-row">
+            <div class="w3-col m6 l6">
+              <p>
+                {{round(each_e_beam.Rp_curr - each_e_beam.Rp_comm),2}} mm Diff
+              </p>
+            </div>
+            <div class="w3-col m6 l6">
+              {% if (each_e_beam.Rp_curr - each_e_beam.Rp_comm) < 2 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <br /><br />
+
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>E<sub>0</sub> (mean Energy):</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <p>{{each_e_beam.mean_e_curr}} MeV</p>
+        </div>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>Compared to previous E<sub>0</sub>:</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <div class="w3-row">
+            <div class="w3-col m6 l6">
+              <p>
+                {{round(100* (float(each_e_beam.mean_e_curr) -
+                each_e_beam.mean_e_prev)/float(each_e_beam.mean_e_curr)),2}} %
+                Diff
+              </p>
+            </div>
+            <div class="w3-col m6 l6">
+              {% if abs(100* (float(each_e_beam.mean_e_curr) -
+              each_e_beam.mean_e_prev)/float(each_e_beam.mean_e_curr)) < 3 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w3-row">
+        <div class="w3-col m6 l6">
+          <p>Compared to commissioning E<sub>0</sub>:</p>
+        </div>
+        <div class="w3-col m6 l6">
+          <div class="w3-row">
+            <div class="w3-col m6 l6">
+              <p>
+                {{round(100* (float(each_e_beam.mean_e_curr) -
+                each_e_beam.mean_e_comm)/float(each_e_beam.mean_e_curr)),2}} %
+                Diff
+              </p>
+            </div>
+            <div class="w3-col m6 l6">
+              {% if abs(100* (float(each_e_beam.mean_e_curr) -
+              each_e_beam.mean_e_comm)/float(each_e_beam.mean_e_curr)) < 3 %}
+              <p class="Pass">Pass</p>
+              {% else %}
+              <p class="Fail">Fail</p>
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr id="bottomline" />
+      <br /><br />
+      {% endfor %}
+    </div>
     <div class="w3-col l6 m6 w3-hide-small"><p></p></div>
   </div>
+  {%endif%}
 </div>
 {% endblock content %}

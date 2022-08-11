@@ -42,6 +42,21 @@ def update_tp():
     db.session.commit()
     return jsonify({'success': True})
 
+@trs_398_bp.route('/trs_398/check_beam_data', methods=['POST'])
+@login_required
+def update_beam_data():
+    machine = request.form['machine']
+    beam = request.form['beam']
+    chamber = request.form['chamber']
+    machine_obj = Machine.query.filter_by(n_name = machine).first()
+    beam_obj = Photon_energy.query.filter(and_(Photon_energy.energy == beam, Photon_energy.machine_id_p == machine_obj.id )).first()
+    pdd_data = Pdd_data_photons.query.filter(and_(Pdd_data_photons.beam_energy_p == beam_obj.id, Pdd_data_photons.machine_scaned_p == machine_obj.id)).order_by(desc(Pdd_data_photons.date)).first()
+    print(pdd_data)
+
+    return jsonify({'success': True})
+
+
+
 
 
 @trs_398_bp.route('/trs_398/photons', methods=['GET','POST'])

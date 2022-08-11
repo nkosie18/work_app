@@ -70,7 +70,6 @@ def upload_status():
         #comm_data = Photon_energy.query.filter(and_(Photon_energy.machine_id_p == machine_id, Photon_energy.id == beam_id)).first()
         previous_data_p = Pdd_data_photons.query.filter(and_(Pdd_data_photons.machine_scaned_p == machine_id, Pdd_data_photons.beam_energy_p == beam_id, Pdd_data_photons.uid_new_p != uid_from_session)).order_by(desc(Pdd_data_photons.date)).first()
         if previous_data_p is not None:
-            print("dmax: %s" %each_p_beam.dose_dmax)
             json_obj_p = energy_check_p(machine_obj.n_name, beam_obj.energy, each_p_beam.pdd10, previous_data_p.pdd10, beam_obj.com_pdd10, each_p_beam.tpr2010, previous_data_p.tpr2010, beam_obj.com_tpr, each_p_beam.dose_dmax, previous_data_p.dose_dmax, beam_obj.com_dose_dmax)
             results_p.append(json_obj_p)
         if previous_data_p is None:
@@ -79,25 +78,25 @@ def upload_status():
 
     for each_e_beam in new_electron_data:
         machine_id_e = each_e_beam.machine_scaned_e
-        beam_id_e = each_e_beam
+        beam_id_e = each_e_beam.beam_energy_e
         machine_obje = Machine.query.filter_by(id = machine_id_e).first()
         beam_obje = Electron_energy.query.filter_by(id = beam_id_e).first()  # This is the commissioning data for the electrns.
         previous_data_e = Pdd_data_electrons.query.filter(and_(Pdd_data_electrons.machine_scaned_e == machine_id_e, Pdd_data_electrons.beam_energy_e == beam_id_e, Pdd_data_electrons.uid_new_e != uid_from_session)).order_by(desc(Pdd_data_electrons.date)).first()
         if not previous_data_e is None:
-            json_obj_e = energy_checks_e(machine_obje.n_name, beam_obje.energy, each_e_beam.R50, previous_data_e.R50, beam_obje.com_R50, each_e_beam.Rp, previous_data_e.Rp, beam_obje.com_Rp, each_e_beam.E_not, previous_data_e.E_not, beam_obje.mean_energy)  )
+            json_obj_e = energy_checks_e(machine_obje.n_name, beam_obje.energy, each_e_beam.R50, previous_data_e.R50, beam_obje.com_R50, each_e_beam.Rp, previous_data_e.Rp, beam_obje.com_Rp, each_e_beam.E_not, previous_data_e.E_not, beam_obje.mean_energy)  
             results_e.append(json_obj_e)
-
-    return render_template('energyChecks/upload_status.html',round = round, results_p = results_p, abs = abs, float = float )
+        if previous_data_e is None:
+            json_obj_e = energy_checks_e(machine_obje.n_name, beam_obje.energy, each_e_beam.R50, beam_obje.com_R50, beam_obje.com_R50, each_e_beam.Rp, beam_obje.com_Rp, beam_obje.com_Rp, each_e_beam.E_not, beam_obje.mean_energy, beam_obje.mean_energy) 
+            results_e.append(json_obj_e)
+    if new_electron_data == []:
+        
+        return render_template('energyChecks/upload_status.html',round = round, results_p = results_p, abs = abs, float = float, photon_data = True)
+    elif new_photon_data == []:
+        return render_template('energyChecks/upload_status.html',round = round, results_e = results_e, abs = abs, float = float, electron_data = True)
+    else:
+        return render_template('energyChecks/upload_status.html',round = round, results_p = results_p, results_e = results_e, abs = abs, float = float, photon_data = True, electron_data = True )
 
         
-            
-
-        
-    
-    new_electron_data = Pdd_data_electrons.query.filter_by(uid_new_e = uid_from_session).all()
-
-
-    return render_template('energyChecks/upload_status.html')
 
 
 @energyChecks_bp.route('/energyChecks/update_pdd', methods = ['GET','POST'])
@@ -128,7 +127,6 @@ def update_pdd():
                                 date_today = datetime.now().date()
                                 machine = Machine.query.filter_by(n_name = each_scan.calc_results()['machine']).first_or_404()
                                 beamEnergy = each_scan.calc_results()['Energy']
-                                print('the dose at depth max is: %s' %each_scan.calc_results()['D max'])
                                 if not beamEnergy in ['16X','110X']:
                                     machine_energy = Photon_energy.query.filter(and_(Photon_energy.energy == '%sX-WFF' %beamEnergy[0:-1], Photon_energy.machine_id_p == machine.id)).first_or_404()
                                 if beamEnergy == '16X':
@@ -155,14 +153,14 @@ def update_pdd():
                                 beamEnergy = each_scan.calc_results()['Energy']
                                 r50 = each_scan.calc_results()['R50']['R50']
                                 Rp = each_scan.calc_results()['Rp']
-                                E_not = round(float(each_scan.calc_results()['R50']['R50']) * 2.33, 2)
+                                E_not = round((float(r50)/10) * 2.33, 2)
                                 machine_energy = Electron_energy.query.filter(and_(Electron_energy.energy == beamEnergy[0:-1], Electron_energy.machine_id_e == machine.id)).first_or_404()
                                 pdd_data = Pdd_data_electrons(uid_new_e = uid_new ,date = date_today, R50 = float(r50), E_not = E_not, Rp = float(Rp), machine_scaned_e = machine.id, beam_energy_e = machine_energy.id,  user_added_by_e = current_user.id)
-                                check_duplicates = Pdd_data_electrons.query,filter(and_(Pdd_data_electrons.date == date_today, Pdd_data_electrons.machine_scaned_e == machine.id, Pdd_data_electrons.beam_energy_e == machine_energy.id)).first()
+                                check_duplicates = Pdd_data_electrons.query.filter(and_(Pdd_data_electrons.date == date_today, Pdd_data_electrons.machine_scaned_e == machine.id, Pdd_data_electrons.beam_energy_e == machine_energy.id)).first()
                                 if not check_duplicates is None:
                                     flash(' %s : This PDD data already exists!  (Machine: %s, Energy: %s)' %(file_name, machine.n_name, machine_energy.energy))
                                     
-                                if checkDuplicate is None:
+                                if check_duplicates is None:
                                     db.session.add(pdd_data)
                                     db.session.commit()
                                     flash('%s : PDD data added for %s %s' %(file_name, machine.n_name, machine_energy.energy))
