@@ -47,13 +47,17 @@ def update_tp():
 def update_beam_data():
     machine = request.form['machine']
     beam = request.form['beam']
-    chamber = request.form['chamber']
+    chamber = request.form['chamber'].split("-")[0]
+    chamber_obj = Ionization_chambers.query.filter_by(sn = request.form['chamber'].split("-")[1]).first()
+    chamber_cal_cert = Chamber_calfactor.query.filter_by(chamber_id1 = chamber_obj.id).order_by(desc(Chamber_calfactor.date_cal)).first()
     machine_obj = Machine.query.filter_by(n_name = machine).first()
     beam_obj = Photon_energy.query.filter(and_(Photon_energy.energy == beam, Photon_energy.machine_id_p == machine_obj.id )).first()
     pdd_data = Pdd_data_photons.query.filter(and_(Pdd_data_photons.beam_energy_p == beam_obj.id, Pdd_data_photons.machine_scaned_p == machine_obj.id)).order_by(desc(Pdd_data_photons.date)).first()
-    print(pdd_data)
-
-    return jsonify({'success': True})
+    kq_corr = Kq_photons(pdd_data.tpr2010, chamber).kq_value()
+    date_m  = datetime.strftime( pdd_data.date, "%d %b %Y")
+    beam_data = {'date': date_m, 'tpr2010': pdd_data.tpr2010, 'k_corr': kq_corr}
+    chamber_data = {'date': datetime.strftime(chamber_cal_cert.date_cal, "%d %b %Y"), 'lab': chamber_cal_cert.cal_lab, 'energy': chamber_cal_cert.cal_energy, 'ndw': chamber_cal_cert.ndw }
+    return jsonify({'success': True, 'beam_data':beam_data, 'chamber_data': chamber_data })
 
 
 

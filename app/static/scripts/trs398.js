@@ -52,6 +52,42 @@ $(document).ready(function () {
 
       success: function (data) {
         if (data.success) {
+          $("#beam_data_table").html(
+            `
+            <tr>
+              <td><b>Date Measured :</b></td>
+              <td>${data.beam_data.date}</td>
+            </tr>
+            <tr>
+              <td><b>TPR<sub>20,10</sub> :</b></td>
+              <td>${data.beam_data.tpr2010}</td>
+            </tr>
+            <tr>
+              <td><b>K<sub>Q,Q0</sub> :</b></td>
+              <td>${data.beam_data.k_corr}</td>
+            </tr>
+            `
+          );
+          $("#chamber_data_table").html(
+            `
+            <tr>
+              <td><b>Date Calibrated :</b></td>
+              <td>${data.chamber_data.date}</td>
+            </tr>
+            <tr>
+              <td><b>Calibration Lab :</b></td>
+              <td>${data.chamber_data.lab}</td>
+            </tr>
+            <tr>
+              <td><b>Calibration Energy :</b></td>
+              <td>${data.chamber_data.energy}</td>
+            </tr>
+            <tr>
+              <td><b>N<sub>DW</sub> :</b></td>
+              <td>${data.chamber_data.ndw} Gy/nC</td>
+            </tr>
+            `
+          );
         }
       },
     });
