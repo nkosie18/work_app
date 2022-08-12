@@ -94,20 +94,18 @@ def trs_398_photons():
                 m3 = form.m13_reading.data
                 m_v1_avrg = np.average([m1, m2, m3])
                 m_v2_avrg = np.average([form.m21_reading.data, form.m22_reading.data])   # Half voltage M2 corresponding to V2
-                m_v_1_avrg = np.average([form.m31_reading.data, form.m32_reading.data])  #reverse polarity -M1
                 v_ratio = np.abs(form.bias_voltage1.data/form.bias_voltage2.data)   #V1/V2
                 m_ratio = m_v1_avrg/m_v2_avrg                                       # M1/M2
                 ktp = k_tp(form.temp.data, form.press.data)
                 k_s = round(k_recomb(v_ratio, m_ratio),3)
-                k_pol = round(k_poll(m_v1_avrg, m_v_1_avrg),3)
                 chamber_selected = Ionization_chambers.query.filter_by(sn = form.chamber.data.split('-')[1]).subquery()
-                chamber_certificate = Chamber_calfactor.query.join(chamber_selected).order_by(desc(Chamber_calfactor.date_loaded)).first()
+                chamber_certificate = Chamber_calfactor.query.join(chamber_selected).order_by(desc(Chamber_calfactor.date_cal)).first()
                 selected_chamber = Ionization_chambers.query.filter_by(id = chamber_certificate.chamber_id1).first_or_404()
                 beam_energy = Photon_energy.query.filter(and_(Photon_energy.machine_id_p == machine.id, Photon_energy.energy == form.photon_energy.data)).first_or_404()
                 scan_data = Pdd_data_photons.query.filter(and_(Pdd_data_photons.beam_energy_p == beam_energy.id, Pdd_data_photons.machine_scaned_p == machine.id )).order_by(desc(Pdd_data_photons.date)).first_or_404()
                 kqq = Kq_photons(scan_data.tpr2010, selected_chamber.make.replace('-', ' ')).kq_value()
                 bias_voltage = form.bias_voltage1
                 electrometer = form.electrometer.data
-                dose_refDepth = (m_v1_avrg * ktp) * chamber_certificate.ndw * kqq * k_s * k_pol
+                dose_refDepth = (m_v1_avrg * ktp) * chamber_certificate.ndw * kqq * k_s 
  
     return render_template('trs398.html', form=form, linac_obj = machine, environ = temp_press, beams = list_beams, round = round)

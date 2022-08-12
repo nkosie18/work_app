@@ -17,9 +17,7 @@ class TRS398_photonsForm(FlaskForm):
     #change voltage for calculation of the recombination correction
     m21_reading = FloatField('M1 (nC)')
     m22_reading = FloatField('M2 (nC)')
-    #reversed polarity for calculation of polarity correction
-    m31_reading = FloatField('M1 (nC)')
-    m32_reading = FloatField('M1 (nC)')
+
     submit = SelectField('Submit')
 
 
@@ -42,9 +40,7 @@ class TRS398_electronForm(FlaskForm):
     #change voltage for calculation of the recombination correction
     m21_reading = FloatField('M<sub>1</sub> (nC)')
     m22_reading = FloatField('M<sub>2</sub> (nC)')
-    #reversed polarity for calculation of polarity correction
-    m31_reading = FloatField('M<sub>1</sub> (nC)')
-    m32_reading = FloatField('M<sub>1</sub> (nC)')
+
 
     submit = SelectField('Submit')
 

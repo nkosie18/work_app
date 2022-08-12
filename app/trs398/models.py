@@ -14,7 +14,6 @@ class Trs398_photons(db.Model):
     m_reading23 = db.Column(db.Float)   #nC
     m_pdd10 = db.Column(db.Float)
     m_tpr = db.Column(db.Float)
-    m_kpol = db.Column(db.Float)
     m_ks = db.Column(db.Float)
     m_kqq = db.Column(db.Float)
     m_dose_ref = db.Column(db.Float)
@@ -39,7 +38,6 @@ class Trs398_electrons(db.Model):
     m_reading32 = db.Column(db.Float)   #nC
     m_R50 = db.Column(db.Float)
     m_Rp = db.Column(db.Float)
-    b_kpol = db.Column(db.Float)
     b_ks = db.Column(db.Float)
     b_kqq = db.Column(db.Float)
     b_dose_ref = db.Column(db.Float)

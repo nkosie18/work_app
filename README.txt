@@ -51,3 +51,29 @@ flask run
 
 I need to work on the page that is going to display the data from energy checks views.
 From there I need to complete the photon_energy TRS-398 model and move on to the electrons model
+
+<!--<div class="w3-row">
+            <p>
+              Determin K<sub>pol</sub>. <br />
+              <i>Reversing the elevtrometer polarity as defined in TRS-398</i>
+            </p>
+          </div>
+          <div class="w3-row">
+            <div class="w3-col m6 l6">{{form.m31_reading.label}}</div>
+            <div class="w3-col m6 l6">{{form.m31_reading(size=24)}}</div>
+          </div>
+          <div class="w3-row">
+            {% for error in form.m31_reading.errors %}
+            <span style="color: red">{{error}}</span>
+            {%endfor%}
+          </div>
+
+          <div class="w3-row">
+            <div class="w3-col m6 l6">{{form.m32_reading.label}}</div>
+            <div class="w3-col m6 l6">{{form.m32_reading(size=24)}}</div>
+          </div>
+          <div class="w3-row">
+            {% for error in form.m32_reading.errors %}
+            <span style="color: red">{{error}}</span>
+            {%endfor%}
+          </div> -->
