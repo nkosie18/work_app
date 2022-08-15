@@ -16,11 +16,11 @@ $(document).ready(function () {
       if (document.getElementById("bodyup").style.display != "block") {
         $("#bodyup").css("display", "block");
       }
-      tablinke = document.getElementsByClassName("tablinkr");
+      var tablinke = document.getElementsByClassName("tablinkr");
       for (i = 0; i < tablinke.length; i++) {
         if (tablinke[i].className.includes("w3-disabled")) {
           qachecks2 = tablinke[i].id;
-
+          console.log(qachecks2);
           if (qachecks2 == "trs398") {
             $("#trs_398e").css("display", "block");
           } else {
@@ -124,11 +124,6 @@ $(document).ready(function () {
       $("#trs_398e").css("display", "none");
     }
 
-    $("#trs_398ph").click(function (e) {
-      e.preventDefault();
-      location = "/trs_398/photons?machine=" + machine;
-    });
-
     req3_data = $.ajax({
       url: "/linacViewProcess",
       type: "POST",
@@ -218,6 +213,18 @@ $(document).ready(function () {
     } else {
       console.log("You did not click the button on the table");
     }
+  });
+
+  $("#trs_398ph").click(function (e) {
+    e.preventDefault();
+    machine_stat = document.getElementsByClassName("tablink");
+    for (let j = 0; j < machine_stat.length; j++) {
+      if (machine_stat[j].className.includes("w3-disabled")) {
+        machine = machine_stat[j].id;
+      }
+    }
+
+    location = "/trs_398/photons?machine=" + machine;
   });
 
   /*

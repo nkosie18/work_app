@@ -58,6 +58,7 @@ def linac_status():
 def linacViewProcess():
     selected_machine_name = request.form['machine_id'].strip(" ")
     selected_qc = request.form['test_name'].strip(" ")
+    print(selected_qc)
     if selected_qc == 'trs398':
         measured_data_photons = Machine.query.filter(Machine.n_name == selected_machine_name).join(Trs398_photons).all()
         measured_data_electrons = Machine.query.filter(Machine.n_name == selected_machine_name).join(Trs398_electrons).all()
@@ -108,7 +109,7 @@ def linacViewProcess():
 
         else:
             return jsonify({'result':'502','data':'The code exacuted fine, but there is no data in your database'})
-
+    
 
 
 

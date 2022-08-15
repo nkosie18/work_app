@@ -6,9 +6,16 @@ $(document).ready(function () {
       if (data.status == "success") {
         var size = Object.keys(data.chamb_dates).length;
         for (let i = 0; i < size; i++) {
-          $("#last_cal_" + data.chamb_dates[i].chamb_sn).html(
-            data.chamb_dates[i].cal_date + " days ago"
-          );
+          try {
+            var number_days = parseInt(data.chamb_dates[i].cal_date);
+            if (number_days > 1) {
+              $("#last_cal_" + data.chamb_dates[i].chamb_sn).html(
+                number_days + " days ago"
+              );
+            } else {
+              $("#last_cal_" + data.chamb_dates[i].chamb_sn).html("Today");
+            }
+          } catch (error) {}
         }
       }
     },
