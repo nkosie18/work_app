@@ -344,14 +344,15 @@
           <div class="w3-row">
             <div class="w3-col m6 l6">
               <p>
-                {{round(100* (float(each_e_beam.mean_e_curr) -
-                each_e_beam.mean_e_prev)/float(each_e_beam.mean_e_curr)),2}} %
-                Diff
+                {{round(100 * (float(each_e_beam.mean_e_curr) -
+                float(each_e_beam.mean_e_prev))/float(each_e_beam.mean_e_curr)),2}}
+                % Diff
               </p>
             </div>
             <div class="w3-col m6 l6">
               {% if abs(100* (float(each_e_beam.mean_e_curr) -
-              each_e_beam.mean_e_prev)/float(each_e_beam.mean_e_curr)) < 3 %}
+              float(each_e_beam.mean_e_prev))/float(each_e_beam.mean_e_curr)) <
+              3 %}
               <p class="Pass">Pass</p>
               {% else %}
               <p class="Fail">Fail</p>

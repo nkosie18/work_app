@@ -117,6 +117,17 @@ $(document).ready(function () {
     }
     var current_machine = machine;
     var current_check = qachecks;
+    console.log(current_check);
+
+    switch (current_check) {
+      case "energy_chk":
+        console.log("yeah this is the right one.");
+        break;
+
+      default:
+        console.log("This is the default code");
+        break;
+    }
 
     if (current_check == "trs398") {
       $("#trs_398e").css("display", "block");

@@ -8,7 +8,7 @@ $(document).ready(function () {
         for (let i = 0; i < size; i++) {
           try {
             var number_days = parseInt(data.chamb_dates[i].cal_date);
-            if (number_days > 1) {
+            if (number_days > 0) {
               $("#last_cal_" + data.chamb_dates[i].chamb_sn).html(
                 number_days + " days ago"
               );
