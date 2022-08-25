@@ -1,5 +1,5 @@
 import time
-from flask import Blueprint, request, flash, redirect, url_for, render_template, jsonify
+from flask import Blueprint, request, flash, redirect, url_for, render_template, jsonify, abort
 from flask_login import login_required, current_user
 from app.ionization_chambers.models import Ionization_chambers, Sr_checks, Chamber_calfactor, Temp_press
 from app.ionization_chambers.forms import CheckSourceForm, NewChamberForm, CalibrationCertForm, TempPressForm
@@ -36,24 +36,27 @@ def ion_chamber():
 @ion_chamber_bp.route('/Add calibration certificate Data', methods=['GET', 'POST'])
 @login_required
 def Cal_certs():
-    form = CalibrationCertForm()
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            check = Chamber_calfactor.query.filter(and_(Chamber_calfactor.date_cal == form.cal_date.data, Chamber_calfactor.ndw == form.calfactor.data)).first()
-            if check is None:
-                chamb = form.chambers.data
-                sn1 = chamb[10:]
-                chamb_obj = Ionization_chambers.query.filter_by(sn = sn1).first()
-                newCert = Chamber_calfactor(added_by = current_user.username, date_cal = form.cal_date.data, cal_lab = form.cal_lab.data, cal_electrometer = form.electrometer.data, calfact_electrometer = form.electrometerCalFactor.data, elec_voltage = form.calVoltage.data, ndw = form.calfactor.data, cal_energy = form.beamQuality.data, cal_machine = form.calMachine.data, ion_chamb = chamb_obj)
-                db.session.add(newCert)
-                db.session.commit()
-                flash('Everything works fine, the chamber certificate has been added to the database')
-                return redirect(url_for('ion_chamber.ion_chamber'))
-            else:
-                flash('The cirtificate you are trying to add already exist in the database.')
-                return redirect(url_for('ion_chamber.ion_chamber'))
-                
-    return render_template('calCetificate.html', form = form)
+    if not current_user.role == 'Guest':
+        form = CalibrationCertForm()
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                check = Chamber_calfactor.query.filter(and_(Chamber_calfactor.date_cal == form.cal_date.data, Chamber_calfactor.ndw == form.calfactor.data)).first()
+                if check is None:
+                    chamb = form.chambers.data
+                    sn1 = chamb[10:]
+                    chamb_obj = Ionization_chambers.query.filter_by(sn = sn1).first()
+                    newCert = Chamber_calfactor(added_by = current_user.username, date_cal = form.cal_date.data, cal_lab = form.cal_lab.data, cal_electrometer = form.electrometer.data, calfact_electrometer = form.electrometerCalFactor.data, elec_voltage = form.calVoltage.data, ndw = form.calfactor.data, cal_energy = form.beamQuality.data, cal_machine = form.calMachine.data, ion_chamb = chamb_obj)
+                    db.session.add(newCert)
+                    db.session.commit()
+                    flash('Everything works fine, the chamber certificate has been added to the database')
+                    return redirect(url_for('ion_chamber.ion_chamber'))
+                else:
+                    flash('The cirtificate you are trying to add already exist in the database.')
+                    return redirect(url_for('ion_chamber.ion_chamber'))
+                    
+        return render_template('calCetificate.html', form = form)
+    else:
+        abort(403)
 
 @ion_chamber_bp.route('/sr-90_measurements', methods=['GET','POST'])
 @login_required
@@ -195,42 +198,45 @@ def connect_electrometer():
 @ion_chamber_bp.route('/Sr-90 check source measurement', methods=['GET', 'POST'])
 @login_required
 def sr_checks_m():
-    checkTempPress = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
-    if not checkTempPress == None:
-        if (checkTempPress.date_time + timedelta(minutes = 30)) < datetime.now():
-            form1 = TempPressForm()
-            if request.method == 'POST':
-                if form1.validate_on_submit():
-                    new_tp_data = Temp_press(date_time = datetime.now(), temp = form1.temp.data, press = form1.press.data)
-                    db.session.add(new_tp_data)
-                    db.session.commit()
-                    return redirect(url_for('ion_chamber.sr_checks_m'))
-                    
-                    
-        
-            return render_template('tempPress.html', form = form1)
-        else:
-            form = CheckSourceForm()  
-            if request.method == 'POST':
-                if form.validate_on_submit():
-                    chamber = form.chamber.data
-                    print(chamber[10:])
-                    chamb_obj = Ionization_chambers.query.filter_by(sn = chamber[10:]).first()
-                    check1 = Sr_checks.query.filter(and_(Sr_checks.date == form.date.data, Sr_checks.ion_chamber_id == chamb_obj.id)).first()
-                    if check1 is None:
-                        #chamber = form.chamber.data
-                        #chamb_obj = Ionization_chambers.query.filter_by(sn = chamber[10:]).first()
-                        entry1 = Sr_checks(hospital_source = current_user.institution, ion_chamber = chamb_obj, date = form.date.data, sr_source = form.source.data, m_electrometer = form.electrometer.data, elect_voltage = form. elect_voltage.data, m_temp = checkTempPress.temp, m_press = checkTempPress.press, m_reading1= form.reading1.data, m_reading2 = form.reading2.data, m_reading3=form.reading3.data)
-                        db.session.add(entry1)
+    if not current_user.role == 'Guest':
+        checkTempPress = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
+        if not checkTempPress == None:
+            if (checkTempPress.date_time + timedelta(minutes = 30)) < datetime.now():
+                form1 = TempPressForm()
+                if request.method == 'POST':
+                    if form1.validate_on_submit():
+                        new_tp_data = Temp_press(date_time = datetime.now(), temp = form1.temp.data, press = form1.press.data)
+                        db.session.add(new_tp_data)
                         db.session.commit()
+                        return redirect(url_for('ion_chamber.sr_checks_m'))
+                        
+                        
+            
+                return render_template('tempPress.html', form = form1)
+            else:
+                form = CheckSourceForm()  
+                if request.method == 'POST':
+                    if form.validate_on_submit():
+                        chamber = form.chamber.data
+                        print(chamber[10:])
+                        chamb_obj = Ionization_chambers.query.filter_by(sn = chamber[10:]).first()
+                        check1 = Sr_checks.query.filter(and_(Sr_checks.date == form.date.data, Sr_checks.ion_chamber_id == chamb_obj.id)).first()
+                        if check1 is None:
+                            #chamber = form.chamber.data
+                            #chamb_obj = Ionization_chambers.query.filter_by(sn = chamber[10:]).first()
+                            entry1 = Sr_checks(hospital_source = current_user.institution, ion_chamber = chamb_obj, date = form.date.data, sr_source = form.source.data, m_electrometer = form.electrometer.data, elect_voltage = form. elect_voltage.data, m_temp = checkTempPress.temp, m_press = checkTempPress.press, m_reading1= form.reading1.data, m_reading2 = form.reading2.data, m_reading3=form.reading3.data)
+                            db.session.add(entry1)
+                            db.session.commit()
 
-                        flash('The measurement has been added to the database!!')
-                        return redirect(url_for('ion_chamber.ion_chamber'))
-                    else:
-                        flash('Data with the same date for the same chamber has already been added onto the data base!! \n Please make sure the chamber and date that have been selected are correct.')
-                        return redirect(url_for('ion_chamber.ion_chamber'))
+                            flash('The measurement has been added to the database!!')
+                            return redirect(url_for('ion_chamber.ion_chamber'))
+                        else:
+                            flash('Data with the same date for the same chamber has already been added onto the data base!! \n Please make sure the chamber and date that have been selected are correct.')
+                            return redirect(url_for('ion_chamber.ion_chamber'))
 
-            return render_template('sr_chechs_do.html', form=form, temp = checkTempPress.temp, press = checkTempPress.press)
+                return render_template('sr_chechs_do.html', form=form, temp = checkTempPress.temp, press = checkTempPress.press)
+    else:
+        abort(403)
  
 
 @ion_chamber_bp.route('/chamberCalStatus', methods = ['GET'])
@@ -333,32 +339,34 @@ def chamberViewProcess():
 @reg_chamber_bp.route('/chamber registration', methods=['GET', 'POST'])
 @login_required
 def reg_chamber():
+    if not current_user.role == 'Guest':
+        form = NewChamberForm()
 
-    form = NewChamberForm()
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                check = Ionization_chambers.query.filter_by(sn = form.sn.data).first()
+                if check is None:
+                    date_add = form.date_add.data
+                    make = form.make.data
+                    sn = form.sn.data
+                    chamber_type =form.chamber_type.data
+                    inst = current_user.institution
 
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            check = Ionization_chambers.query.filter_by(sn = form.sn.data).first()
-            if check is None:
-                date_add = form.date_add.data
-                make = form.make.data
-                sn = form.sn.data
-                chamber_type =form.chamber_type.data
-                inst = current_user.institution
+                    new_chamber = Ionization_chambers(date_add = date_add, make = make, sn =sn, chamber_type = chamber_type, inst_chambers = inst)
 
-                new_chamber = Ionization_chambers(date_add = date_add, make = make, sn =sn, chamber_type = chamber_type, inst_chambers = inst)
+                    db.session.add(new_chamber)
+                    db.session.commit()
+                    flash('A new chamber has just been added successfuly!!')
 
-                db.session.add(new_chamber)
-                db.session.commit()
-                flash('A new chamber has just been added successfuly!!')
+                    return redirect(url_for('ion_chamber.ion_chamber'))
 
-                return redirect(url_for('ion_chamber.ion_chamber'))
-
-            else:
-                return render_template('chamberExist.html', chamber=check)
-    
+                else:
+                    return render_template('chamberExist.html', chamber=check)
+        
+        else:
+            return render_template('newChamberRegistration.html',form = form)
     else:
-        return render_template('newChamberRegistration.html',form = form)
+        abort(403)
 
 @ion_chamber_bp.route('/auto_sr_checks', methods=["GET"])
 @login_required

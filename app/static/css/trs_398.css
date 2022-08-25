@@ -44,3 +44,6 @@ input[type="number"] {
   padding: 32px;
   background-color: #79aab3;
 }
+.hidden {
+  display: none;
+}

@@ -241,11 +241,13 @@
           <div class="w3-row">
             <div class="w3-col m6 l6">
               <p>
-                {{round(each_e_beam.R50_curr - each_e_beam.R50_prev),2}} mm Diff
+                {{round(float(each_e_beam.R50_curr) -
+                float(each_e_beam.R50_prev)),2}} mm Diff
               </p>
             </div>
             <div class="w3-col m6 l6">
-              {% if (each_e_beam.R50_curr - each_e_beam.R50_prev) < 2 %}
+              {% if abs(float(each_e_beam.R50_curr) -
+              float(each_e_beam.R50_prev)) < 3 %}
               <p class="Pass">Pass</p>
               {% else %}
               <p class="Fail">Fail</p>
@@ -262,11 +264,13 @@
           <div class="w3-row">
             <div class="w3-col m6 l6">
               <p>
-                {{round(each_e_beam.R50_curr - each_e_beam.R50_comm),2}} mm Diff
+                {{round(float(each_e_beam.R50_curr) -
+                float(each_e_beam.R50_comm)),2}} mm Diff
               </p>
             </div>
             <div class="w3-col m6 l6">
-              {% if (each_e_beam.R50_curr - each_e_beam.R50_comm) < 2 %}
+              {% if abs(float(each_e_beam.R50_curr) -
+              float(each_e_beam.R50_comm)) < 3 %}
               <p class="Pass">Pass</p>
               {% else %}
               <p class="Fail">Fail</p>
@@ -296,7 +300,8 @@
               </p>
             </div>
             <div class="w3-col m6 l6">
-              {% if (each_e_beam.Rp_curr - each_e_beam.Rp_prev) < 2 %}
+              {% if abs(float(each_e_beam.Rp_curr) - float(each_e_beam.Rp_prev))
+              < 3 %}
               <p class="Pass">Pass</p>
               {% else %}
               <p class="Fail">Fail</p>
@@ -317,7 +322,8 @@
               </p>
             </div>
             <div class="w3-col m6 l6">
-              {% if (each_e_beam.Rp_curr - each_e_beam.Rp_comm) < 2 %}
+              {% if abs(float(each_e_beam.Rp_curr) - float(each_e_beam.Rp_comm))
+              < 3 %}
               <p class="Pass">Pass</p>
               {% else %}
               <p class="Fail">Fail</p>
