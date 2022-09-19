@@ -136,6 +136,7 @@ $(document).ready(function () {
                         </tr>
         
                         `);
+
           $("#calcert").DataTable({
             lengthMenu: [
               [5, 10, -1],

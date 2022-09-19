@@ -20,7 +20,8 @@ $(document).ready(function () {
       for (i = 0; i < tablinke.length; i++) {
         if (tablinke[i].className.includes("w3-disabled")) {
           qachecks2 = tablinke[i].id;
-          console.log(qachecks2);
+          console.log("This is the just added data" + qachecks2);
+          console.log(" this is the machine" + machine);
           if (qachecks2 == "trs398") {
             $("#trs_398e").css("display", "block");
           } else {
@@ -120,68 +121,117 @@ $(document).ready(function () {
     console.log(current_check);
 
     switch (current_check) {
+      //The TRS-398 block of code
+      case "trs398":
+        $("#trs398_qcCheks").css("display", "block");
+        $("#energy_checks").css("display", "none");
+        $("#flatandaym_checks").css("display", "none");
+        $("#mechanical_checks").css("display", "none");
+        req3_data = $.ajax({
+          url: "/linacViewProcess",
+          type: "POST",
+          data: { machine_id: current_machine, test_name: current_check },
+        });
+
+        req3_data.done(function (data) {
+          var status = data.result;
+          if (status == "502") {
+            console.log(data.data);
+          } else {
+            var loop_string = "";
+            var size1 = Object.keys(data.data_p).length;
+            for (let i = 0; i < size1; i++) {
+              var date = data.data_p[i].date;
+              var temp = data.data_p[i].temp;
+              var press = data.data_p[i].press;
+              var chamber = data.data_p[i].chamber;
+              var bvoltage = data.data_p[i].bias_voltage;
+              var dase_max = data.data_p[i].dose_dmax;
+              var pdiff = data.data_p[i].percent_diff;
+              loop_string += `<tr><td>${date}</td><td>${temp}</td><td>${press}</td><td>${chamber}</td><td>${bvoltage}</td><td>${dase_max}</td><td>${pdiff}</td><td> <button id ="phot_${date}" class="w3-button w3-blue w3-round w3-border">View</button></td></tr>`;
+            }
+
+            new_string =
+              "<tr><td>Date</td><td>Temperature</td><td>Pressure</td><td>Ionization Chamber</td><td>Bias Voltage</td> <td>Dose <sub>Z_max</sub></td><td>Percent diff</td></tr>" +
+              loop_string;
+            $("#data_table").innerHTML(new_string);
+
+            $("#data_table").DataTable({
+              lengthMenu: [
+                [5, 10, -1],
+                [5, 10, "All"],
+              ],
+              aoColumns: [
+                { orderSequence: ["desc"] },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+              ],
+            });
+          }
+        });
+
+        break;
+      //The energy checks code block
       case "energy_chk":
-        console.log("yeah this is the right one.");
+        $("#energy_checks").css("display", "block");
+        //The loop to get data from the server
+
+        req4_data = $.ajax({
+          url: "/EnergyChecks",
+          type: "POST",
+          data: { machine_id: current_machine, test_name: current_check },
+        });
+
+        req4_data.done(function (data) {
+          var status = data.result;
+          if (status == "502") {
+            console.log(data.data);
+          } else {
+            $("#trs_398e").css("display", "none");
+            $("#trs398_qcCheks").css("display", "none");
+            $("#flatandaym_checks").css("display", "none");
+            $("#mechanical_checks").css("display", "none");
+            var loop_string1 = "";
+            var size1 = Object.keys(data.data_p).length;
+            for (let i = 0; i < size1; i++) {
+              var date = data.data_p[i].date;
+              var energy_p = data.data_p[i].energy;
+              var uid_p = data.data_p[i].uid;
+              var dmax_p = data.data_p[i].dose_dmax;
+              var pdd_10 = data.data_p[i].pdd10;
+              var tpr = data.data_p[i].tpr;
+              var added_by = data.data_p[i].added_by;
+              loop_string1 += `<tr><td>${date}</td><td>${energy_p}</td><td>${dmax_p}</td><td>${pdd_10}</td><td>${tpr}</td><td>${added_by}</td><td> <button id ="${uid_p}" class="w3-button w3-blue w3-round w3-border">View</button></td></tr>`;
+            }
+
+            new_string1 = `<table id="energy_checks_table"  class="w3-table-all"><tr> <th>Date</th> <th>Energy</th> <th>D <sub>Zmax</sub></th> <th>PDD <sub>10</sub></th> <th>TPR <sub>20,10</sub></th> <th>Physicist</th> <th>  </th></tr> ${loop_string1} </table>`;
+            $("#energy_checks_2").prepend(new_string1);
+
+            $("#energy_checks_table").DataTable({
+              lengthMenu: [
+                [5, 10, -1],
+                [5, 10, "All"],
+              ],
+              aoColumns: [null, null, null, null, null, null, null],
+            });
+          }
+        });
         break;
 
       default:
         console.log("This is the default code");
         break;
     }
+  });
 
-    if (current_check == "trs398") {
-      $("#trs_398e").css("display", "block");
-    } else {
-      $("#trs_398e").css("display", "none");
-    }
-
-    req3_data = $.ajax({
-      url: "/linacViewProcess",
-      type: "POST",
-      data: { machine_id: current_machine, test_name: current_check },
-    });
-
-    req3_data.done(function (data) {
-      var status = data.result;
-      if (status == "502") {
-        console.log(data.data);
-      } else {
-        var loop_string = "";
-        var size1 = Object.keys(data.data_p).length;
-        for (let i = 0; i < size1; i++) {
-          var date = data.data_p[i].date;
-          var temp = data.data_p[i].temp;
-          var press = data.data_p[i].press;
-          var chamber = data.data_p[i].chamber;
-          var bvoltage = data.data_p[i].bias_voltage;
-          var dase_max = data.data_p[i].dose_dmax;
-          var pdiff = data.data_p[i].percent_diff;
-          loop_string += `<tr><td>${date}</td><td>${temp}</td><td>${press}</td><td>${chamber}</td><td>${bvoltage}</td><td>${dase_max}</td><td>${pdiff}</td><td> <button id ="phot_${date}" class="w3-button w3-blue w3-round w3-border">View</button></td></tr>`;
-        }
-
-        new_string =
-          "<tr><td>Date</td><td>Temperature</td><td>Pressure</td><td>Ionization Chamber</td><td>Bias Voltage</td> <td>Dose <sub>Z_max</sub></td><td>Percent diff</td></tr>" +
-          loop_string;
-        $("#data_table").innerHTML(new_string);
-
-        $("#data_table").DataTable({
-          lengthMenu: [
-            [5, 10, -1],
-            [5, 10, "All"],
-          ],
-          aoColumns: [
-            { orderSequence: ["desc"] },
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-          ],
-        });
-      }
-    });
+  $("#energy_checks_b").click(function (e) {
+    e.preventDefault();
+    location = "/energyChecks/update_pdd";
   });
 
   $("#machine_stats").click(function (e) {

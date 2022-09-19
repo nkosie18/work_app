@@ -1,9 +1,9 @@
-import re
+from app.signin.models import User
 from unittest import result
 from flask import jsonify, render_template, Blueprint, request, flash, redirect, url_for
 from app.hospitals.models import Institution
 from app import db
-from app.trs398.models import Trs398_photons, Trs398_electrons
+from app.trs398.models import Pdd_data_electrons, Pdd_data_photons, Trs398_photons, Trs398_electrons
 from app.linac.models import Machine, Photon_energy, Electron_energy
 from app.linac.forms import AddMachineForm, AddBeamsPhotons, AddBeamsElectrons
 from flask_login import current_user, login_required
@@ -53,6 +53,54 @@ def linac_status():
     striped_arg = arg_data.strip()[1]
     linac_selected = Machine.query.filter_by(n_name = "L"+striped_arg).first()
     print(linac_selected.make)
+
+@linac_bp.route('/EnergyChecks', methods = ['POST'])
+@login_required
+def energychecks():
+    selected_machine_name = request.form['machine_id'].strip(" ")
+    energy_checks_data_photons = Pdd_data_photons.query.join(Machine.query.filter_by(n_name = selected_machine_name).subquery).all()
+    energy_checks_data_electrons = Pdd_data_electrons.query.join(Machine.query.filter_by(n_name = selected_machine_name).subquery).all()
+    data_electrons = []
+    data_photons = []
+    if energy_checks_data_photons:
+        for item in energy_checks_data_photons:
+
+            energ_obj_p = item.linac_energy_photon.energy
+            uid_p = item.uid_new_p
+            mdate = datetime.strftime(item.date, "%Y-%m-%d")
+            dmax_p = item.dose_dmax
+            pdd_10 = item.pdd10
+            tpr = item.tpr2010
+            user_obj_p = User.query.filter_by(id = item.user_added_by_p).first()
+            added_by_p = user_obj_p.username
+
+            data_photons.append({'uid': uid_p, 'date': mdate, 'energy': energ_obj_p, 'dose_dmax': dmax_p, 'pdd10':pdd_10, 'tpr': tpr, 'added_by': added_by_p})
+
+
+    if energy_checks_data_electrons:
+        for items in energy_checks_data_electrons:
+            energ_obj_e = items.linac_energy_electron.energy
+            uid_e = items.uid_new_e
+            mdate_e = datetime.strftime(items.date, "%Y-%m-%d")
+            R50 = items.R50
+            E_not = items.E_not
+            Rp = items.Rp
+            user_obj_e = User.query.filter_by(id = items.user_added_by_e).first()
+            added_by_e = user_obj_e.username
+
+            data_electrons.append({'uid':uid_e, 'date': mdate_e, 'energy': energ_obj_e, 'r50': R50, 'e_not': E_not, 'r_p' : Rp, 'added_by': added_by_e })
+
+    if not energy_checks_data_electrons:
+        return jsonify({'results': 'success', 'data_p': data_photons})
+    elif not energy_checks_data_photons:
+        return jsonify({'results': 'success', 'data_e': data_electrons})
+    elif energy_checks_data_electrons and energy_checks_data_photons:
+        return jsonify({'results': 'success', 'data_p': data_photons, 'data_e': data_electrons}) 
+    else:
+            return jsonify({'result':'502','data':'The code exacuted fine, but there is no data in your database'}) 
+
+
+
 @linac_bp.route('/linacViewProcess', methods=['POST'])
 @login_required
 def linacViewProcess():
@@ -104,7 +152,7 @@ def linacViewProcess():
                     'percent_diff': bPdiff    
                 })
 
-        if measured_data_electrons and measured_data_electrons:       
+        if measured_data_electrons and measured_data_photons:       
             return jsonify({'result': 'success', 'data_p':qcdata_trs398_photons, 'data_e': qcdata_trs398_electrons})
 
         else:
