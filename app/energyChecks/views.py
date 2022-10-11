@@ -126,9 +126,10 @@ def update_pdd():
                             if each_scan.calc_results()['modality'] == 'X':
                                 date_today = datetime.now().date()
                                 machine = Machine.query.filter_by(n_name = each_scan.calc_results()['machine']).first_or_404()
-                                beamEnergy = each_scan.calc_results()['Energy']
+                                beamEnergy = each_scan.calc_results()['Energy'].strip()
+                                filter = each_scan.calc_results()['filter'].strip()
                                 if not beamEnergy in ['16X','110X']:
-                                    machine_energy = Photon_energy.query.filter(and_(Photon_energy.energy == '%sX-WFF' %beamEnergy[0:-1], Photon_energy.machine_id_p == machine.id)).first_or_404()
+                                    machine_energy = Photon_energy.query.filter(and_(Photon_energy.energy == '%s-%s' %(beamEnergy, filter), Photon_energy.machine_id_p == machine.id)).first_or_404()
                                 if beamEnergy == '16X':
                                     machine_energy = Photon_energy.query.filter(and_(Photon_energy.energy == '6X-FFF', Photon_energy.machine_id_p == machine.id)).first_or_404()
                                 

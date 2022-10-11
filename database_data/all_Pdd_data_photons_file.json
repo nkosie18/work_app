@@ -1,0 +1,79 @@
+[
+         {
+                  "id": 13,
+                  "uid_new_p": "b4d9ac48-4976-45d1-9683-bd7468d54e93",
+                  "date": "11-08-2022",
+                  "dose_dmax": 15.7,
+                  "pdd10": 67.522,
+                  "tpr2010": 0.679,
+                  "user_added_by_p": 1,
+                  "beam_energy_p": 6,
+                  "machine_scaned_p": 2
+         },
+         {
+                  "id": 14,
+                  "uid_new_p": "b4d9ac48-4976-45d1-9683-bd7468d54e93",
+                  "date": "11-08-2022",
+                  "dose_dmax": 22.5,
+                  "pdd10": 72.923,
+                  "tpr2010": 0.734,
+                  "user_added_by_p": 1,
+                  "beam_energy_p": 7,
+                  "machine_scaned_p": 2
+         },
+         {
+                  "id": 15,
+                  "uid_new_p": "b3b4793e-e8da-42e4-b974-5e1ac219a193",
+                  "date": "16-08-2022",
+                  "dose_dmax": 15.7,
+                  "pdd10": 67.522,
+                  "tpr2010": 0.679,
+                  "user_added_by_p": 1,
+                  "beam_energy_p": 6,
+                  "machine_scaned_p": 2
+         },
+         {
+                  "id": 16,
+                  "uid_new_p": "7913012c-5f1a-4a26-a567-aa46309c4677",
+                  "date": "16-08-2022",
+                  "dose_dmax": 22.5,
+                  "pdd10": 72.923,
+                  "tpr2010": 0.734,
+                  "user_added_by_p": 1,
+                  "beam_energy_p": 7,
+                  "machine_scaned_p": 2
+         },
+         {
+                  "id": 17,
+                  "uid_new_p": "5dab680d-944a-4075-9320-05363ad9a03b",
+                  "date": "18-08-2022",
+                  "dose_dmax": 15.2,
+                  "pdd10": 67.356,
+                  "tpr2010": 0.681,
+                  "user_added_by_p": 1,
+                  "beam_energy_p": 16,
+                  "machine_scaned_p": 4
+         },
+         {
+                  "id": 18,
+                  "uid_new_p": "5dab680d-944a-4075-9320-05363ad9a03b",
+                  "date": "18-08-2022",
+                  "dose_dmax": 22.0,
+                  "pdd10": 73.299,
+                  "tpr2010": 0.738,
+                  "user_added_by_p": 1,
+                  "beam_energy_p": 17,
+                  "machine_scaned_p": 4
+         },
+         {
+                  "id": 19,
+                  "uid_new_p": "5dab680d-944a-4075-9320-05363ad9a03b",
+                  "date": "18-08-2022",
+                  "dose_dmax": 30.0,
+                  "pdd10": 78.034,
+                  "tpr2010": 0.779,
+                  "user_added_by_p": 1,
+                  "beam_energy_p": 18,
+                  "machine_scaned_p": 4
+         }
+]

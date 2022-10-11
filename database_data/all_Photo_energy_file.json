@@ -1,0 +1,106 @@
+[
+      {
+            "id": 6,
+            "energy": "6X-WFF",
+            "com_dose_dmax": 16.0,
+            "com_pdd10": 67.38,
+            "com_tpr": 0.684,
+            "machine_id_p": 2
+      },
+      {
+            "id": 7,
+            "energy": "10X-WFF",
+            "com_dose_dmax": 22.99,
+            "com_pdd10": 73.0,
+            "com_tpr": 0.735,
+            "machine_id_p": 2
+      },
+      {
+            "id": 8,
+            "energy": "18X-WFF",
+            "com_dose_dmax": 30.98,
+            "com_pdd10": 78.13,
+            "com_tpr": 0.777,
+            "machine_id_p": 2
+      },
+      {
+            "id": 9,
+            "energy": "6X-FFF",
+            "com_dose_dmax": 18.01,
+            "com_pdd10": 67.7,
+            "com_tpr": 0.678,
+            "machine_id_p": 2
+      },
+      {
+            "id": 10,
+            "energy": "10X-FFF",
+            "com_dose_dmax": 24.99,
+            "com_pdd10": 73.14,
+            "com_tpr": 0.722,
+            "machine_id_p": 2
+      },
+      {
+            "id": 11,
+            "energy": "6X-WFF",
+            "com_dose_dmax": 16.01,
+            "com_pdd10": 67.74,
+            "com_tpr": 0.6837,
+            "machine_id_p": 3
+      },
+      {
+            "id": 12,
+            "energy": "10X-WFF",
+            "com_dose_dmax": 23.99,
+            "com_pdd10": 73.25,
+            "com_tpr": 0.7332,
+            "machine_id_p": 3
+      },
+      {
+            "id": 13,
+            "energy": "18X-WFF",
+            "com_dose_dmax": 30.98,
+            "com_pdd10": 78.14,
+            "com_tpr": 0.7724,
+            "machine_id_p": 3
+      },
+      {
+            "id": 14,
+            "energy": "6X-FFF",
+            "com_dose_dmax": 17.01,
+            "com_pdd10": 67.66,
+            "com_tpr": 0.6744,
+            "machine_id_p": 3
+      },
+      {
+            "id": 15,
+            "energy": "10X-FFF",
+            "com_dose_dmax": 25.0,
+            "com_pdd10": 72.99,
+            "com_tpr": 0.7198,
+            "machine_id_p": 3
+      },
+      {
+            "id": 16,
+            "energy": "6X-WFF",
+            "com_dose_dmax": 15.0,
+            "com_pdd10": 67.33,
+            "com_tpr": 0.6787,
+            "machine_id_p": 4
+      },
+      {
+            "id": 17,
+            "energy": "10X-WFF",
+            "com_dose_dmax": 21.0,
+            "com_pdd10": 72.97,
+            "com_tpr": 0.7372,
+            "machine_id_p": 4
+      },
+      {
+            "id": 18,
+            "energy": "18X-WFF",
+            "com_dose_dmax": 29.03,
+            "com_pdd10": 78.04,
+            "com_tpr": 0.7753,
+            "machine_id_p": 4
+      }
+]

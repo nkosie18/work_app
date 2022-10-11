@@ -31,6 +31,8 @@
 
         <div class="w3-row">
           <b>Beam Data </b>
+          <p><i>Select correct: Photon beam,
+             Ionization chamber and Electrometer.</i></p>
           <br>
           <table class="w3-table-all" id="beam_data_table">
         
@@ -55,13 +57,20 @@
       <!--
         This is the center column, where the magic happens, ok I am only joking, this is the main form.
       -->
-      <div class="center_row w3-col m7 l7 s7">
-        
+      <div class=" w3-col m7 l7 s7">
+      <input type="hidden" name="beamdata_status" id="beamDataStatus" value="notActive">
+        <div class="w3-row">
+          <div id="status_bg" class="w3-col s12 danger no_padding hidden">
+            <h3 id="status" class="w3-padding"> The message goes here!!! </h3>
+          </div>
+        </div>
+        <div class="w3-row center_row">
+          
         <h2>Reference calibration: {{linac_obj.n_name}}</h2>
         <p id="machine_tag" hidden>{{linac_obj.n_name}}</p>
 
         <h3><i>IAEA TRS-398 of 2006</i></h3>
-        <form action="" method="POST" novalidate>
+        <form action="" method="POST" >
           {{form.hidden_tag()}}
           <div class="w3-row">
             <div class="w3-col m6 l6">{{form.bias_voltage1.label}}</div>
@@ -73,34 +82,36 @@
             {%endfor%}
           </div>
 
-          <div class="w3-row">
-            <div class="w3-col m6 l6">{{form.m11_reading.label}}</div>
-            <div class="w3-col m6 l6">{{form.m11_reading(size=24)}}</div>
-          </div>
-          <div class="w3-row">
-            {% for error in form.m11_reading.errors %}
-            <span style="color: red">{{error}}</span>
-            {%endfor%}
-          </div>
-
-          <div class="w3-row">
-            <div class="w3-col m6 l6">{{form.m12_reading.label}}</div>
-            <div class="w3-col m6 l6">{{form.m12_reading(size=24)}}</div>
-          </div>
-          <div class="w3-row">
-            {% for error in form.m12_reading.errors %}
-            <span style="color: red">{{error}}</span>
-            {%endfor%}
-          </div>
-
-          <div class="w3-row">
-            <div class="w3-col m6 l6">{{form.m13_reading.label}}</div>
-            <div class="w3-col m6 l6">{{form.m13_reading(size=24)}}</div>
-          </div>
-          <div class="w3-row">
-            {% for error in form.m13_reading.errors %}
-            <span style="color: red">{{error}}</span>
-            {%endfor%}
+          <div id="readings_col">
+            <div class="w3-row">
+              <div class="w3-col m6 l6">{{form.m11_reading.label}}</div>
+              <div class="w3-col m6 l6">{{form.m11_reading(size=24)}}</div>
+            </div>
+            <div class="w3-row">
+              {% for error in form.m11_reading.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </div>
+  
+            <div class="w3-row">
+              <div class="w3-col m6 l6">{{form.m12_reading.label}}</div>
+              <div class="w3-col m6 l6">{{form.m12_reading(size=24)}}</div>
+            </div>
+            <div class="w3-row">
+              {% for error in form.m12_reading.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </div>
+  
+            <div class="w3-row">
+              <div class="w3-col m6 l6">{{form.m13_reading.label}}</div>
+              <div class="w3-col m6 l6">{{form.m13_reading(size=24)}}</div>
+            </div>
+            <div class="w3-row">
+              {% for error in form.m13_reading.errors %}
+              <span style="color: red">{{error}}</span>
+              {%endfor%}
+            </div>
           </div>
           <div class="w3-row">
             <p>
@@ -138,8 +149,19 @@
             <span style="color: red">{{error}}</span>
             {%endfor%}
           </div>
+
+          <div class="w3-row" id="next_beam">
+            <p id="submit" style="display: none ;"> <button id="next_beam" class="btn btn_next">Next Beam</button> </p>
+          </div> 
         </form>
-         
+        <p id="validate" style="display: none ;"> <button id="val_btn" class="w3-btn w3-round w3-blue"> Validate</button></p>
+
+        <hr>
+        <h4>Results</h4>
+        <p><b>D<sub>Z<sub>max</sub></sub> = <span id="dose_dmax">Nan</span> Gy/100MU</b> </p>
+        <p>For SSD technique the Dose at maximum depth (Z<sub>max</sub>) is given by: D<sub>Z<sub>max</sub></sub> = (M<sub>Z<sub>ref</sub>></sub> x N<sub>D,W,Q<sub>0</sub></sub> x K<sub>Q,Q<sub>0</sub></sub> x K<sub>T,P</sub> x K<sub>s</sub>)/PDD<sub>10</sub> </p>
+          
+        </div>  
       </div>
 
       <!--
@@ -180,12 +202,12 @@
             <div class="w3-responsive">
               <table class="tp_table w3-table">
                 <tr>
-                  <td id="temp_d" >Temp:</td>
-                  <td>{{environ.temp}} <sup>0</sup>C</td> 
+                  <td  >Temp:</td>
+                  <td id="temp_d" >{{environ.temp}} <sup>0</sup>C</td> 
                 </tr>
                 <tr>
-                  <td id="pres_d">Press:</td>
-                  <td>{{round(environ.press * 1.33322, 2)}} hPa</td>
+                  <td >Press:</td>
+                  <td id="pres_d">{{round(environ.press * 1.33322, 2)}} hPa</td>
                 </tr>
               </table>
               <button id="tem_pres_u" class="w3-button w3-blue w3-round">

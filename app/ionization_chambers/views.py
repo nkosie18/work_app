@@ -1,4 +1,4 @@
-import time
+from datetime import datetime
 from flask import Blueprint, request, flash, redirect, url_for, render_template, jsonify, abort
 from flask_login import login_required, current_user
 from app.ionization_chambers.models import Ionization_chambers, Sr_checks, Chamber_calfactor, Temp_press
@@ -10,7 +10,7 @@ import math
 import numpy as np
 from sqlalchemy import and_, asc, desc
 from app.ionization_chambers.unidos import Unidos
-
+import time
 
 e = Unidos()
 
@@ -22,6 +22,7 @@ def selector(abc :str):
 
 ion_chamber_bp = Blueprint('ion_chamber',__name__, template_folder= 'templates', static_folder='static')
 reg_chamber_bp = Blueprint('reg_chamber',__name__, template_folder= 'templates', static_folder='static')
+
 
 
 
@@ -224,7 +225,7 @@ def sr_checks_m():
                         if check1 is None:
                             #chamber = form.chamber.data
                             #chamb_obj = Ionization_chambers.query.filter_by(sn = chamber[10:]).first()
-                            entry1 = Sr_checks(hospital_source = current_user.institution, ion_chamber = chamb_obj, date = form.date.data, sr_source = form.source.data, m_electrometer = form.electrometer.data, elect_voltage = form. elect_voltage.data, m_temp = checkTempPress.temp, m_press = checkTempPress.press, m_reading1= form.reading1.data, m_reading2 = form.reading2.data, m_reading3=form.reading3.data)
+                            entry1 = Sr_checks(hospital_source = current_user.institution, ion_chamber = chamb_obj, date = form.date.data, sr_source = form.source.data, m_electrometer = form.electrometer.data, elect_voltage = form. elect_voltage.data, m_temp = checkTempPress.temp, m_press = checkTempPress.press, m_reading1= abs(form.reading1.data), m_reading2 = abs(form.reading2.data), m_reading3= abs(form.reading3.data))
                             db.session.add(entry1)
                             db.session.commit()
 

@@ -47,3 +47,9 @@ input[type="number"] {
 .hidden {
   display: none;
 }
+.danger {
+  background-color: rgb(218, 173, 173);
+}
+.success {
+  background-color: #81bd8f;
+}

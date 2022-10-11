@@ -101,8 +101,8 @@ def read_file(filepath: str) -> Union[list, STARCHECK, OCT729, OCT1000, OCT1500]
             if line.split('=')[0] == "ENERGY":
                 if line.split('=')[1] in ['16.00','110.00' ]:
                     filter1 = "FFF"
-                else:
-                    filter1 = "FF"
+            if line.split('=')[0] == "FILTER":
+                filter1 = line.split('=')[1]
 
             # get geometry information
             if line.split("=")[0] == "ISOCENTER":
@@ -146,7 +146,7 @@ def read_file(filepath: str) -> Union[list, STARCHECK, OCT729, OCT1000, OCT1500]
                 
                 if data_type == "PDD":
                     data = conv_data(lines)
-                    energy = scan_energy + modality
+                    energy = scan_energy + modality 
 
                     data_obj.append(PDD(modality, filter1, machine, energy, data_type, data))
 

@@ -1,16 +1,17 @@
+
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session, abort
-from flask_login import current_user, login_user, logout_user, login_manager, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app.hospitals.models import Institution
 from app.signin.models import User
 from app.signin.forms import LoginForm, RegistrationForm
 from app import db
-import datetime
+from datetime import datetime
+
 
 login_bp = Blueprint('login', __name__, template_folder='templates', static_folder='static')
 logout_bp = Blueprint('logout', __name__, template_folder='templates', static_folder='static')
 register_bp = Blueprint('register', __name__, template_folder='templates', static_folder='static')
-
 
 
 @login_bp.route('/login', methods=['GET', 'POST' ])
@@ -36,8 +37,8 @@ def login():
         if not next_page or url_parse(next_page).netloc !='':
             net_page = url_for('home')
         return redirect(url_for('home'))
-    date1 = datetime.datetime.now().date().strftime("%d %B %Y")
-    today = datetime.datetime.now().strftime("%A")
+    date1 = datetime.now().date().strftime("%d %B %Y")
+    today = datetime.now().strftime("%A")
     if today == "Monday":
         roster1 = ['Daily Morning Checks All Linacs','Daily Planning checks','Vmat Plan checks', 'SASQART (Linac 1)']
     elif today == "Tuesday":

@@ -1,12 +1,12 @@
 from datetime import datetime
 from flask_wtf import FlaskForm
-from  wtforms import StringField, SelectField, DateField, FloatField
+from  wtforms import StringField, SelectField, DateField, FloatField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
 
 #long trs-398. This does not use any previouse data. all the data used in the calculations are measured data
 
 class TRS398_photonsForm(FlaskForm):
-    date = DateField('Date', validators=[DataRequired()], default = datetime.now().date())
+    date = DateField('Date', default = datetime.now().date())
     chamber = SelectField('Ionization Chamber', choices=['PTW 30013-0391','PTW 30013-0390', 'PTW 30013-011795', 'PTW 30013-011794'])
     electrometer = SelectField('Electrometer', choices=['Unidose-11126', 'BEAM-SCAN','OTHER'])
     bias_voltage1 = SelectField('Voltage(V1)', choices=[-400, -300, -200, -150, -100, 0, +400, +300, +200, +150, +100])
@@ -17,8 +17,7 @@ class TRS398_photonsForm(FlaskForm):
     #change voltage for calculation of the recombination correction
     m21_reading = FloatField('M1 (nC)')
     m22_reading = FloatField('M2 (nC)')
-
-    submit = SelectField('Submit')
+    submit = SubmitField('Next Beam')
 
 
 class TRS398_electronForm(FlaskForm):
@@ -42,7 +41,7 @@ class TRS398_electronForm(FlaskForm):
     m22_reading = FloatField('M<sub>2</sub> (nC)')
 
 
-    submit = SelectField('Submit')
+    submit = SubmitField('Submit')
 
 
     def validate_r50(self, R50ion):

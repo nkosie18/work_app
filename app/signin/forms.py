@@ -20,7 +20,7 @@ def hospital_list():
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    hospitals = SelectField('Institution', choices= hospital_list())
+    hospitals = SelectField('Institution', choices= hospital_list() ) 
     role = SelectField('Role', choices=['Admin', 'Physicist','Therapist', 'Guest'])
     status = SelectField('status', choices=['Active', 'Suspended'])
     password = PasswordField('Password', validators=[DataRequired()])

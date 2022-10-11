@@ -17,10 +17,12 @@ class NewChamberForm(FlaskForm):
     submit = SubmitField('Register')
 
 chambers = []
+
 all_chambs = Ionization_chambers.query.all()
 for each in all_chambs:
     name12 = '{}-{}'.format(each.make, each.sn)
     chambers.append(name12)
+
 
 class CalibrationCertForm(FlaskForm):
     #remember to query the database for the chamber to be used.
@@ -32,7 +34,7 @@ class CalibrationCertForm(FlaskForm):
     cal_lab = StringField('Calibration Lab', validators=[DataRequired()])
     beamQuality = SelectField('Beam Quality', choices=['Co-60', 'Sr-90', '6 MV', 'Other'])
     calMachine = SelectField('Calibration Unit', choices=['Standards Lab', 'Sr-90 check source', ' L1 (Internaly)', ' L2 (Internaly)', ' L3 (Internaly)'])
-    chambers = SelectField('Chember', choices= chambers)
+    chambers = SelectField('Chember', choices= chambers ) #
     submit = SubmitField('Capture')
 
 

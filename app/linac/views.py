@@ -1,5 +1,4 @@
 from app.signin.models import User
-from unittest import result
 from flask import jsonify, render_template, Blueprint, request, flash, redirect, url_for
 from app.hospitals.models import Institution
 from app import db
@@ -11,6 +10,7 @@ from sqlalchemy import and_ , desc
 from datetime import datetime
 
 linac_bp = Blueprint('linac',__name__, template_folder='templates', static_folder='static')
+
 
 @linac_bp.route('/add linac', methods=['GET', 'POST'])
 @login_required
@@ -58,8 +58,9 @@ def linac_status():
 @login_required
 def energychecks():
     selected_machine_name = request.form['machine_id'].strip(" ")
-    energy_checks_data_photons = Pdd_data_photons.query.join(Machine.query.filter_by(n_name = selected_machine_name).subquery).all()
-    energy_checks_data_electrons = Pdd_data_electrons.query.join(Machine.query.filter_by(n_name = selected_machine_name).subquery).all()
+    machine_obj = Machine.query.filter_by(n_name = selected_machine_name).first()
+    energy_checks_data_photons = Pdd_data_photons.query.filter_by(machine_scaned_p = machine_obj.id).all()
+    energy_checks_data_electrons = Pdd_data_electrons.query.filter_by(machine_scaned_e = machine_obj.id).all()
     data_electrons = []
     data_photons = []
     if energy_checks_data_photons:
