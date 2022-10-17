@@ -1,0 +1,26 @@
+[
+      {
+            "id": 2,
+            "make": "Elekta Versa HD",
+            "n_name": "L1",
+            "com_date": "01-07-2016",
+            "com_technique": null,
+            "hospital_id": 1
+      },
+      {
+            "id": 3,
+            "make": "Elekta Versa HD",
+            "n_name": "L2",
+            "com_date": "11-09-2015",
+            "com_technique": null,
+            "hospital_id": 1
+      },
+      {
+            "id": 4,
+            "make": "Elekta Synergy",
+            "n_name": "L3",
+            "com_date": "01-12-2017",
+            "com_technique": null,
+            "hospital_id": 1
+      }
+]

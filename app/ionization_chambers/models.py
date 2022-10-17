@@ -86,7 +86,8 @@ class Temp_press(db.Model):
     date_time = db.Column(db.DateTime)
     temp = db.Column(db.Float)
     press = db.Column(db.Float)
-
+    trs398_p = db.relationship('Trs398_photons', backref='temp_press_data_p', lazy='dynamic', passive_deletes=True)
+    trs398_e = db.relationship('Trs398_electrons', backref='temp_press_data_e', lazy='dynamic', passive_deletes=True)
     def __repr__(self):
         return "<{}>".format(self.date_time)
 

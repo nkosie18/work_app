@@ -1,0 +1,34 @@
+[
+      {
+            "id": 5,
+            "date_add": "10-01-2022",
+            "make": "PTW-30013",
+            "sn": "011795",
+            "chamber_type": "Field",
+            "institution_id": 1
+      },
+      {
+            "id": 6,
+            "date_add": "10-01-2022",
+            "make": "PTW-30013",
+            "sn": "011794",
+            "chamber_type": "Field",
+            "institution_id": 1
+      },
+      {
+            "id": 4,
+            "date_add": "10-01-2022",
+            "make": "PTW-30013",
+            "sn": "0391",
+            "chamber_type": "Field",
+            "institution_id": 1
+      },
+      {
+            "id": 3,
+            "date_add": "10-01-2022",
+            "make": "PTW-30013",
+            "sn": "0390",
+            "chamber_type": "Reference",
+            "institution_id": 1
+      }
+]

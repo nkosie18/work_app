@@ -1,0 +1,38 @@
+[
+       {
+              "id": 1,
+              "username": "Nkosie",
+              "password_hash": "pbkdf2:sha256:260000$KaIwQVMkKEuXBLoc$1314b12530eb6484f04e59a144ffce4a3dddcceb63709e6a5d5a8896af4ac16b",
+              "role": "Admin",
+              "remember_me": null,
+              "status": "Active",
+              "institution_id": 1
+       },
+       {
+              "id": 2,
+              "username": "Itumeleng",
+              "password_hash": "pbkdf2:sha256:260000$x71DlWsSBGLqvnTO$23323b40bdf8ff29a4293169c65098a9b778e74f4ae98250226b65c2758e0127",
+              "role": "Physicist",
+              "remember_me": null,
+              "status": "Active",
+              "institution_id": 1
+       },
+       {
+              "id": 3,
+              "username": "dgSHGFJKshfkjsf",
+              "password_hash": "pbkdf2:sha256:260000$cYoKMN59smyduUHk$5895366b6ef5f49faa9042b50d5b66908b1f16ecc79262c81f9889de662f7607",
+              "role": "Admin",
+              "remember_me": null,
+              "status": "Active",
+              "institution_id": 1
+       },
+       {
+              "id": 4,
+              "username": "Guest",
+              "password_hash": "pbkdf2:sha256:260000$J2N24F3XWSqYt1qb$078bd9315a9f3ec5113ab863402c61ccc422e9d1beb37d3eb638a216e62a990d",
+              "role": "Guest",
+              "remember_me": null,
+              "status": "Active",
+              "institution_id": 1
+       }
+]

@@ -1,0 +1,58 @@
+[
+            {
+                        "id": 2,
+                        "date_loaded": "20-01-2022",
+                        "added_by": "Nkosie",
+                        "date_cal": "05-01-2021",
+                        "cal_lab": "NMISA",
+                        "cal_electrometer": "Unidos-11126",
+                        "calfact_electrometer": 1.0,
+                        "elec_voltage": "+ 400",
+                        "ndw": 0.05382,
+                        "cal_energy": "Co-60",
+                        "cal_machine": "Standards Lab",
+                        "chamber_id1": 3
+            },
+            {
+                        "id": 3,
+                        "date_loaded": "12-08-2022",
+                        "added_by": "Nkosie",
+                        "date_cal": "12-09-2019",
+                        "cal_lab": "IALCH (cross cal)",
+                        "cal_electrometer": "Unidos-11126",
+                        "calfact_electrometer": 1.0,
+                        "elec_voltage": "+ 400",
+                        "ndw": 0.05375,
+                        "cal_energy": "6 MV",
+                        "cal_machine": " L2 (Internaly)",
+                        "chamber_id1": 4
+            },
+            {
+                        "id": 4,
+                        "date_loaded": "12-08-2022",
+                        "added_by": "Nkosie",
+                        "date_cal": "30-11-2021",
+                        "cal_lab": "IALCH (cross cal)",
+                        "cal_electrometer": "Unidos-11126",
+                        "calfact_electrometer": 1.0,
+                        "elec_voltage": "+ 400",
+                        "ndw": 0.05462,
+                        "cal_energy": "6 MV",
+                        "cal_machine": " L1 (Internaly)",
+                        "chamber_id1": 6
+            },
+            {
+                        "id": 5,
+                        "date_loaded": "12-08-2022",
+                        "added_by": "Nkosie",
+                        "date_cal": "01-12-2021",
+                        "cal_lab": "IALCH (cross cal)",
+                        "cal_electrometer": "Unidos-11126",
+                        "calfact_electrometer": 1.0,
+                        "elec_voltage": "+ 400",
+                        "ndw": 0.05462,
+                        "cal_energy": "6 MV",
+                        "cal_machine": " L1 (Internaly)",
+                        "chamber_id1": 5
+            }
+]

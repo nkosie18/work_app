@@ -220,6 +220,12 @@ $(document).ready(function () {
           var d_zref =
             parseFloat(avrg_reading) * ndw * k_corr * k_tp * parseFloat(k_s);
           var d_zmax = d_zref / (pdd10 / 100);
+          $("#mref").text(avrg_reading);
+          $("#ndw").text(ndw);
+          $("#kqq").text(k_corr);
+          $("#ktp").text(k_tp.toFixed(3));
+          $("#ks").text(k_s);
+          $("#pdd").text(pdd10);
           $("#dose_dmax").text(d_zmax.toFixed(3));
         }
       },
@@ -228,6 +234,7 @@ $(document).ready(function () {
     if (!isNaN(avrg_reading)) {
       $("#val_btn").css("display", "none");
       $("#submit").css("display", "block");
+      $("#raw_data").removeClass("hidden");
       if ($("#status_bg").hasClass("danger")) {
         $("#status_bg").removeClass("danger");
         $("#status_bg").addClass("success");
@@ -258,7 +265,41 @@ $(document).ready(function () {
   $("#next_beam").click(function (e) {
     e.preventDefault();
     //work on adding data for here so we can move on to ellectron beams
-    var m1 = $("#m1").val();
+    var v1 = $("#bias_voltage1").find(":selected").text();
+    var m1 = $("#m11_reading").val();
+    var m2 = $("#m12_reading").val();
+    var m3 = $("#m13_reading").val();
+
+    var v2 = $("#bias_voltage2").find(":selected").text();
+    var m21 = $("#m21_reading").val();
+    var m22 = $("#m22_reading").val();
+
+    var url = new URL(window.location.href);
+    var machine = url.searchParams.get("machine");
+    var date = $("#date").val();
+    var energy = $("#sele_beam").find(":selected").text();
+    var chamber = $("#chamber").find(":selected").text();
+    var electometer = $("#electrometer").find(":selected").text();
+    var temp = $("").text();
+    $.ajax({
+      type: "POST",
+      url: "/trs398/photons_2",
+      data: {
+        v1: v1,
+        m1_reading: m1,
+        m2_reading: m2,
+        m3_reading: m3,
+        v2: v2,
+        m21_reading: m21,
+        m22_reading: m22,
+        machine: machine,
+        date: date,
+        energy: energy,
+        chamber: chamber,
+        electrometer: electometer,
+      },
+      success: function (data) {},
+    });
   });
 
   //This is the ast bracket anythin inside here wil be considered on document ready

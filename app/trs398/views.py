@@ -32,6 +32,8 @@ def k_tp(temp, press):
 
 trs_398_bp = Blueprint('trs_398', __name__, template_folder='templates', static_folder='static')
 
+
+
 @trs_398_bp.route('/trs398/update_tp', methods=['POST'])
 @login_required
 def update_tp():
@@ -40,7 +42,7 @@ def update_tp():
     temp_press_obj = Temp_press(date_time= datetime.now() ,temp=temp, press=press)
     db.session.add(temp_press_obj)
     db.session.commit()
-    return jsonify({'success': True})
+    return jsonify({'success': True})  
 
 @trs_398_bp.route('/trs_398/check_beam_data', methods=['POST'])
 @login_required
@@ -68,13 +70,33 @@ def correctionFactors():
     v1 = int(request.form['v1'])
     v2 = int(request.form['v2'])
     k_s = k_recomb((v1/v2), (avrg_m1/avrg_m2))
-    print(avrg_m1, avrg_m2, v1, v2)
 
     return jsonify({'success' : True, 'k_s' : k_s})
 
-@trs_398_bp.route('/trs398/photons', methods=["POST"])
+@trs_398_bp.route('/trs398/photons_2', methods=["POST"])
 @login_required
 def trs398_photons():
+    date_measured = datetime.strptime(request.form['date'], '%Y-%m-%d').date()
+    voltage_v1 = int(request.form['v1'])
+    reading1 = float(request.form['m1_reading'])
+    reading2 = float(request.form['m2_reading'])
+    reading3 = float(request.form['m3_reading'])
+    # Recombination Correction Readings
+    voltage_v2 = int(request.form['v2'])
+    reading4 = float(request.form['m21_reading'])
+    reading5 = float(request.form['m22_reading'])
+    #electrometer
+    electrometer = request.form['electrometer']
+    k_s = k_recomb((voltage_v1/voltage_v2),(np.average(reading1, reading2, reading3)/ np.average(reading4, reading5)))
+    temp = 'mee'
+
+    temp_press_obj = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
+    chamber_obj = Ionization_chambers.query.filter_by(sn = request.form['chamber'].split("-")[1] ).first()
+    machine_obj = Machine.query.filter_by(n_name = request.form['machine']).first()
+    energy_obj = Photon_energy.query.filter(and_(Photon_energy.energy == request.form['energy'], Photon_energy.machine_id_p == machine_obj.id )).first()
+    check_duplicates = Trs398_photons.query.filter(and_(Trs398_photons.date == date_measured, Trs398_photons.m_reading21 == reading1, Trs398_photons.m_reading22 == reading2, Trs398_photons.machine_id == machine_obj.id, Trs398_photons.beam_id == energy_obj.id)).fiirst()
+    if not check_duplicates:
+        new_data = Trs398_photons(date = date_measured, temp = temp_press_obj.temp, press = temp_press_obj.press, m_reading21 = reading1, m_reading22 = reading2, m_reading23 = reading3) 
     return "javascript will work here"
 
 @trs_398_bp.route('/trs_398/photons', methods=['GET','POST'])
@@ -84,6 +106,7 @@ def trs_398_photons():
     machine = Machine.query.filter_by(n_name = request.args.get('machine')).first()
     temp_press = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
     chambers = Ionization_chambers.query.all()
+    
 
 
     beam_energies = machine.photon_en.all()  #list of all the energies oblects

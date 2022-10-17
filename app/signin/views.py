@@ -9,6 +9,7 @@ from app import db
 from datetime import datetime
 
 
+
 login_bp = Blueprint('login', __name__, template_folder='templates', static_folder='static')
 logout_bp = Blueprint('logout', __name__, template_folder='templates', static_folder='static')
 register_bp = Blueprint('register', __name__, template_folder='templates', static_folder='static')
@@ -97,3 +98,15 @@ def register():
     else:
         abort(403)
 
+'''
+@login_bp.route('/users_chamb', methods = ['GET'])
+def add_users():
+    with open('database_data/all_Electron_energy_file.json', 'r') as f:
+        data = json.load(f)
+    
+    for each in data:
+        new_chamb = Electron_energy(id = each['id'], energy = each['energy'], com_R50 = each['com_R50'], com_Rp = each['com_Rp'], mean_energy = each['mean_energy'], machine_id_e = each['machine_id_e'], )#date = datetime.strptime(each['date'], '%d-%m-%Y'), uid_new_p = each['uid_new_p'], dose_dmax = each['dose_dmax'], pdd10 = each['pdd10'], tpr2010 = each['tpr2010'], user_added_by_p = each['user_added_by_p'], beam_energy_p = each['beam_energy_p'], machine_scaned_p = each['machine_scaned_p'] )# m_temp = each['m_temp'], m_press = each['m_press'], ion_chamber_id = each['ion_chamber_id'], hospitals_id = each['hospitals_id']) 
+        db.session.add(new_chamb)
+        db.session.commit()
+    return('this went well')
+'''

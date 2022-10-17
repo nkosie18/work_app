@@ -102,8 +102,10 @@ def read_file(filepath: str) -> Union[list, STARCHECK, OCT729, OCT1000, OCT1500]
                 if line.split('=')[1] in ['16.00','110.00' ]:
                     filter1 = "FFF"
             if line.split('=')[0] == "FILTER":
-                filter1 = line.split('=')[1]
-
+                if line.split('=')[1] == 'FF':
+                    filter1 = "WFF"
+                else:
+                    filter1 = line.split('=')[1] 
             # get geometry information
             if line.split("=")[0] == "ISOCENTER":
                 isocenter = float(line.split("=")[1])

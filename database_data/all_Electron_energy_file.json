@@ -1,0 +1,122 @@
+[
+      {
+            "id": 2,
+            "energy": "6E",
+            "com_R50": 23.91,
+            "com_Rp": 30.05,
+            "mean_energy": 5.57,
+            "machine_id_e": 2
+      },
+      {
+            "id": 3,
+            "energy": "9E",
+            "com_R50": 36.44,
+            "com_Rp": 45.48,
+            "mean_energy": 8.49,
+            "machine_id_e": 2
+      },
+      {
+            "id": 4,
+            "energy": "12E",
+            "com_R50": 47.55,
+            "com_Rp": 57.7,
+            "mean_energy": 11.08,
+            "machine_id_e": 2
+      },
+      {
+            "id": 5,
+            "energy": "15E",
+            "com_R50": 59.81,
+            "com_Rp": 72.58,
+            "mean_energy": 13.93,
+            "machine_id_e": 2
+      },
+      {
+            "id": 1,
+            "energy": "4E",
+            "com_R50": 16.35,
+            "com_Rp": 21.3,
+            "mean_energy": 3.81,
+            "machine_id_e": 2
+      },
+      {
+            "id": 9,
+            "energy": "12E",
+            "com_R50": 46.68,
+            "com_Rp": 56.91,
+            "mean_energy": 10.88,
+            "machine_id_e": 3
+      },
+      {
+            "id": 6,
+            "energy": "4E",
+            "com_R50": 16.55,
+            "com_Rp": 21.73,
+            "mean_energy": 3.86,
+            "machine_id_e": 3
+      },
+      {
+            "id": 7,
+            "energy": "6E",
+            "com_R50": 24.31,
+            "com_Rp": 31.07,
+            "mean_energy": 5.66,
+            "machine_id_e": 3
+      },
+      {
+            "id": 8,
+            "energy": "9E",
+            "com_R50": 35.43,
+            "com_Rp": 43.72,
+            "mean_energy": 8.26,
+            "machine_id_e": 3
+      },
+      {
+            "id": 10,
+            "energy": "15E",
+            "com_R50": 59.18,
+            "com_Rp": 72.43,
+            "mean_energy": 13.79,
+            "machine_id_e": 3
+      },
+      {
+            "id": 11,
+            "energy": "4E",
+            "com_R50": 16.53,
+            "com_Rp": 21.32,
+            "mean_energy": 3.85,
+            "machine_id_e": 4
+      },
+      {
+            "id": 12,
+            "energy": "12E",
+            "com_R50": 47.73,
+            "com_Rp": 57.18,
+            "mean_energy": 11.12,
+            "machine_id_e": 4
+      },
+      {
+            "id": 13,
+            "energy": "15E",
+            "com_R50": 59.76,
+            "com_Rp": 72.63,
+            "mean_energy": 13.92,
+            "machine_id_e": 4
+      },
+      {
+            "id": 14,
+            "energy": "18E",
+            "com_R50": 71.73,
+            "com_Rp": 86.98,
+            "mean_energy": 16.71,
+            "machine_id_e": 4
+      },
+      {
+            "id": 15,
+            "energy": "20E",
+            "com_R50": 80.68,
+            "com_Rp": 98.82,
+            "mean_energy": 18.8,
+            "machine_id_e": 4
+      }
+]

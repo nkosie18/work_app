@@ -1,0 +1,112 @@
+[
+         {
+                  "id": 4,
+                  "uid_new_e": "b4d9ac48-4976-45d1-9683-bd7468d54e93",
+                  "date": "11-08-2022",
+                  "R50": 16.76,
+                  "E_not": "3.91",
+                  "Rp": 21.55,
+                  "user_added_by_e": 1,
+                  "beam_energy_e": 1,
+                  "machine_scaned_e": 2
+         },
+         {
+                  "id": 5,
+                  "uid_new_e": "b4d9ac48-4976-45d1-9683-bd7468d54e93",
+                  "date": "11-08-2022",
+                  "R50": 58.7,
+                  "E_not": "13.68",
+                  "Rp": 72.62,
+                  "user_added_by_e": 1,
+                  "beam_energy_e": 5,
+                  "machine_scaned_e": 2
+         },
+         {
+                  "id": 6,
+                  "uid_new_e": "b3b4793e-e8da-42e4-b974-5e1ac219a193",
+                  "date": "16-08-2022",
+                  "R50": 16.76,
+                  "E_not": "3.91",
+                  "Rp": 21.55,
+                  "user_added_by_e": 1,
+                  "beam_energy_e": 1,
+                  "machine_scaned_e": 2
+         },
+         {
+                  "id": 7,
+                  "uid_new_e": "77286da4-cc9d-413a-94c8-8f02dd818410",
+                  "date": "16-08-2022",
+                  "R50": 58.7,
+                  "E_not": "13.68",
+                  "Rp": 72.62,
+                  "user_added_by_e": 1,
+                  "beam_energy_e": 5,
+                  "machine_scaned_e": 2
+         },
+         {
+                  "id": 8,
+                  "uid_new_e": "6e8f0b1e-3707-424d-ac97-948df915f129",
+                  "date": "18-08-2022",
+                  "R50": 16.76,
+                  "E_not": "3.91",
+                  "Rp": 21.55,
+                  "user_added_by_e": 1,
+                  "beam_energy_e": 1,
+                  "machine_scaned_e": 2
+         },
+         {
+                  "id": 9,
+                  "uid_new_e": "5dab680d-944a-4075-9320-05363ad9a03b",
+                  "date": "18-08-2022",
+                  "R50": 16.26,
+                  "E_not": "3.79",
+                  "Rp": 21.3,
+                  "user_added_by_e": 1,
+                  "beam_energy_e": 11,
+                  "machine_scaned_e": 4
+         },
+         {
+                  "id": 10,
+                  "uid_new_e": "5dab680d-944a-4075-9320-05363ad9a03b",
+                  "date": "18-08-2022",
+                  "R50": 44.06,
+                  "E_not": "10.27",
+                  "Rp": 53.25,
+                  "user_added_by_e": 1,
+                  "beam_energy_e": 12,
+                  "machine_scaned_e": 4
+         },
+         {
+                  "id": 11,
+                  "uid_new_e": "5dab680d-944a-4075-9320-05363ad9a03b",
+                  "date": "18-08-2022",
+                  "R50": 59.58,
+                  "E_not": "13.88",
+                  "Rp": 74.01,
+                  "user_added_by_e": 1,
+                  "beam_energy_e": 13,
+                  "machine_scaned_e": 4
+         },
+         {
+                  "id": 12,
+                  "uid_new_e": "5dab680d-944a-4075-9320-05363ad9a03b",
+                  "date": "18-08-2022",
+                  "R50": 68.97,
+                  "E_not": "16.07",
+                  "Rp": 85.38,
+                  "user_added_by_e": 1,
+                  "beam_energy_e": 14,
+                  "machine_scaned_e": 4
+         },
+         {
+                  "id": 13,
+                  "uid_new_e": "5dab680d-944a-4075-9320-05363ad9a03b",
+                  "date": "18-08-2022",
+                  "R50": 78.32,
+                  "E_not": "18.25",
+                  "Rp": 97.3,
+                  "user_added_by_e": 1,
+                  "beam_energy_e": 15,
+                  "machine_scaned_e": 4
+         }
+]
