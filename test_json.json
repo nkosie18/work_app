@@ -1,0 +1,28 @@
+{
+  "contacts": [
+    {
+      "name": "Nkosie",
+      "surname": "Maphumulo",
+      "phone": "074 464 0849",
+      "address": "38 Louise Bother Dr, Amanzimtoti"
+    },
+    {
+      "name": "Person2",
+      "surname": "SurnameP2",
+      "phone": "PhoneP2",
+      "address": "Address to p2"
+    },
+    {
+      "name": "Person3",
+      "surname": "SurnameP3",
+      "phone": "PhoneP3",
+      "address": "Address to p3"
+    },
+    {
+      "name": "Person4",
+      "surname": "SurnameP4",
+      "phone": "PhoneP4",
+      "address": "Address to p4"
+    }
+  ]
+}

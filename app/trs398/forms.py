@@ -22,29 +22,21 @@ class TRS398_photonsForm(FlaskForm):
 
 class TRS398_electronForm(FlaskForm):
     date = DateField('Date', validators=[DataRequired()], default = datetime.now().date())
-    temp = FloatField('Temperature (<sup>0</sup>C)', validators=[DataRequired()])
-    press = FloatField('Pressure (hPa)', validators=[DataRequired()])
-    R50ion = FloatField('R<sub>50ion</sub>')
-    R80ion = FloatField('R<sub>80ion</sub>')
     chamber = SelectField('Ionization Chamber', choices=['PTW 30013-0391', 'PTW 30013-011795', 'PTW 30013-011794', 'PTW 30013-0390', 'Other'])
-    other_name = StringField('Chamber (Type & Sn)')
-    other_Calf = FloatField('Calibration Factor (mG/nC)')
     electrometer = SelectField('Electrometer', choices=['Unidose-11126', 'BEAM-SCAN','OTHER'])
-    electrometer_other = StringField('Electrometer (Name and SN)')
-    bias_voltage1 = SelectField('V1', choices=['-400V','-300V', '-200V', '-150', '-100V', '0V', '+400V','+300V', '+200V', '+150', '+100V'])
-    m11_reading = FloatField('M<sub>1</sub> (nC)', validators=[DataRequired()])
-    m12_reading = FloatField('M<sub>2</sub> (nC)', validators=[DataRequired()])
-    m13_reading = FloatField('M<sub>3</sub> (nC)', validators=[DataRequired()])
-    bias_voltage2 = SelectField('V2', choices=['-200V', '-150', '-100V','+200V', '+150', '+100V'])
+    bias_voltage1 = SelectField('V1', choices=[-400, -300, -200, -150, -100, 0, +400, +300, +200, +150, +100])
+    m11_reading = FloatField('M1 (nC)', validators=[DataRequired()])
+    m12_reading = FloatField('M2 (nC)', validators=[DataRequired()])
+    m13_reading = FloatField('M3 (nC)', validators=[DataRequired()])
+    bias_voltage2 = SelectField('V2', choices=[-200, -150, -100, +200, +150, +100])
     #change voltage for calculation of the recombination correction
-    m21_reading = FloatField('M<sub>1</sub> (nC)')
-    m22_reading = FloatField('M<sub>2</sub> (nC)')
-
+    m21_reading = FloatField('M1 (nC)')
+    m22_reading = FloatField('M2 (nC)')
 
     submit = SubmitField('Submit')
 
-
-    def validate_r50(self, R50ion):
+    '''
+        def validate_r50(self, R50ion):
         if not R50ion is None:
             if not isinstance(R50ion, float):
                 raise ValidationError(message='This field expact number')
@@ -53,7 +45,7 @@ class TRS398_electronForm(FlaskForm):
         if not R80ion is None:
             if not isinstance(R80ion, float):
                 raise ValidationError(message='This field expact number')
-
+    '''
     def validate_chamber(self, chamber, other_name, other_calf):
         chamb_list = ['PTW 30013-0391', 'PTW 30013-011795', 'PTW 30013-011794', 'PTW 30013-0390']
         if not chamber in chamb_list:

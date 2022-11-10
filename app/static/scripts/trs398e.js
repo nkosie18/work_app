@@ -1,53 +1,14 @@
 $(document).ready(function () {
-  $("#tem_pres_u").click(function (e) {
-    e.preventDefault();
-    $(".tp_table").hide();
-    $("#tem_pres_u").hide();
-    $(".update_env").show();
-  });
-
-  function isInt(n) {
-    return Number(n) === n && n % 1 === 0;
-  }
-
-  function isFloat(n) {
-    return Number(n) === n && n % 1 !== 0;
-  }
-
-  $("#update_tp").click(function (e) {
-    e.preventDefault();
-
-    var temp = parseFloat($("#temp_u").val());
-    var press = parseFloat($("#press_u").val());
-
-    if (!isNaN(temp) && !isNaN(press)) {
-      $.ajax({
-        type: "POST",
-        url: "/trs398/update_tp",
-        data: { temp: temp, press: press },
-        success: function (data) {
-          if (data.success) {
-            location.reload();
-          }
-        },
-      });
-    } else {
-      alert(
-        "Please enter valid values. The values for temperature and pressure should be numbers"
-      );
-    }
-  });
-
-  $("#beam_data").click(function (e) {
+  $("#beam_data_e").click(function (e) {
     e.preventDefault();
     var machine = $("#machine_tag").text();
     var beam = $("#sele_beam").find(":selected").text();
     var chamber = $("#sele_chamber").find(":selected").text();
-    $("#beamDataStatus").val("Active");
+    $("#beamDataStatuse").val("Active");
 
     $.ajax({
       type: "POST",
-      url: "/trs_398/check_beam_data",
+      url: "/trs_398e/check_beam_data",
       data: { machine: machine, beam: beam, chamber: chamber },
 
       success: function (data) {
@@ -59,19 +20,26 @@ $(document).ready(function () {
               <td id= 'beam_data_date'>${data.beam_data.date}</td>
             </tr>
             <tr>
-              <td><b>TPR<sub>20,10</sub> :</b></td>
-              <td id = "tpr_2010_data">${data.beam_data.tpr2010}</td>
+              <td><b>R<sub>50</sub> :</b></td>
+              <td id = "r_50_data">${data.beam_data.r50} g/cm<sup>2</sup> </td>
             </tr>
             <tr>
-            <td><b>PDD<sub>10</sub> :</b></td>
-            <td id = "pdd_10_data">${data.beam_data.pdd10.toFixed(1)}</td>
+            <td><b>Depth (<sub>Z<sub>ref</sub></sub>) :</b></td>
+            <td id = "z_ref">${data.beam_data.zref} g/cm<sup>2</sup> </td>
           </tr>
             <tr>
               <td><b>K<sub>Q,Q0</sub> :</b></td>
-              <td id = "beam_quality_corr">${data.beam_data.k_corr}</td>
+              <td id = "kqq">${data.beam_data.kqq}</td>
+            </tr>
+            <tr>
+              <td><b>PDD<sub>Z<sub>ref</sub></sub> :</b></td>
+              <td id = "pdd_zref">${data.beam_data.pdd_zref}</td>
             </tr>
             `
           );
+
+          $("#ref_depth ").html(data.beam_data.zref + " g/cm<sup>2</sup>");
+
           $("#chamber_data_table").html(
             `
             <tr>
@@ -97,11 +65,42 @@ $(document).ready(function () {
     });
   });
 
+  $("#tem_pres_e").click(function (e) {
+    e.preventDefault();
+    $(".tp_table").hide();
+    $("#tem_pres_u").hide();
+    $(".update_env").show();
+  });
+
+  $("#update_tp").click(function (e) {
+    e.preventDefault();
+
+    var temp = parseFloat($("#temp_u").val());
+    var press = parseFloat($("#press_u").val());
+
+    if (!isNaN(temp) && !isNaN(press)) {
+      $.ajax({
+        type: "POST",
+        url: "/trs398/update_tp",
+        data: { temp: temp, press: press },
+        success: function (data) {
+          if (data.success) {
+            location.reload();
+          }
+        },
+      });
+    } else {
+      alert(
+        "Please enter valid values. The values for temperature and pressure should be numbers"
+      );
+    }
+  });
+
   $("#readings_col").change(function (event) {
     event.preventDefault();
     var ndw = parseFloat($("#ndw_corr").text().split(" ")[0]);
-    var k_corr = parseFloat($("#beam_quality_corr").text());
-    var pdd10 = parseFloat($("#pdd_10_data").text());
+    var k_corr = parseFloat($("#kqq").text());
+    var pdd_zref = parseFloat($("#pdd_zref").text());
     var temp = $("#temp_d").text();
     var press = $("#pres_d").text();
 
@@ -109,7 +108,7 @@ $(document).ready(function () {
       (1013.2 / parseFloat(press.split(" ")[0])) *
       ((parseFloat(temp.split(" ")[0]) + 273.2) / 293.2);
 
-    if ($("#beamDataStatus").val() === "Active") {
+    if ($("#beamDataStatuse").val() === "Active") {
       $("#validate").css("display", "block");
     }
 
@@ -135,16 +134,20 @@ $(document).ready(function () {
     }
 
     var d_zref = mean_reading * ndw * k_corr * k_tp;
-    var d_zmax = d_zref / (pdd10 / 100);
+    var d_zmax = d_zref / (pdd_zref / 100);
     $("#dose_dmax").text(d_zmax.toFixed(3));
   });
+
+  /*
+the validation button is comming bellow
+*/
 
   $("#val_btn").click(function (e) {
     e.preventDefault();
 
     var ndw = parseFloat($("#ndw_corr").text().split(" ")[0]);
-    var k_corr = parseFloat($("#beam_quality_corr").text());
-    var pdd10 = parseFloat($("#pdd_10_data").text());
+    var k_corr = parseFloat($("#kqq").text());
+    var pddzref = parseFloat($("#pdd_zref").text());
     var temp = $("#temp_d").text();
     var press = $("#pres_d").text();
     var v1 = $("#bias_voltage1").find(":selected").text();
@@ -167,7 +170,7 @@ $(document).ready(function () {
       case $("#m13_reading").val() === "":
         m1 = parseFloat($("#m11_reading").val());
         m2 = parseFloat($("#m12_reading").val());
-        var thirdReading_1 = ((m1 + m2) / 2).toFixed(1);
+        var thirdReading_1 = ((m1 + m2) / 2).toFixed(3);
         $("#m13_reading").val(thirdReading_1);
         m3 = parseFloat(thirdReading_1);
         break;
@@ -179,7 +182,7 @@ $(document).ready(function () {
         break;
     }
 
-    avrg_reading = ((m1 + m2 + m3) / 3).toFixed(1);
+    avrg_reading = ((m1 + m2 + m3) / 3).toFixed(3);
 
     switch (true) {
       case $("#m21_reading").val() === "":
@@ -218,13 +221,13 @@ $(document).ready(function () {
           k_s = parseFloat(data.k_s);
           var d_zref =
             parseFloat(avrg_reading) * ndw * k_corr * k_tp * parseFloat(k_s);
-          var d_zmax = d_zref / (pdd10 / 100);
+          var d_zmax = d_zref / (pddzref / 100);
           $("#mref").text(avrg_reading);
           $("#ndw").text(ndw);
           $("#kqq").text(k_corr);
           $("#ktp").text(k_tp.toFixed(3));
           $("#ks").text(k_s);
-          $("#pdd").text(pdd10);
+          $("#pdd").text(pddzref);
           $("#dose_dmax").text(d_zmax.toFixed(3));
         }
       },
@@ -261,37 +264,21 @@ $(document).ready(function () {
     }
   });
 
+  /* 
+Next button click does this
+*/
+
   $("#next_beam").click(function (e) {
     e.preventDefault();
-    //work on adding data for here so we can move on to ellectron beams
     var v1 = $("#bias_voltage1").find(":selected").text();
     var m1 = $("#m11_reading").val();
     var m2 = $("#m12_reading").val();
     var m3 = $("#m13_reading").val();
-    var ndw = parseFloat($("#ndw_corr").text());
-    var m_avrg_reading = parseFloat($("#mref").text());
-    var kqq1 = parseFloat($("#kqq").text());
-    var ktp1 = parseFloat($("#ktp").text());
-    var ks1 = parseFloat($("#ks").text());
-    var dose_ref = (m_avrg_reading * ndw * kqq1 * ktp1 * ks1).toFixed(3);
-    console.log(
-      "Dose_ref: " +
-        dose_ref +
-        ", M_avrg: " +
-        m_avrg_reading +
-        ", Ndw: " +
-        ndw +
-        ", kqq: " +
-        kqq1 +
-        ", ktp: " +
-        ktp1 +
-        ", ks: " +
-        ks1
-    );
+
     var v2 = $("#bias_voltage2").find(":selected").text();
     var m21 = $("#m21_reading").val();
     var m22 = $("#m22_reading").val();
-
+    var pdd_zref1 = $("#pdd_zref").text();
     var url = new URL(window.location.href);
     var machine = url.searchParams.get("machine");
     var date = $("#date").val();
@@ -302,10 +289,12 @@ $(document).ready(function () {
     var press = $("#pres_d").text();
     var beam_data_date = $("#beam_data_date").text();
     var ndw = parseFloat($("#ndw_corr").text().split(" ")[0]);
+    var m_average = $("#mref").text();
+    var dose_zmax = $("#dose_dmax").text();
     console.log(beam_data_date);
     $.ajax({
       type: "POST",
-      url: "/trs398/photons_2",
+      url: "/trs398/electrons_2",
       data: {
         v1: v1,
         m1_reading: m1,
@@ -322,8 +311,10 @@ $(document).ready(function () {
         temp: temp,
         press: press,
         ndw: ndw,
-        dose_ref: dose_ref,
         beam_data_date: beam_data_date,
+        pdd_zref: pdd_zref1,
+        m_average: m_average,
+        dose_zmax: dose_zmax,
       },
       success: function (data) {
         if (data.success) {
@@ -332,7 +323,7 @@ $(document).ready(function () {
             $("#status_bg").addClass("success");
           }
           $("#status").html(
-            "The TRS-309 values were added to the database successfully!"
+            "The TRS-398 Callibration values were added to the database successfully!"
           );
           $("#status_bg").removeClass("hidden");
           setTimeout(() => {
@@ -344,7 +335,7 @@ $(document).ready(function () {
             $("#status_bg").removeClass("success");
           }
           $("#status_bg").addClass("danger");
-          $("#status").text(
+          $("#status").html(
             "The TRS-398 data was NOT commited to the database, an ERROR occurred "
           );
 
@@ -360,6 +351,4 @@ $(document).ready(function () {
       },
     });
   });
-
-  //This is the ast bracket anythin inside here wil be considered on document ready
 });

@@ -8,6 +8,7 @@ from app.linac.forms import AddMachineForm, AddBeamsPhotons, AddBeamsElectrons
 from flask_login import current_user, login_required
 from sqlalchemy import and_ , desc
 from datetime import datetime
+import numpy as np
 
 linac_bp = Blueprint('linac',__name__, template_folder='templates', static_folder='static')
 
@@ -106,29 +107,32 @@ def energychecks():
 @login_required
 def linacViewProcess():
     selected_machine_name = request.form['machine_id'].strip(" ")
+    machine_object = Machine.query.filter_by(n_name = selected_machine_name).first()
     selected_qc = request.form['test_name'].strip(" ")
     print(selected_qc)
     if selected_qc == 'trs398':
-        measured_data_photons = Machine.query.filter(Machine.n_name == selected_machine_name).join(Trs398_photons).all()
-        measured_data_electrons = Machine.query.filter(Machine.n_name == selected_machine_name).join(Trs398_electrons).all()
+        measured_data_photons = Trs398_photons.query.join(Machine.query.filter_by(n_name = selected_machine_name).subquery()).all()
+        measured_data_electrons = Trs398_electrons.query.join(Machine.query.filter_by(n_name = selected_machine_name).subquery()).all()
         qcdata_trs398_photons = []
         qcdata_trs398_electrons = []
         if measured_data_photons:
             for item in measured_data_photons:
                 mDate = datetime.strftime(item.date, "%Y-%m-%d")
+                mEnergy = item.trs398_cal_energy.energy
                 mTemp = item.temp
                 mPress = item.press
                 mChamber = '{}-{}'.format(item.ion_chamber_trs_ph.make, item.ion_chamber_trs_ph.sn)
                 mBiasvoltage = item.m_biasVoltage
-                mDoseMax = item.m_dose_max
-                mPdiff = item.m_pdiff
+                mDoseMax = round((item.m_dose_ref/item.m_pdd10) * 100,3)
+                mPdiff = round(((1 - mDoseMax)/np.average([1,mDoseMax]))*100,2)
 
                 qcdata_trs398_photons.append({
                     'date': mDate,
                     'temp' : mTemp,
+                    'Beam' : mEnergy,
                     'press' : mPress,
                     'chamber': mChamber,
-                    'biase_voltay' : mBiasvoltage,
+                    'bias_voltage' : mBiasvoltage,
                     'dose_dmax': mDoseMax,
                     'percent_diff': mPdiff    
                 })
@@ -136,16 +140,18 @@ def linacViewProcess():
         if measured_data_electrons:
             for item in measured_data_electrons:
                 bDate = datetime.strftime(item.date, "%Y-%m-%d")
+                bEnergy = item.ion_chamber_elen.energy
                 bTemp = item.temp
                 bPress = item.press
                 bChamber = '{}-{}'.format(item.ion_chamber_trs_el.make, item.ion_chamber_trs_el.sn)
-                bBiasvoltage = item.m_biasVoltage
+                bBiasvoltage = item.b_biasVoltage
                 bDoseMax = item.b_dose_max
-                bPdiff = item.b_pdiff
+                bPdiff = round(((1 - bDoseMax)/np.average([1,bDoseMax]))*100,2)
 
                 qcdata_trs398_electrons.append({
                     'date': bDate,
                     'temp' : bTemp,
+                    'Beam' : bEnergy,
                     'press' : bPress,
                     'chamber': bChamber,
                     'biase_voltay' : bBiasvoltage,

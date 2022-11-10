@@ -1,17 +1,19 @@
 from datetime import datetime
+from types import new_class
 from flask import flash, jsonify
 from app import db
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.linac.models import Machine, Photon_energy, Electron_energy
-from app.trs398.models import Pdd_data_photons, Trs398_electrons, Trs398_photons
+from app.trs398.models import Pdd_data_electrons, Pdd_data_photons, Trs398_electrons, Trs398_photons
 from app.ionization_chambers.models import Ionization_chambers, Chamber_calfactor, Temp_press
-from app.trs398.forms import TRS398_photonsForm
+from app.trs398.forms import TRS398_photonsForm, TRS398_electronForm
 from flask_login import current_user, login_required
 from sqlalchemy import and_, asc, desc
 import numpy as np
-from app.trs398.energyCorrections import Kq_photons
+from app.trs398.energyCorrections import Kq_photons, Kq_electrons
+from app.trs398.pdd_zref import Pdd_data
 
-def k_recomb(volt_ratio, charge_ratio):
+def k_recomb(volt_ratio: float, charge_ratio: float) -> float:
     voltage_ratio = [2, 2.5, 3, 3.5, 4, 5]
     k_recomb_table = {'a_0': [2.337, 1.474, 1.198, 1.080, 1.022, 0.975],
     'a_1': [-3.636, -1.587, -0.875, -0.542, -0.363, -0.188],
@@ -25,7 +27,7 @@ def k_recomb(volt_ratio, charge_ratio):
 def k_poll(m1, m2):
     return((np.abs(m1) + np.abs(m2))/2*np.abs(m1))
 
-def k_tp(temp, press):
+def k_tp(temp:float, press:float) -> float:
     return((101.32/press) * ((273.2 + temp)/293.2))
 
 
@@ -87,17 +89,30 @@ def trs398_photons():
     reading5 = float(request.form['m22_reading'])
     #electrometer
     electrometer = request.form['electrometer']
-    k_s = k_recomb((voltage_v1/voltage_v2),(np.average(reading1, reading2, reading3)/ np.average(reading4, reading5)))
-    temp = 'mee'
+    avrg_readings1 = (reading1 + reading2 + reading3)/3
+    avrg_reading2 = (reading4 + reading5)/2
+    k_s = k_recomb((voltage_v1/voltage_v2),(avrg_readings1/ avrg_reading2))
+    ndw_cor = float(request.form['ndw'])
 
-    temp_press_obj = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
-    chamber_obj = Ionization_chambers.query.filter_by(sn = request.form['chamber'].split("-")[1] ).first()
+    temp = float(request.form['temp'].split(' ')[0])
+    press = float(request.form['press'].split(' ')[0])
+    ktp_corr = k_tp(temp,press)
     machine_obj = Machine.query.filter_by(n_name = request.form['machine']).first()
     energy_obj = Photon_energy.query.filter(and_(Photon_energy.energy == request.form['energy'], Photon_energy.machine_id_p == machine_obj.id )).first()
-    check_duplicates = Trs398_photons.query.filter(and_(Trs398_photons.date == date_measured, Trs398_photons.m_reading21 == reading1, Trs398_photons.m_reading22 == reading2, Trs398_photons.machine_id == machine_obj.id, Trs398_photons.beam_id == energy_obj.id)).fiirst()
+
+    beam_data_date = datetime.strptime(request.form['beam_data_date'], '%d %b %Y').date()
+    beam_data = Pdd_data_photons.query.filter(and_(Pdd_data_photons.date == beam_data_date, Pdd_data_photons.beam_energy_p == energy_obj.id)).first()
+    chamber_obj = Ionization_chambers.query.filter_by(sn = request.form['chamber'].split("-")[1] ).first()
+    kqq_corr = Kq_photons(beam_data.tpr2010, request.form['chamber'].split("-")[0]).kq_value()
+
+    
+    check_duplicates = Trs398_photons.query.filter(and_(Trs398_photons.date == date_measured, Trs398_photons.m_reading21 == reading1, Trs398_photons.m_reading22 == reading2, Trs398_photons.machine_id == machine_obj.id, Trs398_photons.beam_id == energy_obj.id)).first()
     if not check_duplicates:
-        new_data = Trs398_photons(date = date_measured, temp = temp_press_obj.temp, press = temp_press_obj.press, m_reading21 = reading1, m_reading22 = reading2, m_reading23 = reading3) 
-    return "javascript will work here"
+        new_data = Trs398_photons(date = date_measured, temp = temp, press = press, m_reading21 = reading1, m_reading22 = reading2, m_reading23 = reading3, m_pdd10 = beam_data.pdd10, m_tpr = beam_data.tpr2010, m_ks = k_s, m_kqq = kqq_corr, m_dose_ref = request.form['dose_ref'], m_electrometer = electrometer, m_biasVoltage = voltage_v1, m_user_id = current_user.id, ion_chamber_id = chamber_obj.id, machine_id = machine_obj.id, beam_id = energy_obj.id) 
+        db.session.add(new_data)
+        db.session.commit()
+        return jsonify({'success':True})    
+    return jsonify({'success': False})
 
 @trs_398_bp.route('/trs_398/photons', methods=['GET','POST'])
 @login_required
@@ -105,7 +120,6 @@ def trs_398_photons():
     form = TRS398_photonsForm()
     machine = Machine.query.filter_by(n_name = request.args.get('machine')).first()
     temp_press = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
-    chambers = Ionization_chambers.query.all()
     
 
 
@@ -121,7 +135,6 @@ def trs_398_photons():
         date_1 = form.date.data
         reading1 = form.m11_reading.data
         reading2 = form.m12_reading.data
-        print(form.electrometer.data)
         #check if the data has not already been added to the database, this will prevent duplication
         check_entry = Trs398_photons.query.filter(and_(Trs398_photons.date == date_1, Trs398_photons.m_reading21 == reading1, Trs398_photons.m_reading22 == reading2)).first()
         if check_entry is None:
@@ -151,3 +164,100 @@ def trs_398_photons():
             flash('The data you want to add to the database already exist!')
             redirect(url_for('trs_398.trs_398_photons'))
     return render_template('trs398.html', form=form, linac_obj = machine, environ = temp_press, beams = list_beams, round = round, k_s = k_recomb)
+
+###############################################
+## ELECTRONS  TRS-398 ##################
+#########################################
+
+@trs_398_bp.route('/trs_398/electrons', methods = ['GET' , 'POST'])
+@login_required
+def trs_398_electrons():
+    form = TRS398_electronForm()
+    machine_selected = Machine.query.filter_by(n_name = request.args.get('machine')).first()
+    temp_press = Temp_press.query.order_by(desc(Temp_press.date_time)).first()
+
+    electron_beams = machine_selected.electron_en.all()
+    electronBeams_used_today = Electron_energy.query.join(Trs398_electrons.query.filter(and_(Trs398_electrons.date == datetime.now().date(), Trs398_electrons.machine_id == machine_selected.id)).subquery()).all()
+    newElectronBEamsList = []
+
+    for each in electron_beams:
+        if not each in electronBeams_used_today:
+            newElectronBEamsList.append(each)
+
+    if request.method == 'POST':
+        print("Work still needs to be done")
+
+    return render_template('trs398e.html',form=form, linac_obj = machine_selected, environ = temp_press, beams = newElectronBEamsList, round = round)
+
+
+###############################################
+## ELECTRONS  TRS-398 Beam Data ###############
+###############################################
+
+@trs_398_bp.route('/trs_398e/check_beam_data', methods=['POST'])
+@login_required
+def checkElectronsBeamData():
+    machine_obj = Machine.query.filter_by(n_name = request.form['machine']).first()
+    beam_obj = Electron_energy.query.filter(and_(Electron_energy.energy == request.form['beam'], Electron_energy.machine_id_e == machine_obj.id)).first()
+    pdd_data = beam_obj.pdd_energy_checks_e.order_by(desc(Pdd_data_electrons.date)).first()
+    chamber_obj = Ionization_chambers.query.filter_by(sn = request.form['chamber'].split('-')[1]).first()
+    chamber_certificate = chamber_obj.chamber_cal.order_by(desc(Chamber_calfactor.date_loaded)).first()
+
+
+    r50 = round((pdd_data.R50)/10,2)
+    zref = (0.6 * r50 - 0.1)*10
+    pdd_zref = Pdd_data(beam_obj.energy, zref, machine_obj.n_name).pdd()
+    kqq = Kq_electrons(r50, request.form['chamber'].split('-')[0]).kq_value()
+    beam_data = {'date' : datetime.strftime(pdd_data.date, '%d-%m-%Y'),
+                'r50' : r50,
+                'zref' : round(zref/10,2),
+                'pdd_zref' : pdd_zref,
+                'kqq' : kqq}
+
+    chamber_data = {'date' : datetime.strftime(chamber_certificate.date_cal, '%d-%m-%Y'),
+                    'lab' : chamber_certificate.cal_lab,
+                    'energy' : chamber_certificate.cal_energy,
+                    'ndw' : chamber_certificate.ndw}
+
+    return jsonify({"success": True, 'beam_data' : beam_data, 'chamber_data' : chamber_data})
+
+
+@trs_398_bp.route('/trs398/electrons_2', methods = ['POST'])
+@login_required
+def commitTrs398Results():
+    date_measured = datetime.strptime(request.form['date'], '%Y-%m-%d').date()
+    voltage_v1 = int(request.form['v1'])
+    reading1 = float(request.form['m1_reading'])
+    reading2 = float(request.form['m2_reading'])
+    reading3 = float(request.form['m3_reading'])
+    # Recombination Correction Readings
+    voltage_v2 = int(request.form['v2'])
+    reading4 = float(request.form['m21_reading'])
+    reading5 = float(request.form['m22_reading'])
+    #electrometer
+    electrometer = request.form['electrometer']
+    avrg_readings1 = (reading1 + reading2 + reading3)/3
+    avrg_reading2 = (reading4 + reading5)/2
+    k_s = k_recomb((voltage_v1/voltage_v2),(avrg_readings1/ avrg_reading2))
+    ndw_cor = float(request.form['ndw'])
+
+    temp = float(request.form['temp'].split(' ')[0])
+    press = float(request.form['press'].split(' ')[0])
+    ktp_corr = k_tp(temp,press)
+    pdd_zref = float(request.form['pdd_zref'])
+
+    beam_data_date = datetime.strptime(request.form['beam_data_date'], '%d-%m-%Y').date()
+    machine_obj = Machine.query.filter_by(n_name = request.form['machine']).first()
+    energy_obj = Electron_energy.query.filter(and_(Electron_energy.energy == request.form['energy'], Electron_energy.machine_id_e == machine_obj.id )).first()
+    chamber_obj = Ionization_chambers.query.filter_by(sn = request.form['chamber'].split("-")[1]).first()
+    beam_data = Pdd_data_electrons.query.filter(and_(Pdd_data_electrons.date == beam_data_date, Pdd_data_electrons.beam_energy_e == energy_obj.id)).first()
+   
+    kqq = Kq_electrons(beam_data.R50, request.form['chamber'].split("-")[0]).kq_value()
+
+    check_duplicates = Trs398_electrons.query.filter(and_(Trs398_electrons.date == date_measured, Trs398_electrons.m_reading31 == reading1, Trs398_electrons.m_reading32 == reading2, Trs398_electrons.machine_id == machine_obj.id, Trs398_electrons.beam_id == energy_obj.id)).first()
+    if not check_duplicates:
+        new_data = Trs398_electrons(date = date_measured, temp = temp, press = press, m_reading31 = reading1, m_reading32 = reading2, m_R50 = beam_data.R50, m_Rp = beam_data.Rp, b_ks = k_s, b_kqq = kqq, b_dose_max = round(float(request.form['dose_zmax']),3), b_electrometer = request.form['electrometer'], b_biasVoltage = request.form['v1'], b_user_id = current_user.id, ion_chamber_id = chamber_obj.id, machine_id = machine_obj.id, beam_id = energy_obj.id)
+        db.session.add(new_data)
+        db.session.commit()
+        return jsonify({'success':True})
+    return jsonify({'success':False})
