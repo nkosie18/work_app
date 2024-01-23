@@ -115,7 +115,9 @@ def linacViewProcess():
         measured_data_electrons = Trs398_electrons.query.join(Machine.query.filter_by(n_name = selected_machine_name).subquery()).all()
         qcdata_trs398_photons = []
         qcdata_trs398_electrons = []
+        data_there = [1, 2]
         if measured_data_photons:
+            data_there[0] = 'p'
             for item in measured_data_photons:
                 mDate = datetime.strftime(item.date, "%Y-%m-%d")
                 mEnergy = item.trs398_cal_energy.energy
@@ -138,6 +140,7 @@ def linacViewProcess():
                 })
 
         if measured_data_electrons:
+            data_there[1] = 'e'
             for item in measured_data_electrons:
                 bDate = datetime.strftime(item.date, "%Y-%m-%d")
                 bEnergy = item.ion_chamber_elen.energy
@@ -158,9 +161,14 @@ def linacViewProcess():
                     'dose_dmax': bDoseMax,
                     'percent_diff': bPdiff    
                 })
+        if data_there == ['p', 2]:
+            return jsonify({'result': 'success','photons':True, 'electrons': False,  'data_p':qcdata_trs398_photons})
 
-        if measured_data_electrons and measured_data_photons:       
-            return jsonify({'result': 'success', 'data_p':qcdata_trs398_photons, 'data_e': qcdata_trs398_electrons})
+        elif data_there == [1, 'e']:
+            return jsonify({'result': 'success', 'photons':False, 'electrons': True, 'data_e':qcdata_trs398_electrons})
+
+        elif data_there == ['p', 'e']:       
+            return jsonify({'result': 'success', 'photons':True, 'electrons': True, 'data_p':qcdata_trs398_photons, 'data_e': qcdata_trs398_electrons})
 
         else:
             return jsonify({'result':'502','data':'The code exacuted fine, but there is no data in your database'})

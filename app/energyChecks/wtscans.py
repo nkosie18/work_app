@@ -99,7 +99,7 @@ class PDD:
         return max_depth
 
 
-    def depth_x(self, x: np.float) -> np.float64:
+    def depth_x(self, x: np.float64) -> np.float64:
         """
         function that returns the position of x% of the max of the pdd with
         linear interpolation between data points (in case of a steep gradient)
@@ -136,7 +136,7 @@ class PDD:
         return x_depth
 
 
-    def dose_x(self, depth: np.float) -> np.float64:
+    def dose_x(self, depth: np.float64) -> np.float64:
         """
         returns the percent dose value at x mm depth
 

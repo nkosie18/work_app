@@ -31,11 +31,13 @@ $(document).ready(function () {
             <div class="w3-col l8 m8">
             <div class = "padding-top">
             <h2> TRS-398 Data. </h2>
-            <h3> <i>Photons</i> </h3>
           </div>
-          <div class="w3-container w3-responsive">
-            <table id="data_table" class="w3-table-all">
-              <thead>
+          <div id="p_table" class="w3-container" style = "display : none">
+            <h3> <i>Photons</i> </h3>
+            <br>
+            <div class="w3-responsive">
+              <table id="data_table" class="w3-table-all">
+                <thead>
                 <tr>  
                   <th>Date</th>
                   <th>Energy</th>
@@ -44,16 +46,16 @@ $(document).ready(function () {
                   <th>Percent diff</th>
                   <th></th>
                 </tr>
-              </thead>
-              <tbody id = "trs398_ph_body">
-              </tbody>
-            </table>
+                </thead>
+                <tbody id = "trs398_ph_body">
+                </tbody>
+              </table>
+            </div>
           </div>
         
-          <div class = "padding-top">
+          <div id="e_table" class = " w3-container padding-top" style ="display: none">
             <h3> <i>Electrons</i> </h3>
-          </div>
-          <div class="w3-container w3-responsive">
+            <div class="w3-container w3-responsive">
             <table id= "data_table_elec" class= "w3-table-all">
               <thead>
                 <tr>
@@ -68,11 +70,12 @@ $(document).ready(function () {
               <tbody id = "trs398_el_body">
               </tbody>
             </table>
-          </div>
             </div>
-            <div class="w3-col l3 m3 w3-hide-small"><p></p></div>
           </div>
         </div>
+        <div class="w3-col l3 m3 w3-hide-small"><p></p></div>
+        </div>
+      </div>
 
         `);
           $("#trs_398ph").click(function (e) {
@@ -85,6 +88,16 @@ $(document).ready(function () {
             location = "/trs_398/electrons?machine=" + machine;
           });
 
+          $("#data_table").click(function (e) {
+            e.preventDefault();
+            var button_id = e.target.id;
+            if (button_id.split("_")[1] == "button") {
+              var date = $(`#${button_id.split("_")[0]}_date`).text();
+              var energy = $(`#${button_id.split("_")[0]}_energy`).text();
+              location = `/trs_398/photons/view_data?machine=${machine}&date=${date}&energy=${energy}`;
+            }
+          });
+
           $.ajax({
             type: "POST",
             url: "/linacViewProcess",
@@ -93,12 +106,14 @@ $(document).ready(function () {
               var status = data.result;
               if (status == "502") {
                 console.log(data.data);
-              } else {
+              }
+
+              if (data.photons) {
                 $("#trs398_qcCheks").css("display", "block"); ///////////////////
+                $("#p_table").css("display", "block");
                 var loop_string_p = "";
-                var loop_string_e = "";
                 var size1 = Object.keys(data.data_p).length;
-                var size2 = Object.keys(data.data_e).length;
+
                 for (let i = 0; i < size1; i++) {
                   var date = data.data_p[i].date;
                   var temp = data.data_p[i].temp;
@@ -106,26 +121,11 @@ $(document).ready(function () {
                   var press = data.data_p[i].press;
                   var chamber = data.data_p[i].chamber;
                   var bvoltage = data.data_p[i].bias_voltage;
-                  var dase_max = data.data_p[i].dose_dmax;
+                  var dose_max = data.data_p[i].dose_dmax;
                   var pdiff = data.data_p[i].percent_diff;
-                  loop_string_p += `<tr><td>${date}</td><td>${energy}</td><td>${chamber}</td><td>${dase_max} cGy/Mu</td><td>${pdiff} %</td><td> <button id ="phot_${date}" class="w3-button w3-blue w3-round w3-border">View</button></td></tr>`;
+                  loop_string_p += `<tr><td id = "ph${i}_date">${date}</td><td id = "ph${i}_energy">${energy}</td><td id = "ph${i}_chamber">${chamber}</td><td id = "ph${i}_Dmax">${dose_max} cGy/Mu</td><td id = "ph${i}_pdiff">${pdiff} %</td><td> <button id = "ph${i}_button" class="w3-button w3-blue w3-round w3-border">View</button></td></tr>`;
                 }
-
-                for (let j = 0; j < size2; j++) {
-                  var date1 = data.data_e[j].date;
-                  var temp1 = data.data_e[j].temp;
-                  var energy1 = data.data_e[j].Beam;
-                  var press1 = data.data_e[j].press;
-                  var chamber1 = data.data_e[j].chamber;
-                  var bvoltage1 = data.data_e[j].bias_voltage;
-                  var dase_max1 = data.data_e[j].dose_dmax;
-                  var pdiff1 = data.data_e[j].percent_diff;
-                  loop_string_e += `<tr><td>${date1}</td><td>${energy1}</td><td>${chamber1}</td><td>${dase_max1} cGy/Mu</td><td>${pdiff1} %</td><td> <button id ="elec_${date1}" class="w3-button w3-blue w3-round w3-border">View</button></td></tr>`;
-                }
-
                 $("#trs398_ph_body").append(loop_string_p);
-
-                $("#trs398_el_body").append(loop_string_e);
 
                 $("#data_table").DataTable({
                   lengthMenu: [
@@ -141,7 +141,25 @@ $(document).ready(function () {
                     null,
                   ],
                 });
+              }
 
+              if (data.electrons) {
+                $("#trs398_qcCheks").css("display", "block");
+                $("#e_table").css("display", "block");
+                var loop_string_e = "";
+                var size2 = Object.keys(data.data_e).length;
+                for (let j = 0; j < size2; j++) {
+                  var date1 = data.data_e[j].date;
+                  var temp1 = data.data_e[j].temp;
+                  var energy1 = data.data_e[j].Beam;
+                  var press1 = data.data_e[j].press;
+                  var chamber1 = data.data_e[j].chamber;
+                  var bvoltage1 = data.data_e[j].bias_voltage;
+                  var dase_max1 = data.data_e[j].dose_dmax;
+                  var pdiff1 = data.data_e[j].percent_diff;
+                  loop_string_e += `<tr><td id="el${j}_${date}">${date1}</td><td id="el${j}_${energy1}">${energy1}</td><td id="el${j}_${chamber1}">${chamber1}</td><td id="el${j}_${dase_max1}">${dase_max1} cGy/Mu</td><td id="el${j}_${pdiff1}">${pdiff1} %</td><td> <button id="el${j}_button"" class="w3-button w3-blue w3-round w3-border">View</button></td></tr>`;
+                }
+                $("#trs398_el_body").append(loop_string_e);
                 $("#data_table_elec").DataTable({
                   lengthMenu: [
                     [5, 10, -1],

@@ -92,6 +92,17 @@ $(document).ready(function () {
             </tr>
             `
           );
+        } else {
+          if ($("#status_bg").hasClass("success")) {
+            $("#status_bg").removeClass("success");
+          }
+          $("#status_bg").addClass("danger");
+          $("#status").html(data.message);
+
+          $("#status_bg").removeClass("hidden");
+          setTimeout(() => {
+            $("#status_bg").addClass("hidden");
+          }, 3000);
         }
       },
     });
@@ -226,6 +237,17 @@ $(document).ready(function () {
           $("#ks").text(k_s);
           $("#pdd").text(pdd10);
           $("#dose_dmax").text(d_zmax.toFixed(3));
+        } else {
+          if ($("#status_bg").hasClass("success")) {
+            $("#status_bg").removeClass("success");
+          }
+          $("#status_bg").addClass("danger");
+          $("#status").html(data.message);
+
+          $("#status_bg").removeClass("hidden");
+          setTimeout(() => {
+            $("#status_bg").addClass("hidden");
+          }, 3000);
         }
       },
     });

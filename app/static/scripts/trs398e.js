@@ -60,6 +60,17 @@ $(document).ready(function () {
             </tr>
             `
           );
+        } else {
+          if ($("#status_bg").hasClass("success")) {
+            $("#status_bg").removeClass("success");
+          }
+          $("#status_bg").addClass("danger");
+          $("#status").html(data.message);
+
+          $("#status_bg").removeClass("hidden");
+          setTimeout(() => {
+            $("#status_bg").addClass("hidden");
+          }, 3000);
         }
       },
     });
@@ -134,7 +145,7 @@ $(document).ready(function () {
     }
 
     var d_zref = mean_reading * ndw * k_corr * k_tp;
-    var d_zmax = d_zref / (pdd_zref / 100);
+    var d_zmax = d_zref / pdd_zref;
     $("#dose_dmax").text(d_zmax.toFixed(3));
   });
 
@@ -229,6 +240,17 @@ the validation button is comming bellow
           $("#ks").text(k_s);
           $("#pdd").text(pddzref);
           $("#dose_dmax").text(d_zmax.toFixed(3));
+        } else {
+          if ($("#status_bg").hasClass("success")) {
+            $("#status_bg").removeClass("success");
+          }
+          $("#status_bg").addClass("danger");
+          $("#status").html(data.message);
+
+          $("#status_bg").removeClass("hidden");
+          setTimeout(() => {
+            $("#status_bg").addClass("hidden");
+          }, 3000);
         }
       },
     });

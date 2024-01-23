@@ -57,12 +57,14 @@ def update_beam_data():
     machine_obj = Machine.query.filter_by(n_name = machine).first()
     beam_obj = Photon_energy.query.filter(and_(Photon_energy.energy == beam, Photon_energy.machine_id_p == machine_obj.id )).first()
     pdd_data = Pdd_data_photons.query.filter(and_(Pdd_data_photons.beam_energy_p == beam_obj.id, Pdd_data_photons.machine_scaned_p == machine_obj.id)).order_by(desc(Pdd_data_photons.date)).first()
-    kq_corr = Kq_photons(pdd_data.tpr2010, chamber).kq_value()
-    date_m  = datetime.strftime( pdd_data.date, "%d %b %Y")
-    beam_data = {'date': date_m, 'tpr2010': pdd_data.tpr2010, 'pdd10': pdd_data.pdd10, 'k_corr': kq_corr}
-    chamber_data = {'date': datetime.strftime(chamber_cal_cert.date_cal, "%d %b %Y"), 'lab': chamber_cal_cert.cal_lab, 'energy': chamber_cal_cert.cal_energy, 'ndw': chamber_cal_cert.ndw }
-    return jsonify({'success': True, 'beam_data':beam_data, 'chamber_data': chamber_data })
-
+    if not pdd_data is None:
+        kq_corr = Kq_photons(pdd_data.tpr2010, chamber).kq_value()
+        date_m  = datetime.strftime( pdd_data.date, "%d %b %Y")
+        beam_data = {'date': date_m, 'tpr2010': pdd_data.tpr2010, 'pdd10': pdd_data.pdd10, 'k_corr': kq_corr}
+        chamber_data = {'date': datetime.strftime(chamber_cal_cert.date_cal, "%d %b %Y"), 'lab': chamber_cal_cert.cal_lab, 'energy': chamber_cal_cert.cal_energy, 'ndw': chamber_cal_cert.ndw }
+        return jsonify({'success': True, 'beam_data':beam_data, 'chamber_data': chamber_data })
+    else:
+        return jsonify({'success': False, 'message': 'No PDD Data was Found in the Database!!'})
 
 @trs_398_bp.route('/trs398/photons/correctionFactors', methods=["POST"])
 @login_required
@@ -112,7 +114,8 @@ def trs398_photons():
         db.session.add(new_data)
         db.session.commit()
         return jsonify({'success':True})    
-    return jsonify({'success': False})
+    else:
+        return jsonify({'success': False})
 
 @trs_398_bp.route('/trs_398/photons', methods=['GET','POST'])
 @login_required
@@ -165,6 +168,17 @@ def trs_398_photons():
             redirect(url_for('trs_398.trs_398_photons'))
     return render_template('trs398.html', form=form, linac_obj = machine, environ = temp_press, beams = list_beams, round = round, k_s = k_recomb)
 
+@trs_398_bp.route('/trs_398/photons/view_data', methods=['GET'])
+@login_required
+def check_trs_data_p():
+    machine_used = Machine.query.filter_by(n_name = request.args.get('machine')).first()
+    date_of_measurement = datetime.strptime(request.args.get('date'), '%Y-%m-%d').date()
+    energy_used = Photon_energy.query.filter(and_(Photon_energy.energy == request.args.get('energy'), Photon_energy.machine_id_p == machine_used.id)).first()
+
+    trs_data = Trs398_photons.query.filter(and_(Trs398_photons.date == date_of_measurement, Trs398_photons.machine_id == machine_used.id, Trs398_photons.beam_id == energy_used.id)).first()
+    
+    return "Machine: %s, date measured: %s, energy: %s" %(trs_data.press, date_of_measurement, energy_used)
+
 ###############################################
 ## ELECTRONS  TRS-398 ##################
 #########################################
@@ -191,7 +205,7 @@ def trs_398_electrons():
 
 
 ###############################################
-## ELECTRONS  TRS-398 Beam Data ###############
+## ELECTRONS  TRS-398 Beam Data ############### 
 ###############################################
 
 @trs_398_bp.route('/trs_398e/check_beam_data', methods=['POST'])
@@ -203,23 +217,25 @@ def checkElectronsBeamData():
     chamber_obj = Ionization_chambers.query.filter_by(sn = request.form['chamber'].split('-')[1]).first()
     chamber_certificate = chamber_obj.chamber_cal.order_by(desc(Chamber_calfactor.date_loaded)).first()
 
-
-    r50 = round((pdd_data.R50)/10,2)
-    zref = (0.6 * r50 - 0.1)*10
-    pdd_zref = Pdd_data(beam_obj.energy, zref, machine_obj.n_name).pdd()
-    kqq = Kq_electrons(r50, request.form['chamber'].split('-')[0]).kq_value()
-    beam_data = {'date' : datetime.strftime(pdd_data.date, '%d-%m-%Y'),
+    if not pdd_data is None:
+        r50 = round((pdd_data.R50)/10,2)
+        zref = (0.6 * r50 - 0.1)*10
+        pdd_zref = Pdd_data(beam_obj.energy, zref, machine_obj.n_name).pdd()
+        kqq = Kq_electrons(r50, request.form['chamber'].split('-')[0]).kq_value()
+        beam_data = {'date' : datetime.strftime(pdd_data.date, '%d-%m-%Y'),
                 'r50' : r50,
                 'zref' : round(zref/10,2),
                 'pdd_zref' : pdd_zref,
                 'kqq' : kqq}
 
-    chamber_data = {'date' : datetime.strftime(chamber_certificate.date_cal, '%d-%m-%Y'),
+        chamber_data = {'date' : datetime.strftime(chamber_certificate.date_cal, '%d-%m-%Y'),
                     'lab' : chamber_certificate.cal_lab,
                     'energy' : chamber_certificate.cal_energy,
                     'ndw' : chamber_certificate.ndw}
 
-    return jsonify({"success": True, 'beam_data' : beam_data, 'chamber_data' : chamber_data})
+        return jsonify({"success": True, 'beam_data' : beam_data, 'chamber_data' : chamber_data})
+    else:
+        return jsonify({'success': False, 'message': 'No PDD Data was Found in the Database!!'})
 
 
 @trs_398_bp.route('/trs398/electrons_2', methods = ['POST'])
