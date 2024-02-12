@@ -12,6 +12,7 @@ from sqlalchemy import and_, asc, desc
 import numpy as np
 from app.trs398.energyCorrections import Kq_photons, Kq_electrons
 from app.trs398.pdd_zref import Pdd_data
+from app.signin.models import User
 
 def k_recomb(volt_ratio: float, charge_ratio: float) -> float:
     voltage_ratio = [2, 2.5, 3, 3.5, 4, 5]
@@ -176,8 +177,9 @@ def check_trs_data_p():
     energy_used = Photon_energy.query.filter(and_(Photon_energy.energy == request.args.get('energy'), Photon_energy.machine_id_p == machine_used.id)).first()
 
     trs_data = Trs398_photons.query.filter(and_(Trs398_photons.date == date_of_measurement, Trs398_photons.machine_id == machine_used.id, Trs398_photons.beam_id == energy_used.id)).first()
-    
-    return "Machine: %s, date measured: %s, energy: %s" %(trs_data.press, date_of_measurement, energy_used)
+    chamber = Ionization_chambers.query.filter_by(id= trs_data.ion_chamber_id).first()
+    physicist = User.query.filter_by(id = trs_data.m_user_id).first()
+    return  render_template('trs_398_vew_data.html', trs_data = trs_data, physicist = physicist, round = round, chamber = chamber)  #"Machine: %s, date measured: %s, energy: %s" %(trs_data.press, date_of_measurement, energy_used)
 
 ###############################################
 ## ELECTRONS  TRS-398 ##################
